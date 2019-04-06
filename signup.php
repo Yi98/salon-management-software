@@ -34,8 +34,7 @@
             align-items: center;
         }
         .signup-image img {
-            width:100%;
-            height:500px;
+            max-width:100%;
         }
         .signup-image {
             padding:0;
@@ -119,7 +118,7 @@
                         </form>
                     </div>
                     <div class="signup-image col-md-6">
-                    <img src="images\signup-image.jpg" alt="sign up image">
+                    <img class="img-fluid" src="images\signup-image.jpg" alt="sign up image">
                     </div>
                 </div>
             </div>
