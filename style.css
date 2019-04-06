@@ -1,0 +1,153 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #fdfdfd;
+}
+
+.product-categories {
+	margin: 2%;
+}
+
+.product-thumbnail {
+	width: 80px;
+	height: 80px;
+	margin: 2% 2% 5% 0;
+}
+
+.product-showcase {
+	width: 1000px;
+	height: 600px;
+}
+
+ul {
+	padding-left: 4%;
+}
+
+.add-to-cart-button {
+	margin-top: 5%;
+	width: 50%;
+	height: 8%;
+	color: white;
+	background-color: #F85700;
+	border: none;
+	box-shadow: none !important;
+}
+
+.add-to-cart-button:hover,
+.add-to-cart-button:active,
+.add-to-cart-button:visited {
+	box-shadow: none !important;
+	background-color: #F85700 !important;
+	color: white;
+	opacity: 0.9;
+}
+
+.next-button {
+	margin-top: 3%;
+	margin-left: 3%;
+	width: 30%;
+	height: 40px;
+	color: white;
+	background-color: #F85700;
+	border: none;
+	box-shadow: none !important;
+	float: right;
+}
+
+.next-button:hover,
+.next-button:active,
+.next-button:visited {
+	box-shadow: none !important;
+	background-color: #F85700 !important;
+	color: white;
+	opacity: 0.9;
+}
+
+
+.purchase-flow {
+	margin-bottom: 5%;
+	margin-top: 0%;
+	text-align: center;
+}
+
+.purchase-flow-other {
+	margin-bottom: 5%;
+	margin-top: 7%;
+	text-align: center;
+}
+
+.product-price {
+	font-size: 1.5em;
+}
+
+.product-description {
+	font-size: 1.3em;
+	text-align: justify;
+}
+
+.product-features {
+	font-size: 1.1em;
+}
+
+#date-form {
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 7%;
+}
+
+#service-form, #request-form, #summary-form {
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 7%;
+	display: none;
+}
+
+#right-rails {
+	width: 13%;
+	margin-top: 5%;
+}
+
+#right-rails-segment {
+	background-color: #fafafa;
+	display: none;
+}
+
+.view-cart-button {
+	width: 100%;
+	margin-bottom: 5%;
+	box-shadow: none !important;
+	color: black;
+	background-color: #eaeaea;
+}
+
+.view-cart-button:hover {
+	width: 100%;
+	margin-bottom: 5%;
+	box-shadow: none !important;
+	color: black;
+	background-color: #eaeaea;
+	opacity: 0.9;
+}
+
+.checkout-button {
+	width: 100%;
+	box-shadow: none !important;
+	background-color: #F85700;
+	color: white;
+}
+
+.checkout-button:hover {
+	width: 100%;
+	box-shadow: none !important;
+	background-color: #F85700;
+	color: white;
+	opacity: 0.9;
+}
+
+.summary-title {
+	font-weight: bold;
+	font-size: 1.3em;
+}
