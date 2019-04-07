@@ -126,3 +126,124 @@ function onSwitchRequest() {
 
 	requestBox.disabled = hasRequest ? true : false;
 }
+
+/***** Sign Up validation *****/
+function validateSignUpName() {
+    // Should only contain alphabets and space
+    let name = document.getElementById("name").value;
+    let nameAlert = document.getElementById("signup-name-alert");
+    let regex = /^[a-zA-Z ]*$/;
+    let result = regex.test(name);
+    if (name.length == 0 ) {
+        nameAlert.textContent = "Name should not be empty";
+        nameAlert.style.color = "red";
+        return false;
+    } else if (!result ) {
+        nameAlert.textContent = "Name should only contains alphabets and spaces";
+        nameAlert.style.color = "red";
+        return false;
+    } else {
+        nameAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function validateSignUpEmail() {
+    // Should meet the email format
+    let email = document.getElementById("email").value;
+    let emailAlert = document.getElementById("signup-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function validateSignUpPassword() {
+    // Should between 6 to 12 characters
+    let password = document.getElementById("pass").value;
+    let passwordAlert = document.getElementById("signup-password-alert");
+    if (password.length == 0) {
+        passwordAlert.textContent = "Password should not be empty";
+        passwordAlert.style.color = "red";
+        return false;
+    } else if (password.length < 6 || password.length > 12) {
+        passwordAlert.textContent = "Password length should in between 6 to 12 character(s)";
+        passwordAlert.style.color = "red";
+        return false;
+    } else {
+        passwordAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function validateSignUpRepeatPassword() {
+    // Password and repeat password should be the same
+    let repeatPassword = document.getElementById("re-pass").value;
+    let password = document.getElementById("pass").value;
+    let repeatPassAlert = document.getElementById("signup-retypepassword-alert");
+    if (repeatPassword != password) {
+        repeatPassAlert.textContent = "Repeat Password are not the same as the password typed above";
+        repeatPassAlert.style.color = "red";
+        return false;
+    } else {
+        repeatPassAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function startSignUpValidate() {
+    let name = validateSignUpName();
+    let email = validateSignUpEmail();
+    let password = validateSignUpPassword();
+    let repeatPassword = validateSignUpRepeatPassword();
+
+    if (name && email && password && repeatPassword) {
+        return true;
+    }
+    return false;
+}
+
+/***** Log In validation *****/
+function validateLogInEmail() {
+    // Should meet the email format
+    let email = document.getElementById("login-email").value;
+    let emailAlert = document.getElementById("login-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        return false;
+    }
+    return false;
+}
+
+function startLogInValidate() {
+    let email = validateLogInEmail();
+
+    if (email) {
+        return true;
+    }
+    return false;
+}
