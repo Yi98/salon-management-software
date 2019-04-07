@@ -107,6 +107,7 @@
       <button type="button" class="btn btn-primary next-button" onclick="onCompleteRequestInfo()">Next <i class="arrow right icon"></i></button>
       <button type="button" class="btn btn-primary next-button" onclick="onBackToService()"><i class="arrow left icon"></i> Back to previous</button>
     </form>
+    
 
     <!-- summary form -->
     <form class="ui form" id="summary-form">

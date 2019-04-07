@@ -51,14 +51,19 @@ function onCompleteRequestInfo() {
 function onConfirmSummary() {
 	const summaryForm = document.getElementById('summary-form');
 	const summaryStep = document.getElementById('summary-step');
+	const requestBox = document.getElementById('request-box');	
 
+	// sanitize content of special request
+	if (requestBox.disabled == false && (requestBox.value.includes('<') || requestBox.value.includes('>'))) {
+		alert ("Please don't include special characters in your request");
+	} else {
+		summaryStep.classList.add("completed");
+		summaryStep.classList.remove("active");
 
-	summaryStep.classList.add("completed");
-	summaryStep.classList.remove("active");
-
-	$('.ui.basic.modal')
-	  .modal('show')
-	;
+		$('.ui.basic.modal')
+		  .modal('show')
+		;
+	}
 }
 
 
