@@ -120,6 +120,23 @@
       <button type="button" class="btn btn-primary next-button" onclick="onEditSummary()"><i class="edit icon"></i> Edit</button>
     </form>
 
+    <!-- Pop out confirmation -->
+    <div class="ui basic modal modal-container">
+      <div class="ui icon header">
+        <i class="calendar check icon"></i>
+        Appointment confirmed
+      </div>
+      <div class="content">
+        <p class="modal-message">You have successfully booked the appointment. Have a nice day :)</p>
+      </div>
+      <div class="actions">
+        <div class="ui orange ok inverted button okay-button-modal">
+          <i class="checkmark icon"></i>
+          Great
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

@@ -151,3 +151,18 @@ ul {
 	font-weight: bold;
 	font-size: 1.3em;
 }
+
+.modal-message{
+	text-align: center;
+}
+
+.modal-container {
+	position: absolute;
+	top: 30%;
+	left: 20%;
+}
+
+.okay-button-modal {
+	position: absolute;
+	left: 44%;
+}

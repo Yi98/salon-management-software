@@ -55,6 +55,10 @@ function onConfirmSummary() {
 
 	summaryStep.classList.add("completed");
 	summaryStep.classList.remove("active");
+
+	$('.ui.basic.modal')
+	  .modal('show')
+	;
 }
 
 
