@@ -234,9 +234,9 @@ function validateLogInEmail() {
         return false;
     } else {
         emailAlert.textContent = "";
-        return false;
+        return true;
     }
-    return false;
+    return true;
 }
 
 function startLogInValidate() {

@@ -1,3 +1,82 @@
+<?php include "db_connect.php"; ?>
+
+<?php
+    $name = "";
+    $email = "";
+    $name_existed_error = " ";
+    $email_existed_error = " ";
+
+    if (!empty($_POST)) {
+        $signup_password = "";
+        $errors = array();
+        
+        //if (isset($POST["signup_user"])) {
+        $name = $conn->quote($_POST["name"]);
+        $email = $conn->quote($_POST["email"]);
+        $signup_password = $conn->quote($_POST["pass"]);
+        //}
+
+        $user_check_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+        $result = $conn->prepare($user_check_query);
+        $result->bindValue(":name", $name);
+        $result->bindValue(":email", $email);
+        $result->execute();
+        
+        $user = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            if ($user["name"] === $name) {
+                array_push($errors, "Name already exits");
+                $name_existed_error = "Name already taken";
+            }
+            if ($user["email"] === $email) {
+                array_push($errors, "email already exists");
+                $email_existed_error = "Email already taken";
+            }
+        }
+
+        if (count($errors) == 0) {
+            // Encrypt password
+            $password_encrypted = md5($signup_password);
+            // format date
+            $date = date("Y-m-d H:i:s");
+
+            $query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, '$password_encrypted', :name, 'user', '', '$date');";
+            
+            // Insert the user
+            $result = $conn->prepare($query);
+            $result->bindValue(":name", $name);
+            $result->bindValue(":email", $email);
+            $result->execute();
+            
+            // Select the signed user from database
+            $user_find_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+            $result = $conn->prepare($user_find_query);
+            $result->bindValue(":name", $name);
+            $result->bindValue(":email", $email);
+            $result->execute();
+
+            $newUser = $result->fetch(PDO::FETCH_ASSOC);
+
+            // Clear the form data
+            //$name = "";
+            //$email = "";
+            //$name_existed_error = " ";
+            //$email_existed_error = " ";
+            
+            $_SESSION["id"] = newUser["userId"];
+            $_SESSION["name"] = newUser["name"];
+            $_SESSION["email"] = newUser["email"];
+            $_SESSION["role"] = newUser["role"];
+            $_SESSION["success"] = "You are now logged in";
+            header('location: index.php');
+            exit;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,21 +119,23 @@
                         <div class="or-separator">
                             <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>
                         </div>
-                        <form method="POST" class="register-form" id="register-form" onSubmit="return startSignUpValidate()">
+                        <form method="POST" class="register-form" id="register-form" autocomplete="autocomplete" action="signup.php" onSubmit="return startSignUpValidate()">
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="name"><i class="flaticon-id-card"></i></label>
-                                    <input type="text" name="name" id="name" placeholder="Your Name" class="form-control"/>
+                                    <input type="text" name="name" id="name" placeholder="Your Name" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$name) ?>"/>
                                 </div>
                                 <span id="signup-name-alert"></span>
+                                <?php echo "<span style='color:red'>$name_existed_error</span>" ?>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
-                                    <input type="text" name="email" id="email" placeholder="Your Email" class="form-control" />
+                                    <input type="text" name="email" id="email" placeholder="Your Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$email) ?>"/>
                                    
                                 </div>
                                  <span id="signup-email-alert"></span>
+                                 <?php echo "<span style='color:red'>$email_existed_error</span>" ?>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
@@ -72,7 +153,7 @@
                                 <span id="signup-retypepassword-alert"></span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="signup" id="signup" class="btn btn-info" value="Register"/>
+                                <input type="submit" name="signup_user" id="signup" class="btn btn-info" value="Register"/>
                                 <a  class="existing-member" href="login.php" class="signup-image-link">I am already member</a>
                             </div>
                         </form>

@@ -1,3 +1,46 @@
+<?php include "db_connect.php"; ?>
+
+<?php
+    /* For Log out codes
+        unset($_SESSION["id"]);
+        unset($_SESSION["name"]); 
+        unset($_SESSION["email"]); 
+        unset($_SESSION["role"]); 
+        unset($_SESSION["success"]);
+        header("Location:login.php");
+    */
+    $login_email = "";
+    $login_error_message = "";
+
+    if (!empty($_POST)) {
+        $login_email = $conn->quote($_POST["email"]);
+        $login_password = $conn->quote($_POST["password"]);
+        
+        $hashed_password = md5($login_password);
+        
+        // Find user from the database's user table
+        $user_check_query = "SELECT * FROM `users` WHERE `email` = :email AND `password` = '$hashed_password' LIMIT 1";
+            
+        $result = $conn->prepare($user_check_query);
+        $result->bindValue(":email", $login_email);
+        $result->execute();
+        
+        $currentUser = $result->fetch(PDO::FETCH_ASSOC);
+        
+        if (is_array($currentUser)) {
+            $_SESSION["id"] = $currentUser["userId"];
+            $_SESSION["name"] = $currentUser["name"];
+            $_SESSION["email"] = $currentUser["email"];
+            $_SESSION["role"] = newUser["role"];
+            $_SESSION["success"] = "You are now logged in";
+            header('location: index.php');
+            exit;
+        } else {
+            $login_error_message = "Email or Password is incorrect";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,12 +82,12 @@
                         <div class="or-separator">
                             <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>
                         </div>
-                        <p id="login-error">Email or password is not valid</p>
+                        <?php echo "<span style='color:red'>$login_error_message</span>" ?>
                         <form method="POST" class="login-form" id="login-form" onSubmit="return validateLogInEmail()">
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
-                                    <input type="text" name="email" id="login-email" placeholder="Your Login Email" class="form-control"/>
+                                    <input type="text" name="email" id="login-email" placeholder="Your Login Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$login_email) ?>"/>
                                 </div>
                                 <span id="login-email-alert"></span>
                             </div>
