@@ -6,6 +6,12 @@ function onCompleteDateInfo() {
 	const dateStep = document.getElementById('date-step');
 	const serviceStep = document.getElementById('service-step');
 
+	const appointmentDate = document.getElementById('appointment-date').value;
+	const appointmentTime = document.getElementById('appointment-time').value;
+
+	sessionStorage.setItem("date", appointmentDate);
+	sessionStorage.setItem("time", appointmentTime);
+
 	dateForm.style.display = "none";
 	serviceForm.style.display = "block";
 
@@ -22,6 +28,12 @@ function onCompleteServicesInfo() {
 	const serviceStep = document.getElementById('service-step');
 	const requestStep = document.getElementById('request-step');
 
+    const service = document.getElementById('service').value;
+    const hairdresser = document.getElementById('hairdresser').value;
+
+    sessionStorage.setItem("service", service);
+    sessionStorage.setItem("hairdresser", hairdresser);
+
 	serviceForm.style.display = "none";
 	requestForm.style.display = "block";
 
@@ -37,10 +49,18 @@ function onCompleteRequestInfo() {
 	const requestStep = document.getElementById('request-step');
 	const summaryStep = document.getElementById('summary-step');
 
+    const request = document.getElementById('request-box').value;
+    sessionStorage.setItem("request", request);
 
-	requestForm.style.display = "none";
-	summaryForm.style.display = "block";
+    document.getElementById('summary-date').innerHTML = `Date: ${sessionStorage.getItem("date")}`;
+    document.getElementById('summary-time').innerHTML = `Time: ${sessionStorage.getItem("time")}`;
+    document.getElementById('summary-service').innerHTML = `Service: ${sessionStorage.getItem("service")}`;
+    document.getElementById('summary-hairdresser').innerHTML = `Hairdresser: ${sessionStorage.getItem("hairdresser")}`;
+    document.getElementById('summary-request').innerHTML = `Special Request: ${sessionStorage.getItem("request")}`;
 
+    requestForm.style.display = "none";
+    summaryForm.style.display = "block";
+	
 	requestStep.classList.remove("active");
 	requestStep.classList.add("completed");
 	summaryStep.classList.remove("disabled");

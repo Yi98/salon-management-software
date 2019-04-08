@@ -1,5 +1,16 @@
 <?php include 'db_connect.php'; ?>
 
+<?php 
+// !empty(userId) && !empty(appointmentDate) && !empty(typeOfServices) && !empty(request) && !empty(status)
+// $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '2-3-2019', '09:00-11:00', 'hair-cutting', 'I might be late for a little bit', 'fulfilled')";
+
+// use exec() because no results are returned
+
+// $conn->exec($sql);
+// echo "New record created successfully";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,17 +62,17 @@
       <div class="field">
         <label>Date</label>
         <div class="field">
-          <input type="date" name="shipping[first-name]" placeholder="First Name">
+          <input type="date" name="date" id="appointment-date">
         </div>
       </div>
         <div class="field">
           <label>Timeslot</label>
-          <select class="ui fluid dropdown">
-            <option value="">Pick your time</option>
-            <option value="sab">09:00 - 11:00</option>
-            <option value="sar">11:00 - 13:00</option>
-            <option value="ked">13:00 - 15:00</option>
-            <option value="per">15:00 - 17:00</option>
+          <select class="ui fluid dropdown" id="appointment-time">
+            <option value="none">Pick your time</option>
+            <option value="09:00 - 11:00">09:00 - 11:00</option>
+            <option value="11:00 - 13:00">11:00 - 13:00</option>
+            <option value="13:00 - 15:00">13:00 - 15:00</option>
+            <option value="15:00 - 17:00">15:00 - 17:00</option>
           </select>
         </div>
       <button type="button" class="btn btn-primary next-button" onclick="onCompleteDateInfo()">Next <i class="arrow right icon"></i></button>
@@ -73,21 +84,21 @@
       <h3 class="ui dividing header">Services</h3>
       <div class="field">
         <label>Type of services</label>
-        <select class="ui fluid search dropdown" name="card[type]">
-          <option value="">Choose your service</option>
-          <option value="1">Hair-cutting</option>
-          <option value="2">Hair-dyeing</option>
-          <option value="3">Hair consultation</option>
+        <select class="ui fluid search dropdown" name="service" id="service">
+          <option value="none">Choose your service</option>
+          <option value="Hair-cutting">Hair-cutting</option>
+          <option value="Hair-dyeing">Hair-dyeing</option>
+          <option value="Hair consultation">Hair consultation</option>
         </select>
       </div>
       <div class="field">
         <label>Hairdresser</label>
-        <select class="ui fluid search dropdown" name="card[type]">
-          <option value="">Choose your service</option>
-          <option value="1">David Cheam</option>
-          <option value="2">Steven Lau</option>
-          <option value="3">Joanne Cheong</option>
-          <option value="4">Any</option>
+        <select class="ui fluid search dropdown" name="hairdresser" id="hairdresser">
+          <option value="none">Choose your service</option>
+          <option value="David Cheam">David Cheam</option>
+          <option value="Steven Lau">Steven Lau</option>
+          <option value="Joanne Cheong">Joanne Cheong</option>
+          <option value="Any">Any</option>
         </select>
       </div>
       <button type="button" class="btn btn-primary next-button" onclick="onCompleteServicesInfo()">Next <i class="arrow right icon"></i></button>
@@ -114,11 +125,11 @@
     <!-- summary form -->
     <form class="ui form" id="summary-form">
       <h3 class="ui dividing header">Appointment Summary</h3>
-      <p class="summary-title">Date: </p>
-      <p class="summary-title">Time: </p>
-      <p class="summary-title">Service: </p>
-      <p class="summary-title">Hairdresser: </p>
-      <p class="summary-title">Special Request: </p>
+      <p class="summary-title" id="summary-date">Date: </p>
+      <p class="summary-title" id="summary-time">Time: </p>
+      <p class="summary-title" id="summary-service">Service: </p>
+      <p class="summary-title" id="summary-hairdresser">Hairdresser: </p>
+      <p class="summary-title" id="summary-request">Special Request: </p>
       <button type="button" class="btn btn-primary next-button" onclick="onConfirmSummary()"><i class="check icon"></i> Confirm</button>
       <button type="button" class="btn btn-primary next-button" onclick="onEditSummary()"><i class="edit icon"></i> Edit</button>
     </form>
