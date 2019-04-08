@@ -1,14 +1,6 @@
 <?php include 'db_connect.php'; ?>
 
 <?php 
-// !empty(userId) && !empty(appointmentDate) && !empty(typeOfServices) && !empty(request) && !empty(status)
-// $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '2-3-2019', '09:00-11:00', 'hair-cutting', 'I might be late for a little bit', 'fulfilled')";
-
-// use exec() because no results are returned
-
-// $conn->exec($sql);
-// echo "New record created successfully";
-
 if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
   $date = $_POST['date'];
   $time = $_POST['time'];
@@ -19,7 +11,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
   $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '$date', '$time', '$service', '$request', 'unfulfilled')";
 
   $conn->exec($sql);
-  echo "New record created successfully";
+  // echo "New record created successfully";
 }
 
 ?>
