@@ -1,5 +1,16 @@
 <?php include 'db_connect.php'; ?>
 
+<?php 
+// !empty(userId) && !empty(appointmentDate) && !empty(typeOfServices) && !empty(request) && !empty(status)
+// $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '2-3-2019', '09:00-11:00', 'hair-cutting', 'I might be late for a little bit', 'fulfilled')";
+
+// use exec() because no results are returned
+
+// $conn->exec($sql);
+// echo "New record created successfully";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +62,7 @@
       <div class="field">
         <label>Date</label>
         <div class="field">
-          <input type="date" name="shipping[first-name]" placeholder="First Name">
+          <input type="date" name="date" id="appointment-date">
         </div>
       </div>
         <div class="field">

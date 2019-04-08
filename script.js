@@ -6,12 +6,22 @@ function onCompleteDateInfo() {
 	const dateStep = document.getElementById('date-step');
 	const serviceStep = document.getElementById('service-step');
 
+	const appointmentDate = document.getElementById('appointment-date').value;
+	const appointmentTime  document.getElementById('appointment-time').value;
+
+	sessionStorage.setItem("date", "appointmentDate");
+	sessionStorage.setItem("time", "appointmentTime");
+
+	alert(sessionStorage.getItem("date"));
+	alert(sessionStorage.getItem("time"));
+
 	dateForm.style.display = "none";
 	serviceForm.style.display = "block";
 
 	dateStep.classList.remove("active");
 	dateStep.classList.add("completed");
 	serviceStep.classList.add("active");
+
 }
 
 
