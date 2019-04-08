@@ -1,8 +1,52 @@
+<?php include "db_connect.php"; ?>
+
+<?php
+    /* For Log out codes
+        unset($_SESSION["id"]);
+        unset($_SESSION["name"]); 
+        unset($_SESSION["email"]); 
+        unset($_SESSION["role"]); 
+        unset($_SESSION["success"]);
+        header("Location:login.php");
+    */
+    $login_email = "";
+    $login_error_message = "";
+
+    if (!empty($_POST)) {
+        $login_email = $conn->quote($_POST["email"]);
+        $login_password = $conn->quote($_POST["password"]);
+        
+        $hashed_password = md5($login_password);
+        
+        // Find user from the database's user table
+        $user_check_query = "SELECT * FROM `users` WHERE `email` = :email AND `password` = '$hashed_password' LIMIT 1";
+            
+        $result = $conn->prepare($user_check_query);
+        $result->bindValue(":email", $login_email);
+        $result->execute();
+        
+        $currentUser = $result->fetch(PDO::FETCH_ASSOC);
+        
+        if (is_array($currentUser)) {
+            $_SESSION["id"] = $currentUser["userId"];
+            $_SESSION["name"] = $currentUser["name"];
+            $_SESSION["email"] = $currentUser["email"];
+            $_SESSION["role"] = newUser["role"];
+            $_SESSION["success"] = "You are now logged in";
+            header('location: index.php');
+            exit;
+        } else {
+            $login_error_message = "Email or Password is incorrect";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
     
     <!-- icon css link -->
     <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>
@@ -16,71 +60,10 @@
     <!-- Latest compiled Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    <title>Log In</title>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style>
-        .form-title {
-            font-weight: bold;
-            margin-bottom: 10%;
-        }
-        .log-in-container {
-            border:1px solid grey;
-            min-height: 50vh;
-        }
-        .vertical-center {
-            min-height: 100%;
-            min-height: 100vh;
-            display:flex;
-            align-items: center;
-        }
-        .login-image img {
-            max-width:100%;
-            height:400px;
-        }
-        .login-image {
-            padding:0;    
-        }
-        .existing-member {
-            float:right;
-        }
-        .login-form .form-group {
-            margin: 10% 0 10% 0;
-        }
-        
-        .form-group:nth-child(2) {
-            margin:0;
-        }
-        .login-form .form-control {
-            border:none;
-            border-bottom: 1px solid grey;
-        }
-        .login-form .input-group-addon {
-            border:none;
-            border:1px solid grey;
-        }
-        .login-form i::before {
-             margin:0;
-        }
-        .login-form label {
-            background-color:white;
-        }
-        .login-form .form-control, .signin-form label {
-            border-radius: 0;
-        }
-        .login-form .form-control {
-            box-shadow: none;
-        }
-        .login-form input:focus {
-            border-bottom:1px solid black;
-        }
-        input:focus::-webkit-input-placeholder {
-            color:black;
-        }
-        #login {
-            width:30%;
-            padding:3%;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <!-- Sign up form -->
@@ -90,12 +73,23 @@
                 <div class="login-content">
                     <div class="login-form  col-md-6">
                         <h2 class="form-title">Log In</h2>
-                        <form method="POST" class="login-form" id="login-form">
+                        <p class="login-instruction">Log In with your social media account or email address</p>
+                        <div class="social-media-login-container">
+                            <a href="#" class="fa fa-facebook"></a>
+                            <a href="#" class="fa fa-google"></a>
+                            <a href="#" class="fa fa-twitter"></a>
+                        </div>
+                        <div class="or-separator">
+                            <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>
+                        </div>
+                        <?php echo "<span style='color:red'>$login_error_message</span>" ?>
+                        <form method="POST" class="login-form" id="login-form" onSubmit="return validateLogInEmail()">
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
-                                    <input type="text" name="email" id="email" placeholder="Your Login Email" class="form-control"/>
+                                    <input type="text" name="email" id="login-email" placeholder="Your Login Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$login_email) ?>"/>
                                 </div>
+                                <span id="login-email-alert"></span>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
@@ -111,11 +105,16 @@
                         </form>
                     </div>
                     <div class="login-image col-md-6">
-                    <img class="img-fluid" src="images\login-image.jpg" alt="sign up image">
+                    <img class="img-fluid" src="images\login-image.jpg" alt="log in image">
                     </div>
                 </div>
             </div>
         </div>    
     </div>
+    
+    <!-- script.js -->
+    <script src="script.js"></script>
 </body>
+    
+
 </html>

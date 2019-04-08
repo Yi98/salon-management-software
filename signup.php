@@ -1,8 +1,88 @@
+<?php include "db_connect.php"; ?>
+
+<?php
+    $name = "";
+    $email = "";
+    $name_existed_error = " ";
+    $email_existed_error = " ";
+
+    if (!empty($_POST)) {
+        $signup_password = "";
+        $errors = array();
+        
+        //if (isset($POST["signup_user"])) {
+        $name = $conn->quote($_POST["name"]);
+        $email = $conn->quote($_POST["email"]);
+        $signup_password = $conn->quote($_POST["pass"]);
+        //}
+
+        $user_check_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+        $result = $conn->prepare($user_check_query);
+        $result->bindValue(":name", $name);
+        $result->bindValue(":email", $email);
+        $result->execute();
+        
+        $user = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            if ($user["name"] === $name) {
+                array_push($errors, "Name already exits");
+                $name_existed_error = "Name already taken";
+            }
+            if ($user["email"] === $email) {
+                array_push($errors, "email already exists");
+                $email_existed_error = "Email already taken";
+            }
+        }
+
+        if (count($errors) == 0) {
+            // Encrypt password
+            $password_encrypted = md5($signup_password);
+            // format date
+            $date = date("Y-m-d H:i:s");
+
+            $query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, '$password_encrypted', :name, 'user', '', '$date');";
+            
+            // Insert the user
+            $result = $conn->prepare($query);
+            $result->bindValue(":name", $name);
+            $result->bindValue(":email", $email);
+            $result->execute();
+            
+            // Select the signed user from database
+            $user_find_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+            $result = $conn->prepare($user_find_query);
+            $result->bindValue(":name", $name);
+            $result->bindValue(":email", $email);
+            $result->execute();
+
+            $newUser = $result->fetch(PDO::FETCH_ASSOC);
+
+            // Clear the form data
+            //$name = "";
+            //$email = "";
+            //$name_existed_error = " ";
+            //$email_existed_error = " ";
+            
+            $_SESSION["id"] = newUser["userId"];
+            $_SESSION["name"] = newUser["name"];
+            $_SESSION["email"] = newUser["email"];
+            $_SESSION["role"] = newUser["role"];
+            $_SESSION["success"] = "You are now logged in";
+            header('location: index.php');
+            exit;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
     
     <!-- icon css link -->
     <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>
@@ -16,67 +96,11 @@
     <!-- Latest compiled Bootstrap JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    <title>Sign Up</title>
+    
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style>
-        .form-title {
-            font-weight: bold;
-            margin-bottom: 10%;
-        }
-        .sign-up-container {
-            border:1px solid grey;
-            min-height: 50vh;
-        }
-        .vertical-center {
-            min-height: 100%;
-            min-height: 100vh;
-            display:flex;
-            align-items: center;
-        }
-        .signup-image img {
-            max-width:100%;
-        }
-        .signup-image {
-            padding:0;
-                
-        }
-        .existing-member {
-            float:right;
-        }
-        .signup-form .form-group {
-            margin: 10% 0 10% 0;
-        }
-        .signup-form .form-control {
-            border:none;
-            border-bottom: 1px solid grey;
-        }
-        .signup-form .input-group-addon {
-            border:none;
-            border:1px solid grey;
-        }
-        .signup-form i::before {
-             margin:0;
-        }
-        .signup-form label {
-            background-color:white;
-        }
-        .signup-form .form-control, .signup-form label {
-            border-radius: 0;
-        }
-        .signup-form .form-control {
-            box-shadow: none;
-        }
-        .signup-form input:focus {
-            border-bottom:1px solid black;
-        }
-        input:focus::-webkit-input-placeholder {
-            color:black;
-        }
-        #signup {
-            width:30%;
-            padding:3%;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <!-- Sign up form -->
@@ -86,33 +110,50 @@
                 <div class="signup-content">
                     <div class="signup-form  col-md-6">
                         <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="register-form">
+                        <p class="signup-instruction">Sign up with your social media account or email address</p>
+                        <div class="social-media-signup-container">
+                            <a href="#" class="fa fa-facebook"></a>
+                            <a href="#" class="fa fa-google"></a>
+                            <a href="#" class="fa fa-twitter"></a>
+                        </div>
+                        <div class="or-separator">
+                            <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>
+                        </div>
+                        <form method="POST" class="register-form" id="register-form" autocomplete="autocomplete" action="signup.php" onSubmit="return startSignUpValidate()">
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="name"><i class="flaticon-id-card"></i></label>
-                                    <input type="text" name="name" id="name" placeholder="Your Name" class="form-control"/>
+                                    <input type="text" name="name" id="name" placeholder="Your Name" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$name) ?>"/>
                                 </div>
+                                <span id="signup-name-alert"></span>
+                                <?php echo "<span style='color:red'>$name_existed_error</span>" ?>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
-                                    <input type="email" name="email" id="email" placeholder="Your Email" class="form-control"/>
+                                    <input type="text" name="email" id="email" placeholder="Your Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$email) ?>"/>
+                                   
                                 </div>
+                                 <span id="signup-email-alert"></span>
+                                 <?php echo "<span style='color:red'>$email_existed_error</span>" ?>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="pass"><i class="flaticon-lock"></i></label>
-                                    <input type="password" name="pass" id="pass" placeholder="Password" class="form-control"/>
+                                    <input type="password" name="pass" id="pass" placeholder="Password" class="form-control" />
+                                    
                                 </div>
+                                <span id="signup-password-alert"></span>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="re-pass"><i class="flaticon-lock-1"></i></label>
                                     <input type="password" name="re_pass" id="re-pass" placeholder="Repeat your password" class="form-control"/>
                                 </div>
+                                <span id="signup-retypepassword-alert"></span>
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="signup" id="signup" class="btn btn-info" value="Register"/>
+                                <input type="submit" name="signup_user" id="signup" class="btn btn-info" value="Register"/>
                                 <a  class="existing-member" href="login.php" class="signup-image-link">I am already member</a>
                             </div>
                         </form>
@@ -124,5 +165,9 @@
             </div>
         </div>    
     </div>
+    
+    <!-- script.js -->
+    <script src="script.js"></script>
+    
 </body>
 </html>
