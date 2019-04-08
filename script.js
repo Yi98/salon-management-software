@@ -71,7 +71,29 @@ function onCompleteRequestInfo() {
 function onConfirmSummary() {
 	const summaryForm = document.getElementById('summary-form');
 	const summaryStep = document.getElementById('summary-step');
-	const requestBox = document.getElementById('request-box');	
+	const requestBox = document.getElementById('request-box');
+
+  const date = sessionStorage.getItem("date");
+  const time = sessionStorage.getItem("time");
+  const service = sessionStorage.getItem("service");
+  const hairdresser = sessionStorage.getItem("hairdresser");
+  const request = sessionStorage.getItem("request");
+
+  const http = new XMLHttpRequest();
+  const url = 'appointment.php';
+  const params = `date=${date}&time=${time}&service=${service}&hairdresser=${hairdresser}&request=${request}`;
+  http.open('POST', url, true);
+
+  //Send the proper header information along with the request
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = function() {//Call a function when the state changes.
+      if(http.readyState == 4 && http.status == 200) {
+          alert(http.responseText);
+          // alert("Hi");
+      }
+  }
+  http.send(params);
 
 	// sanitize content of special request
 	if (requestBox.disabled == false && (requestBox.value.includes('<') || requestBox.value.includes('>'))) {
