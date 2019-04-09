@@ -1,25 +1,3 @@
-<?php include 'db_connect.php'; ?>
-
-<?php 
-if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
-  $date = $_POST['date'];
-  $time = $_POST['time'];
-  $service = $_POST['service'];
-  $hairdresser = $_POST['hairdresser'];
-  $request = $_POST['request'];
-
-  $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '$date', '$time', '$service', '$request', 'unfulfilled')";
-
-  if ($conn->exec($sql)) {
-    echo "success";
-  }
-  else {
-    echo "fail";
-  }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,7 +122,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
     </form>
 
     <!-- Pop out confirmation -->
-    <div class="ui basic modal modal-container">
+    <div class="ui basic modal modal-container" id="success-booking-modal">
       <div class="ui icon header">
         <i class="calendar check icon"></i>
         Appointment confirmed
@@ -156,6 +134,22 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
         <div class="ui orange ok inverted button okay-button-modal">
           <i class="checkmark icon"></i>
           Great
+        </div>
+      </div>
+    </div>
+
+    <div class="ui basic modal modal-container" id="fail-booking-modal">
+      <div class="ui icon header">
+        <i class="calendar minus icon"></i>
+        Oops something went wrong!
+      </div>
+      <div class="content">
+        <p class="modal-message">Please try again later :(</p>
+      </div>
+      <div class="actions">
+        <div class="ui red ok inverted button okay-button-modal">
+          <i class="checkmark icon"></i>
+          Okay
         </div>
       </div>
     </div>
