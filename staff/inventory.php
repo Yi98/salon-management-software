@@ -1,4 +1,5 @@
-<?php include "db_connect.php"; ?>
+<?php include "../db_connect.php"; ?>
+
 
 <?php
   
@@ -8,13 +9,16 @@
     $price = $_POST['price'];
     $retailprice = $_POST['retailprice'];
     $quantity = $_POST['quantity'];
+    $status = "available";
     
-    $query = "INSERT INTO `inventories` (inventoryName,description,quantity,unitPrice,purchasingPrice) VALUES ($name,$description,$quantity,$retailprice,$price);";
+    $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`) VALUES (:name,:description,:quantity,:retailprice,:price)";
     
-    $result = $conn->prepare($query);
-    $result->execute();
+    $pdoResult = $conn->prepare($pdoQuery);
+    $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price));
   }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,16 +53,25 @@
     <div class="container">
         <h1>Staff Product View</h1>
         <div class="row">
-            <div class="col-lg-4 product-c"><button class="addItem" onclick="openForm()"><img src="../images/add.png" alt="add-btn"></button></div>
-            <?php 
-                echo '<div class="col-lg-4 product-c"><img src="" alt="productimg"><p></p></div>'; 
+            <div class="col-lg-4 col-xs-4 product-c"><button class="addItem" onclick="openForm()"><img src="../images/add.png" alt="add-btn"></button></div>
+            
+            <!-- Display Existing Product -->
+            <?php
+              $query = "SELECT * FROM inventories";
+              $data = $conn->query($query);
+              
+              $data->execute();
+
+              foreach($data as $row)
+              {
+                echo "<div class='col-lg-4 col-xs-4 product-c'>". $row['inventoryName'] . "</div>";
+              }
             ?>
-            <div class="col-lg-4 product-c"><img src="" alt="productimg"><p></p></div>
         </div>
         
         <!-- This is the pop up form -->
-        <div class="form-popup form-control" id="myForm" onsubmit="return confirm('Are you sure you want to submit this form?');">
-            <form action="" method="post" class="form-container" enctype="multipart/form-data">
+        <div class="form-popup form-control" id="myForm">
+            <form method="post" class="form-container" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit this form?');">
                 <fieldset>
                 <h1>Add new product</h1>
 
@@ -94,7 +107,7 @@
                 </div>
                 </fieldset>
                 
-                <button type="submit" name="submit" class="btn" onclick="">Add</button>
+                <button type="submit" name="submit" class="btn">Add</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
