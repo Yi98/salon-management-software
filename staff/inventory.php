@@ -1,5 +1,21 @@
 <?php include "db_connect.php"; ?>
 
+<?php
+  
+  if(isset($_POST['submit'])){
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
+    $retailprice = $_POST['retailprice'];
+    $quantity = $_POST['quantity'];
+    
+    $query = "INSERT INTO `inventories` (inventoryName,description,quantity,unitPrice,purchasingPrice) VALUES ($name,$description,$quantity,$retailprice,$price);";
+    
+    $result = $conn->prepare($query);
+    $result->execute();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +24,7 @@
     <title>Product</title>
     
     <!-- icon css link -->
-    <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>
+    <link rel="stylesheet" type="text/css" href="../font/flaticon.css"/>
     
     <!-- Bootstrap library -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -22,22 +38,13 @@
     <!-- Add icon library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    
+    <script src="../script.js"></script>
   
 </head>
   <!--store the added inventory to database-->
-<?php
-  
-  if(isset($_POST['submit'])){
-    $name = $_POST['name'];
-    $desciption = $_POST['desciption'];
-    $price = $_POST['price'];
-    $retailprice = $_POST['retailprice'];
-    
-    $statement = $conn->prepare("INSERT INTO")
-  }
-  
-?>
+
 <body>
     <div class="container">
         <h1>Staff Product View</h1>
@@ -67,10 +74,15 @@
                     
                 <div class="form-group">    
                     <label for="product-image"><b>Product Image</b></label>
-                    <input type="file" name="fileToUpload" id="fileToUpload" class="form-control" required>
+                    <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
                     <!--<input type="submit" value="Upload Image" name="submit">-->
                 </div>
                     
+                <div class="form-group">    
+                    <label for="product-quantity"><b>Product Quantity</b></label>
+                    <input type="number" name="quantity" class="form-control" required>
+                </div>
+                  
                 <div class="form-group">    
                     <label for="product-price"><b>Product Price (RM)</b></label>
                     <input type="number" name="price" class="form-control" required>
@@ -87,5 +99,8 @@
             </form>
         </div>
     </div>
+  
+
 </body>
+  
 </html>
