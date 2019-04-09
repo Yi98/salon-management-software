@@ -33,18 +33,19 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>John Lilki</td>
-          <td>September 14, 2013</td>
-          <td>jhlilk22@yahoo.com</td>
-          <td><a onclick="onViewAppointment()">view details</a></td>
-        </tr>
         <?php while ($row = $q->fetch()): ?>
           <tr>
             <td><?php echo htmlspecialchars($row['userId']) ?></td>
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
-            <td><a onclick="onViewAppointment()">view details</a></td>
+            <td><a class="view-details-tag" onclick='onViewAppointment(
+              "<?php echo htmlspecialchars($row['userId']) ?>",
+              "<?php echo htmlspecialchars($row['appointmentDate']) ?>",
+              "<?php echo htmlspecialchars($row['appointmentTime']) ?>",
+              "<?php echo htmlspecialchars($row['typeOfServices']) ?>",
+              "<?php echo htmlspecialchars($row['request']) ?>"
+              )'>view details</a>
+            </td>
           </tr>
         <?php endwhile; ?>
       </tbody>
@@ -53,11 +54,12 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <div class="ui modal" id="appointment-details-modal">
       <div class="header">Appointment details</div>
       <div class="content">
-        <p class="appointment-details-title">User: </p>
-        <p class="appointment-details-title">Appointment Date: </p>
-        <p class="appointment-details-title">Appointment Time: </p>
-        <p class="appointment-details-title">Service: </p>
-        <p class="appointment-details-title">Request: </p>
+        <p class="appointment-details-title">User: <span id="appDetails-user" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Appointment Date: <span id="appDetails-date" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Appointment Time: <span id="appDetails-time" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Service: <span id="appDetails-service" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
       </div>
     </div>
 

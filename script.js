@@ -374,7 +374,16 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-function onViewAppointment () {
+function onViewAppointment (userId, date, time, service, request) {
+
+	document.getElementById('appDetails-user').innerHTML = userId;
+	document.getElementById('appDetails-date').innerHTML = date;
+	document.getElementById('appDetails-time').innerHTML = time;
+	document.getElementById('appDetails-service').innerHTML = service;
+	// document.getElementById('appDetails-hairdresser').innerHTML += hairdresser;
+	document.getElementById('appDetails-request').innerHTML = request;
+
+
 	$('#appointment-details-modal')
   	.modal('show');
 }
