@@ -373,3 +373,8 @@ function openForm() {
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+function onViewAppointment () {
+	$('#appointment-details-modal')
+  	.modal('show');
+}
