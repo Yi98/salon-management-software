@@ -378,3 +378,385 @@ input:focus::-webkit-input-placeholder {
 .product-c img{
     width:100%;
 }
+
+
+/* Index style */
+.main-container{
+    background-color:black;
+    height:100vh;
+}
+
+.product-container{
+    height:80vh;
+    text-align: center;
+
+}
+
+.product-container .logo li img{
+    width:10%;
+}
+
+.product-container .logo li{
+    list-style-type:none;
+    display: inline;
+    margin: 0 6% 0 6%;
+}
+
+.product-container .product li img{
+    width:15%;
+    margin: 0 4% 0 3%;
+}
+
+.product-container .product li{
+    display: inline;
+}
+
+.columnLeft{
+    width:50%; 
+    float:left;
+}
+
+.columnRight{
+    width:50%;
+    float:right;
+}
+
+.columnLeft img, .columnRight img{
+    object-fit: cover;
+    float: left;
+    width: 100%;
+    height:100%;  
+}
+
+.main-container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+@media screen and (max-width: 500px) {
+  .column {
+    width: 100%;
+  }
+
+    #indexTitle{
+        font-size:3em;
+    }
+
+}
+
+@import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed');
+
+@keyframes shadow-pulse
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(229, 202, 0);
+  }
+}
+
+@keyframes shadow-pulse-big
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 70px rgba(0, 0, 0, 0);
+  }
+}
+
+@font-face {
+    font-family: "CustomFont";
+    src: url(fonts/Vogue.ttf);
+
+}
+
+@font-face{
+    font-family: "CustomFont2";
+    src: url(fonts/MonicasSalonShadowNF.ttf);
+}
+
+
+#indexTitle{
+    position:absolute;
+    top:35%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 5.5em;
+    color:white;
+    z-index: 1;
+    font-family:"Abrail Fatface";
+    font-weight: bold;
+    color:#e5ca00;
+    text-shadow: black 0 -3.5px;
+}
+
+#indexSubtitle{
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 1em;
+    color:White;
+    font-weight: 1000;
+    z-index: 1;
+    font-family: Georgia;
+    letter-spacing: 3px;
+}
+
+#book-btn{
+    font-family: 'Oswald', sans-serif; 
+    letter-spacing: 1px;
+    padding:1% 5% 1% 5%;
+    position:absolute;
+    background-color:transparent;
+    border-color:transparent;
+    border-width: thin;
+    font-weight:thin;
+    color:white;
+    top:65%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    animation: shadow-pulse 2s infinite;
+    border-radius:0;
+    text-transform: uppercase;
+}
+
+#book-btn:hover{
+    background-color:#e5ca00;
+    border-width:3px;
+    border-color:black;
+    animation:none;
+    color:black;
+    font-weight:400;
+}
+
+#product-btn{
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    margin:3% 0 3% 0;
+    padding:1% 5% 1% 5%;
+    background-color:transparent;
+    font-weight:thin;
+    color:black;
+    border:3px solid black;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+#appointment-btn{
+    margin-right:5%;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    margin-top:5%;
+    padding:1% 5% 1% 5%;
+    background-color:transparent;
+    font-weight:thin;
+    color:black;
+    border:3px solid black;
+    border-radius: 0;
+    text-transform: uppercase;
+}
+
+#appointment-btn:hover{
+    background-color:#e5ca00;
+}
+
+#product-btn:hover{
+    background-color:#e5ca00;
+}
+
+.appointment-container nav ul li{
+    display: inline-block;
+    margin:0 6.5% 0 5%;
+}
+
+.appointment-container nav ul li p{
+    margin-top:20%;
+}
+
+.appointment-container nav ul li a{
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif; 
+    font-weight:bold;
+    letter-spacing: 1px;
+    color:black;
+}
+
+.appointment-container nav ul li p a:hover{
+    text-decoration: none;
+    color:#e5ca00;
+}
+
+nav{
+    height:10vh;
+/*    background-image:url(Images/pipes.png);*/
+    text-align: center;
+    position:relative;
+    z-index: 1;
+    background-color:#FAFAFA;
+    position:sticky;
+
+}
+
+
+.downArrow{
+    position:absolute;
+    top:85%;
+    left:48.8%;
+    transform: translate(-50%,-50%);
+    color:white;
+    z-index: 1;
+}
+
+.bounce {
+    -moz-animation: bounce 3s infinite;
+    -webkit-animation: bounce 3s infinite;
+    animation: bounce 3s infinite;
+}
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px);
+  }
+}
+
+.appointment-container{
+    height:80vh;
+    overflow:hidden;
+
+}
+
+.main_column img{
+    width:100%;
+    object-fit:cover;
+    height: auto;
+}
+
+.main_column{
+    overflow:hidden;
+}
+
+.main2_column h1{
+    font-family: 'Abril Fatface', cursive;
+    font-size:3rem;
+    padding-right:5%
+}
+
+.main2_column h2{
+    font-family: 'Oswald', sans-serif; 
+    font-size:1.2rem;
+    font-weight: 100;
+    letter-spacing: 5px;
+    padding-right:5%;
+}
+
+.main2_column p{
+    font-family: 'Oswald', sans-serif; 
+    line-height: 200%;
+    padding-right:5%;
+}
+
+.main2_column{
+    text-align: center;
+    padding-top:4%;
+
+}
+
+#booknav-btn{
+    border-width: 2px;
+    border-color:black;
+    border-style: solid;
+    padding:2px 10px 2px 10px;
+}
+
+#booknav-btn:hover{
+    background-color:#e5ca00;
+}
+
+#booknav-btn a:hover{
+    color:black;
+}
+
+
+#ac2{
+    padding:0;
+    padding-left:2%;
+    padding-top:6%;
+}
+
+#gap{
+    height:10vh;
+}
+
+footer {
+    clear: both;
+    position: relative;
+    height: 50vh;
+    margin-top: -40px;
+}
+
+#firstfooter{
+    height 40vh;
+}
+
+#lastfooter{
+    height:10vh;
+    background-color: black;
+    color:#e5ca00;
+    text-align: center;
+    padding:1.5% 0 1.5% 0;
+    letter-spacing: 5px;
+    text-transform: uppercase; 
+}
+
+
+
+
