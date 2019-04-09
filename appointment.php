@@ -10,8 +10,12 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
   $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, request, status) VALUES ('1', '$date', '$time', '$service', '$request', 'unfulfilled')";
 
-  $conn->exec($sql);
-  // echo "New record created successfully";
+  if ($conn->exec($sql)) {
+    echo "success";
+  }
+  else {
+    echo "fail";
+  }
 }
 
 ?>

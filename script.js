@@ -9,15 +9,42 @@ function onCompleteDateInfo() {
 	const appointmentDate = document.getElementById('appointment-date').value;
 	const appointmentTime = document.getElementById('appointment-time').value;
 
-	sessionStorage.setItem("date", appointmentDate);
-	sessionStorage.setItem("time", appointmentTime);
+	if (!appointmentDate || appointmentTime == "none") {
+		if (!appointmentDate) {
+			$('#appointment-date')
+		  .transition({
+		  	animation: 'shake',
+		  	duration: 200
+		  })
+		  .transition({
+		  	animation: 'glow',
+		  	duration: 1500
+		  });;
+		}
 
-	dateForm.style.display = "none";
-	serviceForm.style.display = "block";
+		if (appointmentTime == "none") {
+			$('#appointment-time')
+		  .transition({
+		  	animation: 'shake',
+		  	duration: 200
+		  })
+		  .transition({
+		  	animation: 'glow',
+		  	duration: 1500
+		  });;
+		}
+	}
+	else {
+		sessionStorage.setItem("date", appointmentDate);
+		sessionStorage.setItem("time", appointmentTime);
 
-	dateStep.classList.remove("active");
-	dateStep.classList.add("completed");
-	serviceStep.classList.add("active");
+		dateForm.style.display = "none";
+		serviceForm.style.display = "block";
+
+		dateStep.classList.remove("active");
+		dateStep.classList.add("completed");
+		serviceStep.classList.add("active");
+	}	
 }
 
 
@@ -28,18 +55,46 @@ function onCompleteServicesInfo() {
 	const serviceStep = document.getElementById('service-step');
 	const requestStep = document.getElementById('request-step');
 
-    const service = document.getElementById('service').value;
-    const hairdresser = document.getElementById('hairdresser').value;
+  const service = document.getElementById('service').value;
+  const hairdresser = document.getElementById('hairdresser').value;
 
-    sessionStorage.setItem("service", service);
-    sessionStorage.setItem("hairdresser", hairdresser);
+	if (service === "none" || hairdresser == "none") {
+		if (service === "none") {
+			$('#service')
+		  .transition({
+		  	animation: 'shake',
+		  	duration: 200
+		  })
+		  .transition({
+		  	animation: 'glow',
+		  	duration: 1500
+		  });;
+		}
 
-	serviceForm.style.display = "none";
-	requestForm.style.display = "block";
+		if (hairdresser == "none") {
+			$('#hairdresser')
+		  .transition({
+		  	animation: 'shake',
+		  	duration: 200
+		  })
+		  .transition({
+		  	animation: 'glow',
+		  	duration: 1500
+		  });;
+		}
+	}
+	else {
+		sessionStorage.setItem("service", service);
+	  sessionStorage.setItem("hairdresser", hairdresser);
 
-	serviceStep.classList.remove("active");
-	serviceStep.classList.add("completed");
-	requestStep.classList.add("active");
+		serviceForm.style.display = "none";
+		requestForm.style.display = "block";
+
+		serviceStep.classList.remove("active");
+		serviceStep.classList.add("completed");
+		requestStep.classList.add("active");
+	}
+
 }
 
 
@@ -49,22 +104,41 @@ function onCompleteRequestInfo() {
 	const requestStep = document.getElementById('request-step');
 	const summaryStep = document.getElementById('summary-step');
 
-    const request = document.getElementById('request-box').value;
-    sessionStorage.setItem("request", request);
+  const request = document.getElementById('request-box').value;
 
-    document.getElementById('summary-date').innerHTML = `Date: ${sessionStorage.getItem("date")}`;
-    document.getElementById('summary-time').innerHTML = `Time: ${sessionStorage.getItem("time")}`;
-    document.getElementById('summary-service').innerHTML = `Service: ${sessionStorage.getItem("service")}`;
-    document.getElementById('summary-hairdresser').innerHTML = `Hairdresser: ${sessionStorage.getItem("hairdresser")}`;
-    document.getElementById('summary-request').innerHTML = `Special Request: ${sessionStorage.getItem("request")}`;
+	if (!document.getElementById('request-box').disabled && request == "") {
+		$('#request-box')
+		  .transition({
+		  	animation: 'shake',
+		  	duration: 200
+		  })
+		  .transition({
+		  	animation: 'glow',
+		  	duration: 1500
+		  });;
+	}
+	else {
+		if (!request) {
+			sessionStorage.setItem("request", "none");
+		}
+		else {
+			sessionStorage.setItem("request", request);
+		}
 
-    requestForm.style.display = "none";
-    summaryForm.style.display = "block";
-	
-	requestStep.classList.remove("active");
-	requestStep.classList.add("completed");
-	summaryStep.classList.remove("disabled");
-	summaryStep.classList.add("active");
+	  document.getElementById('summary-date').innerHTML = `Date: ${sessionStorage.getItem("date")}`;
+	  document.getElementById('summary-time').innerHTML = `Time: ${sessionStorage.getItem("time")}`;
+	  document.getElementById('summary-service').innerHTML = `Service: ${sessionStorage.getItem("service")}`;
+	  document.getElementById('summary-hairdresser').innerHTML = `Hairdresser: ${sessionStorage.getItem("hairdresser")}`;
+	  document.getElementById('summary-request').innerHTML = `Special Request: ${sessionStorage.getItem("request")}`;
+
+	  requestForm.style.display = "none";
+	  summaryForm.style.display = "block";
+		
+		requestStep.classList.remove("active");
+		requestStep.classList.add("completed");
+		summaryStep.classList.remove("disabled");
+		summaryStep.classList.add("active");
+	}
 }
 
 
@@ -90,12 +164,12 @@ function onConfirmSummary() {
 
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-    http.onreadystatechange = function() {//Call a function when the state changes.
-        if(http.readyState == 4 && http.status == 200) {
-            console.log(http.responseText);
-            $('.ui.basic.modal')
-              .modal('show');
-        }
+    http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) {
+          // alert(http.responseText);
+          $('.ui.basic.modal')
+            .modal('show');
+      }
     }
     http.send(params);
 
