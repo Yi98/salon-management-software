@@ -360,6 +360,27 @@ function startLogInValidate() {
     return false;
 }
 
+/***** Forgot Password validation *****/
+function forgotPasswordEmailValidation() {
+    let email = document.getElementById("forgot-password-email").value;
+    let emailAlert = document.getElementById("forgot-password-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
 /* Show Hidden Form */
 function openForm() {
     document.getElementById("myForm").style.display = "block";
