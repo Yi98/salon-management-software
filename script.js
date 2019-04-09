@@ -387,3 +387,13 @@ function onViewAppointment (userId, date, time, service, request) {
 	$('#appointment-details-modal')
   	.modal('show');
 }
+
+function onCloseAppDetail() {
+	$('#appointment-details-modal')
+  	.modal('hide');
+}
+
+function onHoverCloseDetail() {
+	$('#close-app-mark')
+	  .transition('tada');
+}

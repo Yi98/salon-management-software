@@ -52,14 +52,15 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     </table>
 
     <div class="ui modal" id="appointment-details-modal">
-      <div class="header">Appointment details</div>
+      <div class="header">Appointment details<i id="close-app-mark" onmouseover="onHoverCloseDetail()" onclick="onCloseAppDetail()" class="close icon"></i></div>
       <div class="content">
         <p class="appointment-details-title">User: <span id="appDetails-user" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Appointment Date: <span id="appDetails-date" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Appointment Time: <span id="appDetails-time" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Service: <span id="appDetails-service" class="appointment-details-content"></span></p>
-        <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdreser" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
+        <button class="ui red button"><i class="trash icon"></i>Delete appointment</button>
       </div>
     </div>
 
