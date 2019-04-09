@@ -1,14 +1,6 @@
 <?php include "db_connect.php"; ?>
 
 <?php
-    /* For Log out codes
-        unset($_SESSION["id"]);
-        unset($_SESSION["name"]); 
-        unset($_SESSION["email"]); 
-        unset($_SESSION["role"]); 
-        unset($_SESSION["success"]);
-        header("Location:login.php");
-    */
     $login_email = "";
     $login_error_message = "";
 
@@ -28,10 +20,16 @@
         $currentUser = $result->fetch(PDO::FETCH_ASSOC);
         
         if (is_array($currentUser)) {
-            $_SESSION["id"] = $currentUser["userId"];
-            $_SESSION["name"] = $currentUser["name"];
-            $_SESSION["email"] = $currentUser["email"];
-            $_SESSION["role"] = newUser["role"];
+            $date = date("Y-m-d H:i:s");
+            $id = $currentUser['userId'];
+            $user_update_query = "UPDATE `users` SET `lastSignIn`='$date' WHERE `userId`='$id'";
+            $update = $conn->prepare($user_update_query);
+            $update->execute();
+            
+            $_SESSION["id"] = trim($currentUser["userId"], "'");
+            $_SESSION["name"] = trim($currentUser["name"], "'");
+            $_SESSION["email"] = trim($currentUser["email"], "'");
+            $_SESSION["role"] = trim(newUser["role"], "'");
             $_SESSION["success"] = "You are now logged in";
             header('location: index.php');
             exit;

@@ -573,6 +573,14 @@ input:focus::-webkit-input-placeholder {
     margin:0 6.5% 0 5%;
 }
 
+#logout-button, #login-button {
+    margin-left:1%;
+}
+
+#after-login {
+    margin:0 1% 0 1%;
+}
+
 .appointment-container nav ul li p{
     margin-top:20%;
 }
@@ -588,6 +596,10 @@ input:focus::-webkit-input-placeholder {
 .appointment-container nav ul li p a:hover{
     text-decoration: none;
     color:#e5ca00;
+}
+/* Prevent the navigation bar from wrapping */
+ul {
+    white-space: nowrap;
 }
 
 nav{
@@ -710,18 +722,20 @@ nav{
 
 }
 
-#booknav-btn{
+#booknav-btn, #login-nav-btn, #logout-nav-btn{
     border-width: 2px;
     border-color:black;
     border-style: solid;
     padding:2px 10px 2px 10px;
 }
 
-#booknav-btn:hover{
+
+
+#booknav-btn:hover, #login-nav-btn:hover, #logout-nav-btn:hover{
     background-color:#e5ca00;
 }
 
-#booknav-btn a:hover{
+#booknav-btn a:hover, #login-nav-btn a:hover, #logout-nav-btn a:hover{
     color:black;
 }
 

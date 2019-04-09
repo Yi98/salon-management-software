@@ -1,3 +1,5 @@
+<?php include "db_connect.php"; ?>
+
 <!-- Created By: Ng Chin Shu -->
 <!-- Date Created: 3/10/2019 -->
 <!DOCTYPE html>
@@ -55,7 +57,20 @@
                         <li><p><a href="#">APPOINTMENT</a></p></li>
                         <li><p><a href="#">SHOP</a></p></li>
                         <li><p><a href="#">REVIEW</a></p></li>
-                        <li><p id="booknav-btn"><a href="#">BOOK NOW</a></p></li>
+                        <?php
+                            if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) {
+                                echo '<span>Welcome! '.$_SESSION["name"].'</span>';
+                            }
+                        ?>
+                        <li id="after-login"><p id="booknav-btn"><a href="#">BOOK NOW</a></p></li>
+                        <?php 
+                            if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) {
+                                echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
+                            } else {
+                                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
+                            }
+                        ?>
+                        
                     </ul>
                 </nav>
                 <div class="row">

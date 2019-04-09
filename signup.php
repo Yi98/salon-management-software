@@ -10,12 +10,15 @@
         $signup_password = "";
         $errors = array();
         
-        //if (isset($POST["signup_user"])) {
+        // Get form data from form
         $name = $conn->quote($_POST["name"]);
         $email = $conn->quote($_POST["email"]);
         $signup_password = $conn->quote($_POST["pass"]);
-        //}
-
+        
+        // Trim the data
+        $name = trim($name);
+        $email = trim($email);
+        
         $user_check_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
 
         $result = $conn->prepare($user_check_query);
@@ -66,10 +69,10 @@
             //$name_existed_error = " ";
             //$email_existed_error = " ";
             
-            $_SESSION["id"] = newUser["userId"];
-            $_SESSION["name"] = newUser["name"];
-            $_SESSION["email"] = newUser["email"];
-            $_SESSION["role"] = newUser["role"];
+            $_SESSION["id"] = trim($newUser["userId"], "'");
+            $_SESSION["name"] = trim($newUser["name"], "'");
+            $_SESSION["email"] = trim($newUser["email"], "'");
+            $_SESSION["role"] = trim($newUser["role"], "'");
             $_SESSION["success"] = "You are now logged in";
             header('location: index.php');
             exit;
