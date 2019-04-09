@@ -19,7 +19,7 @@ function onCompleteDateInfo() {
 		  .transition({
 		  	animation: 'glow',
 		  	duration: 1500
-		  });;
+		  });
 		}
 
 		if (appointmentTime == "none") {
@@ -31,7 +31,7 @@ function onCompleteDateInfo() {
 		  .transition({
 		  	animation: 'glow',
 		  	duration: 1500
-		  });;
+		  });
 		}
 	}
 	else {
@@ -68,7 +68,7 @@ function onCompleteServicesInfo() {
 		  .transition({
 		  	animation: 'glow',
 		  	duration: 1500
-		  });;
+		  });
 		}
 
 		if (hairdresser == "none") {
@@ -80,7 +80,7 @@ function onCompleteServicesInfo() {
 		  .transition({
 		  	animation: 'glow',
 		  	duration: 1500
-		  });;
+		  });
 		}
 	}
 	else {
@@ -115,7 +115,7 @@ function onCompleteRequestInfo() {
 		  .transition({
 		  	animation: 'glow',
 		  	duration: 1500
-		  });;
+		  });
 	}
 	else {
 		if (!request) {
@@ -158,7 +158,7 @@ function onConfirmSummary() {
 		alert ("Please don't include special characters in your request");
 	} else {
     const http = new XMLHttpRequest();
-    const url = 'appointment.php';
+    const url = 'appointment-process.php';
     const params = `date=${date}&time=${time}&service=${service}&hairdresser=${hairdresser}&request=${request}`;
     http.open('POST', url, true);
 
@@ -166,9 +166,14 @@ function onConfirmSummary() {
 
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
-          // alert(http.responseText);
-          $('.ui.basic.modal')
+      	if (http.responseText.trim() == "success") {
+      		$('#success-booking-modal')
             .modal('show');
+      	}
+      	else {
+					$('#fail-booking-modal')
+            .modal('show');
+      	}
       }
     }
     http.send(params);
@@ -388,4 +393,18 @@ function openForm() {
 
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
+}
+
+function onViewAppointment (userId, date, time, service, request) {
+
+	document.getElementById('appDetails-user').innerHTML = userId;
+	document.getElementById('appDetails-date').innerHTML = date;
+	document.getElementById('appDetails-time').innerHTML = time;
+	document.getElementById('appDetails-service').innerHTML = service;
+	// document.getElementById('appDetails-hairdresser').innerHTML += hairdresser;
+	document.getElementById('appDetails-request').innerHTML = request;
+
+
+	$('#appointment-details-modal')
+  	.modal('show');
 }
