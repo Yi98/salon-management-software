@@ -109,7 +109,7 @@
     <!-- Sign up form -->
     <div class="vertical-center">
         <div class="sign-up-container container col-md-offset-2 col-md-8">
-            <div class="row">
+            <div class="row equal">
                 <div class="signup-content">
                     <div class="signup-form  col-md-6">
                         <h2 class="form-title">Sign up</h2>

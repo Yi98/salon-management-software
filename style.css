@@ -175,6 +175,7 @@ ul {
     border:1px solid grey;
     min-height: 50vh;
 }
+
 .vertical-center {
     min-height: 100%;
     min-height: 100vh;
@@ -182,53 +183,66 @@ ul {
     align-items: center;
 }
 .signup-image img {
-    max-width:100%;
+    width:100%;
+    vertical-align: top;
 }
 .login-image img {
-    max-width:100%;
-    height:490px;
+    width:100%;
+    min-height:450px;
+    vertical-align: top;
 }
-.signup-image, .login-image {
+.reset-password-image img {
+    width:100%;
+    vertical-align: top;
+}
+.forgot-password-image img {
+    width:100%;
+    vertical-align: top;
+}
+.signup-image, .login-image,.forgot-password-image, .reset-password-image {
     padding:0;       
 }
 .existing-member {
     float:right;
 }
-.signup-form .form-group, .login-form .form-group {
+.signup-form .form-group, .login-form .form-group, .reset-password-form .form-group, .forgot-password-form .form-group {
     margin: 7% 0 7% 0;
 }
 
+.forgot-password-form, .reset-password-form {
+    border:1px solid grey;
+}
 .login-form .form-group:nth-child(2) {
     margin:0;
 }
 
-.signup-form .form-control, .login-form .form-control {
+.signup-form .form-control, .login-form .form-control, .reset-password-form .form-control, .forgot-password-form .form-control {
     border:none;
     border-bottom: 1px solid grey;
 }
-.signup-form .input-group-addon, .login-form .input-group-addon {
+.signup-form .input-group-addon, .login-form .input-group-addon, .reset-password-form .input-group-addon, .forgot-password-form .input-group-addon{
     border:none;
     border:1px solid grey;
 }
-.signup-form i::before, .login-form i::before {
+.signup-form i::before, .login-form i::before, .reset-password-form i::before, .forgot-password-form i::before {
      margin:0;
 }
-.signup-form label, .login-form label {
+.signup-form label, .login-form label, .reset-password-form label, .forgot-password-form label{
     background-color:white;
 }
-.signup-form .form-control, .signup-form label, .login-form .form-control {
+.signup-form .form-control, .signup-form label, .login-form .form-control, .forgot-password-form .form-control, .forgot-password-form label, .reset-password-form .form-control, .reset-password-form label {
     border-radius: 0;
 }
-.signup-form .form-control, .login-form .form-control  {
+.signup-form .form-control, .login-form .form-control, .forgot-password-form .form-control, .reset-password-form .form-control    {
     box-shadow: none;
 }
-.signup-form input:focus, .login-form input:focus  {
+.signup-form input:focus, .login-form input:focus, .forgot-password-form input:focus, .reset-password-form input:focus  {
     border-bottom:1px solid black;
 }
 input:focus::-webkit-input-placeholder {
     color:black;
 }
-#signup, #login {
+#signup, #login, #resetpassword, #forgotpassword {
     width:30%;
     padding:2%;
 }
@@ -275,7 +289,7 @@ input:focus::-webkit-input-placeholder {
     margin-bottom: auto;
     text-align: center;
 }
-.signup-instruction, .login-instruction {
+.signup-instruction, .login-instruction, .reset-password-instruction, .forgot-password-instruction {
     font-size: 12px;
     color:grey;
     text-align: center;

@@ -296,7 +296,7 @@ function validateSignUpPassword() {
         passwordAlert.style.color = "red";
         return false;
     } else if (password.length < 6 || password.length > 12) {
-        passwordAlert.textContent = "Password length should in between 6 to 12 character(s)";
+        passwordAlert.  textContent = "Password length should in between 6 to 12 character(s)";
         passwordAlert.style.color = "red";
         return false;
     } else {
@@ -360,6 +360,71 @@ function startLogInValidate() {
     let email = validateLogInEmail();
 
     if (email) {
+        return true;
+    }
+    return false;
+}
+
+/***** Forgot Password validation *****/
+function forgotPasswordEmailValidation() {
+    let email = document.getElementById("forgot-password-email").value;
+    let emailAlert = document.getElementById("forgot-password-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+/***** Reset Password validation *****/
+function resetPasswordValidation() {
+    // Should between 6 to 12 characters
+    let password = document.getElementById("reset-password").value;
+    let passwordAlert = document.getElementById("reset-password-alert");
+    if (password.length == 0) {
+        passwordAlert.textContent = "Password should not be empty";
+        passwordAlert.style.color = "red";
+        return false;
+    } else if (password.length < 6 || password.length > 12) {
+        passwordAlert.textContent = "Password length should in between 6 to 12 character(s)";
+        passwordAlert.style.color = "red";
+        return false;
+    } else {
+        passwordAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+function resetRepeatPasswordValidation() {
+    let repeatPassword = document.getElementById("reset-repeatpassword").value;
+    let password = document.getElementById("reset-password").value;
+    let repeatPassAlert = document.getElementById("reset-retypepassword-alert");
+    if (repeatPassword != password) {
+        repeatPassAlert.textContent = "Repeat Password are not the same as the password typed above";
+        repeatPassAlert.style.color = "red";
+        return false;
+    } else {
+        repeatPassAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function startResetPasswordValidate() {
+    let pass = resetPasswordValidation();
+    let re_pass = resetRepeatPasswordValidation();
+
+    if (pass && re_pass) {
         return true;
     }
     return false;
