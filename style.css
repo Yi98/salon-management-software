@@ -817,3 +817,14 @@ span.appointment-details-content {
 i#close-app-mark {
   cursor: pointer;
 }
+
+#delete-app-modal {
+  position: absolute;
+  top: 32%;
+  left: 38%;
+  height: 230px;
+}
+
+span.view-details-text {
+  color: blue;
+}
