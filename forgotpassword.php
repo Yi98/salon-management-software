@@ -68,7 +68,7 @@ require 'vendor/autoload.php';
 
                         //Recipients
                         $mail->setFrom('smileandstylesalon@gmail.com', 'Smile And Style Salon');
-                        $mail->addAddress('bong1hongyeah@gmail.com', $currentUser["name"]);     // Add a recipient
+                        $mail->addAddress($_POST["email"], $currentUser["name"]);     // Add a recipient
 
                         // Content
                         $mail->isHTML(true);                                  // Set email format to HTML

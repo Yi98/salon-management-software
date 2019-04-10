@@ -34,6 +34,9 @@
         </style>
     </head>
     <body>
+        <?php echo $_SESSION["access_token"]; ?>
+        <?php echo $_SESSION["name"]; ?>
+        <?php echo $_SESSION["email"]; ?>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             <p id="indexSubtitle">HAIR SALON</p>
@@ -58,16 +61,20 @@
                         <li><p><a href="#">SHOP</a></p></li>
                         <li><p><a href="#">REVIEW</a></p></li>
                         <?php
-                            if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) {
+                            if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
                                 echo '<span>Welcome! '.$_SESSION["name"].'</span>';
                             }
                         ?>
                         <li id="after-login"><p id="booknav-btn"><a href="#">BOOK NOW</a></p></li>
                         <?php 
-                            if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) {
-                                echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
-                            } else {
+                            if (isset($_SESSION["access_token"])) {
                                 echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
+                            } else {
+                                if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) {
+                                    echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
+                                } else {
+                                    echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
+                                }
                             }
                         ?>
                         
