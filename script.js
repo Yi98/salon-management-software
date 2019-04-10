@@ -296,7 +296,7 @@ function validateSignUpPassword() {
         passwordAlert.style.color = "red";
         return false;
     } else if (password.length < 6 || password.length > 12) {
-        passwordAlert.textContent = "Password length should in between 6 to 12 character(s)";
+        passwordAlert.  textContent = "Password length should in between 6 to 12 character(s)";
         passwordAlert.style.color = "red";
         return false;
     } else {
@@ -384,6 +384,50 @@ function forgotPasswordEmailValidation() {
         return true;
     }
     return true;
+}
+
+/***** Reset Password validation *****/
+function resetPasswordValidation() {
+    // Should between 6 to 12 characters
+    let password = document.getElementById("reset-password").value;
+    let passwordAlert = document.getElementById("reset-password-alert");
+    if (password.length == 0) {
+        passwordAlert.textContent = "Password should not be empty";
+        passwordAlert.style.color = "red";
+        return false;
+    } else if (password.length < 6 || password.length > 12) {
+        passwordAlert.textContent = "Password length should in between 6 to 12 character(s)";
+        passwordAlert.style.color = "red";
+        return false;
+    } else {
+        passwordAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+function resetRepeatPasswordValidation() {
+    let repeatPassword = document.getElementById("reset-repeatpassword").value;
+    let password = document.getElementById("reset-password").value;
+    let repeatPassAlert = document.getElementById("reset-retypepassword-alert");
+    if (repeatPassword != password) {
+        repeatPassAlert.textContent = "Repeat Password are not the same as the password typed above";
+        repeatPassAlert.style.color = "red";
+        return false;
+    } else {
+        repeatPassAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
+
+function startResetPasswordValidate() {
+    let pass = resetPasswordValidation();
+    let re_pass = resetRepeatPasswordValidation();
+
+    if (pass && re_pass) {
+        return true;
+    }
+    return false;
 }
 
 /* Show Hidden Form */
