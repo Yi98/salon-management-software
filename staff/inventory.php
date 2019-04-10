@@ -8,7 +8,7 @@
     $price = $_POST['price'];
     $retailprice = $_POST['retailprice'];
     $quantity = $_POST['quantity'];
-    $status = "available";
+    $status = "In stock";
     
     $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`) VALUES (:name,:description,:quantity,:retailprice,:price,:status)";
     
@@ -17,27 +17,49 @@
   }
 ?>
 
+<!-- Change status module -->
 <?php 
     if(isset($_POST['id'])){
       $id = $_POST['id'];
       $query = "SELECT * FROM inventories";
-              $data = $conn->query($query);
-              $data->execute();
-            
-              foreach($data as $row)
-              {
-                if ($row['status']=="available"){
-                  $update = "UPDATE inventories SET status = 'not available' WHERE inventoryId = '$id'";
-                  $result = $conn->prepare($update);
-                  $execute = $result->execute();
-                }
-              }
-      echo "<h1>". $_POST['id'] . "</h1>";
+      $data = $conn->query($query);
+      $data->execute();
+
+      foreach($data as $row)
+      {
+        if ($row['status'] == "In stock"){
+          $update = "UPDATE inventories SET status = 'Out of stock' WHERE inventoryId = '$id'";
+          $result = $conn->prepare($update);
+          $execute = $result->execute();
+        }
+
+        if ($row['status'] == "Out of stock"){
+          $update = "UPDATE inventories SET status = 'In stock' WHERE inventoryId = '$id'";
+          $result = $conn->prepare($update);
+          $execute = $result->execute();
+        }
+      }
     }
 ?>
 
+<!-- Delete product module -->
+<?php 
+    if(isset($_POST['idDel'])){
+      $id = $_POST['idDel'];
+      $query = "SELECT * FROM inventories";
+      $data = $conn->query($query);
+      $data->execute();
 
-
+      foreach($data as $row)
+      {
+        if($row['inventoryId'] == $id){
+          $delete = "DELETE FROM inventories WHERE inventoryId = '$id'";
+          $result = $conn->prepare($delete);
+          $execute = $result->execute();
+        }
+      }
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,8 +94,18 @@
     <div class="container">
         <h1>Staff Product View</h1>
       
-        <div class="row">
-            <div class="col-lg-4 col-xs-4 product-c"><button class="addItem" onclick="openForm()"><img src="../images/add.png" alt="add-btn"></button></div>
+        <table class="table table-bordered ttb">
+            
+            <tr>
+              <th>No.</th>
+              <th>Item Name</th>
+              <th id="itemDesc">Item Description</th>
+              <th>Quantity</th>
+              <th>Price (MYR)</th>
+              <th>Retail Price (MYR)</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
             
             <!-- Display Existing Product -->
             <?php
@@ -82,16 +114,19 @@
               
               $data->execute();
             
-
+              $inventoryNo = 0;
+              
               foreach($data as $row)
               {
+                $inventoryNo ++;
                 $id = $row['inventoryId'];
-                echo "<div class='col-lg-4 col-xs-4 product-c'>". $row['inventoryName'] . "<form method='post'><button type='submit' class='btn btn-primary' name='id' value ='$id'>Change Status</button>" . "</div></form>";
+                echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['description'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'><button type='submit' class='btn btn-primary' name='id' value ='$id'>Change Status</button> " . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>"."</div></form></td></tr>";
               }
-            ?>
-        </div>
+            ?>  
+          
+        </table>
       
-      
+      <div class="product-c"><button class="addItem" onclick="openForm()"><img src="../images/add.png" alt="add-btn"></button><span id="anp">Add new product</span></div>
         
         <!-- This is the pop up form -->
         <div class="form-popup form-control" id="myForm">
@@ -122,12 +157,12 @@
                   
                 <div class="form-group">    
                     <label for="product-price"><b>Product Price (RM)</b></label>
-                    <input type="number" name="price" class="form-control" required>
+                    <input type="text" name="price" class="form-control" required>
                 </div>
                     
                 <div class="form-group">
                     <label for="product-retail-price"><b>Product Retail Price (RM)</b></label>
-                    <input type="number" name="retailprice" class="form-control" required>
+                    <input type="text" name="retailprice" class="form-control" required>
                 </div>
                 </fieldset>
                 

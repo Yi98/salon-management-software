@@ -346,14 +346,14 @@ input:focus::-webkit-input-placeholder {
 
 /* Add styles to the form container */
 .form-container {
-  max-width:100%;
+  max-width:50%;
   padding: 10px;
   background-color: white;
 }
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
+  width: 50%;
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
@@ -373,7 +373,7 @@ input:focus::-webkit-input-placeholder {
   padding: 16px 20px;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 49%;
   margin-bottom:10px;
   opacity: 0.8;
 }
@@ -391,6 +391,21 @@ input:focus::-webkit-input-placeholder {
 /* Set image size for each product */
 .product-c img{
     width:100%;
+}
+
+.product-c button{
+    width: 5%;
+    border: none;
+    padding:0;
+}
+
+.product-c{
+    font-size:1.5rem;
+    font-family:georgia;
+}
+
+#anp{
+    margin-left:2%;
 }
 
 
@@ -816,4 +831,13 @@ span.appointment-details-content {
 
 i#close-app-mark {
   cursor: pointer;
+}
+
+#itemDesc{
+  width: 20%;
+}
+
+.ttb, .ttb th{
+  text-align:center;
+  
 }
