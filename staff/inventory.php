@@ -1,6 +1,5 @@
 <?php include "../db_connect.php"; ?>
 
-
 <?php
   
   if(isset($_POST['submit'])){
@@ -11,12 +10,32 @@
     $quantity = $_POST['quantity'];
     $status = "available";
     
-    $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`) VALUES (:name,:description,:quantity,:retailprice,:price)";
+    $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`) VALUES (:name,:description,:quantity,:retailprice,:price,:status)";
     
     $pdoResult = $conn->prepare($pdoQuery);
-    $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price));
+    $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status));
   }
 ?>
+
+<?php 
+    if(isset($_POST['id'])){
+      $id = $_POST['id'];
+      $query = "SELECT * FROM inventories";
+              $data = $conn->query($query);
+              $data->execute();
+            
+              foreach($data as $row)
+              {
+                if ($row['status']=="available"){
+                  $update = "UPDATE inventories SET status = 'not available' WHERE inventoryId = '$id'";
+                  $result = $conn->prepare($update);
+                  $execute = $result->execute();
+                }
+              }
+      echo "<h1>". $_POST['id'] . "</h1>";
+    }
+?>
+
 
 
 
@@ -52,6 +71,7 @@
 <body>
     <div class="container">
         <h1>Staff Product View</h1>
+      
         <div class="row">
             <div class="col-lg-4 col-xs-4 product-c"><button class="addItem" onclick="openForm()"><img src="../images/add.png" alt="add-btn"></button></div>
             
@@ -61,13 +81,17 @@
               $data = $conn->query($query);
               
               $data->execute();
+            
 
               foreach($data as $row)
               {
-                echo "<div class='col-lg-4 col-xs-4 product-c'>". $row['inventoryName'] . "</div>";
+                $id = $row['inventoryId'];
+                echo "<div class='col-lg-4 col-xs-4 product-c'>". $row['inventoryName'] . "<form method='post'><button type='submit' class='btn btn-primary' name='id' value ='$id'>Change Status</button>" . "</div></form>";
               }
             ?>
         </div>
+      
+      
         
         <!-- This is the pop up form -->
         <div class="form-popup form-control" id="myForm">

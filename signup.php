@@ -79,6 +79,99 @@
         }
     }
 ?>
+<!-- Google social login -->
+<?php
+    require "vendor/autoload.php"; 
+
+
+    $client_id = '993021568317-9a6ejtq7kb5ipc99tl9u1dscoa9iahj4.apps.googleusercontent.com';
+    $client_secret = 'oMtXNC8ZXVsFSOTg4Lkk3ZgE';
+    $redirect_uri = 'http://localhost/salon-management-software/login.php';
+    $simple_api_key = 'AIzaSyAPkP_QS-PgGrnbJsoKkDwbJgM_cOIx1IE';
+
+    $client = new Google_Client();
+    $client->setApplicationName("PHP Google OAuth Login Example");
+    $client->setClientId($client_id);
+    $client->setClientSecret($client_secret);
+    $client->setRedirectUri($redirect_uri);
+    $client->setDeveloperKey($simple_api_key);
+    $client->addScope(array("https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"));
+    $client->setAccessType ("offline");
+    $client->setApprovalPrompt ("force");
+
+    if (isset($_GET['code'])) {
+      $client->authenticate($_GET['code']);
+        // ACCESS TOKEN RETURN NULL
+      $_SESSION['access_token'] = $client->getAccessToken();
+      header('Location: ' . filter_var($redirect_uri, FILTER_SANITIZE_URL));
+    }
+
+    //Set Access Token to make Request
+    if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+      $client->setAccessToken($_SESSION['access_token']);
+    }
+
+    //Get User Data from Google Plus
+    //If New, Insert to Database
+    if ($client->getAccessToken()) {
+      $objOAuthService =  new \Google_Service_Oauth2($client);
+      $userData = $objOAuthService->userinfo->get();
+      if(!empty($userData)) {
+        $_SESSION["access_token"] = implode(" ",($client->getAccessToken()));
+        $_SESSION["name"] = $userData["name"];
+        $_SESSION["email"] = $userData["email"];
+        header("Location: index.php");
+      }
+        
+    } else {
+      $authUrl = $client->createAuthUrl();
+    }
+
+
+?>
+<?php 
+    require "vendor/autoload.php";
+
+    $fb = new Facebook\Facebook([
+        "app_id" => "2199009383524440",
+        "app_secret" => "20beaba1dc33f9db6a3a703979723015",
+        "default_graph_version" => "v2.7"
+    ]);
+    
+    $helper = $fb->getRedirectLoginHelper();
+    $login_url = $helper->getLoginUrl("http://localhost/salon-management-software/login.php",["email"]);
+    
+    try {
+        $accessToken = $helper->getAccessToken();
+        if (isset($accessToken)) {
+            // Problem Here
+            $_SESSION["access_token"] = (string)$accessToken;
+            
+            if ($_SESSION["access_token"]) {
+                try {
+                    //$info = explode('=', $accessToken);
+                    //$fb->setDefaultAccessToken($info[1]);
+                    $fb->setDefaultAccessToken($_SESSION["access_token"]);
+                    $res = $fb->get("/me?locale=en_US&fields=name,email", $_SESSION["access_token"]);
+                    $user = $res->getGraphUser();
+                    $_SESSION["name"] = $user->getField("name");
+                    $_SESSION["email"] = $user->getField("email");
+                    header("Location: index.php");
+                } catch (Exception $exc) {
+                    echo $exc->getTraceAsString();
+                }
+            }
+            
+            //header("Location: index.php");
+            
+        }
+    } catch (Exception $exc) {
+        echo $exc->getTraceAsString();
+    }
+
+    
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -115,8 +208,8 @@
                         <h2 class="form-title">Sign up</h2>
                         <p class="signup-instruction">Sign up with your social media account or email address</p>
                         <div class="social-media-signup-container">
-                            <a href="#" class="fa fa-facebook"></a>
-                            <a href="#" class="fa fa-google"></a>
+                            <a href="<?php echo $login_url; ?>" class="fa fa-facebook"></a>
+                            <a href="<?php echo $authUrl; ?>" class="fa fa-google"></a>
                             <a href="#" class="fa fa-twitter"></a>
                         </div>
                         <div class="or-separator">
