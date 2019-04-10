@@ -34,6 +34,7 @@ CREATE TABLE `appointments` (
   `appointmentDate` date NOT NULL,
   `appointmentTime` varchar(50) NOT NULL,
   `typeOfServices` varchar(100) NOT NULL,
+  `hairdresser` varchar(50) NOT NULL,
   `request` varchar(200) NOT NULL,
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
