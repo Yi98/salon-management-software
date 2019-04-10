@@ -39,12 +39,14 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
+              "<?php echo htmlspecialchars($row['appointmentId']) ?>",
               "<?php echo htmlspecialchars($row['userId']) ?>",
               "<?php echo htmlspecialchars($row['appointmentDate']) ?>",
               "<?php echo htmlspecialchars($row['appointmentTime']) ?>",
               "<?php echo htmlspecialchars($row['typeOfServices']) ?>",
-              "<?php echo htmlspecialchars($row['request']) ?>"
-              )'>view details</a>
+              "<?php echo htmlspecialchars($row['hairdresser']) ?>",
+              "<?php echo htmlspecialchars($row['request']) ?>")'>
+            view details</a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -58,9 +60,9 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <p class="appointment-details-title">Appointment Date: <span id="appDetails-date" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Appointment Time: <span id="appDetails-time" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Service: <span id="appDetails-service" class="appointment-details-content"></span></p>
-        <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdreser" class="appointment-details-content"></span></p>
+        <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
-        <button class="ui red button"><i class="trash icon"></i>Delete appointment</button>
+        <button class="ui red button" onclick="onDeleteAppointment()"><i class="trash icon"></i>Delete appointment</button>
       </div>
     </div>
 

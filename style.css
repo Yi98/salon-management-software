@@ -795,7 +795,11 @@ a.view-details-tag {
   cursor: pointer;
 }
 
-span {
+span.appointment-details-content {
   padding-left: 1%;
   font-weight: normal;
+}
+
+i#close-app-mark {
+  cursor: pointer;
 }

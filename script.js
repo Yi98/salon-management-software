@@ -374,18 +374,21 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-function onViewAppointment (userId, date, time, service, request) {
+function onViewAppointment(appointmentId, userId, date, time, service, hairdresser, request) {
 
-	document.getElementById('appDetails-user').innerHTML = userId;
-	document.getElementById('appDetails-date').innerHTML = date;
-	document.getElementById('appDetails-time').innerHTML = time;
-	document.getElementById('appDetails-service').innerHTML = service;
-	document.getElementById('appDetails-hairdresser').innerHTML += hairdresser;
-	document.getElementById('appDetails-request').innerHTML = request;
+	if (!$('#appointment-details-modal').modal('is active')) {
+		sessionStorage.setItem('appId', appointmentId);
 
+		document.getElementById('appDetails-user').innerHTML = userId;
+		document.getElementById('appDetails-date').innerHTML = date;
+		document.getElementById('appDetails-time').innerHTML = time;
+		document.getElementById('appDetails-service').innerHTML = service;
+		document.getElementById('appDetails-hairdresser').innerHTML = hairdresser;
+		document.getElementById('appDetails-request').innerHTML = request;
 
-	$('#appointment-details-modal')
-  	.modal('show');
+		$('#appointment-details-modal')
+	  	.modal('show');
+	}
 }
 
 function onCloseAppDetail() {
@@ -396,4 +399,30 @@ function onCloseAppDetail() {
 function onHoverCloseDetail() {
 	$('#close-app-mark')
 	  .transition('tada');
+}
+
+function onDeleteAppointment() {
+	let appId = sessionStorage.getItem('appId');
+
+	const http = new XMLHttpRequest();
+  const url = '../appointment-process.php';
+  const params = `appId=${appId}&action=delete`;
+  http.open('POST', url, true);
+
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200) {
+    // 	if (http.responseText.trim() == "success") {
+    // 		$('#success-booking-modal')
+    //       .modal('show');
+    // 	}
+    // 	else {
+				// $('#fail-booking-modal')
+    //       .modal('show');
+    // 	}
+    alert(http.responseText);
+    }
+  }
+  http.send(params);
 }
