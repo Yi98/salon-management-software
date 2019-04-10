@@ -833,6 +833,7 @@ i#close-app-mark {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 #itemDesc{
   width: 20%;
 }
@@ -841,3 +842,15 @@ i#close-app-mark {
   text-align:center;
   
 }
+=======
+#delete-app-modal {
+  position: absolute;
+  top: 32%;
+  left: 38%;
+  height: 230px;
+}
+
+span.view-details-text {
+  color: blue;
+}
+>>>>>>> e21c7c1c55f94b74cd02f4851e3994afba41034f

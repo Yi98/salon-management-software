@@ -467,6 +467,21 @@ function onHoverCloseDetail() {
 }
 
 function onDeleteAppointment() {
+	$('#appointment-details-modal')
+	  .modal({
+	    allowMultiple: false
+	  });
+
+	$('.mini.modal')
+		.modal({
+			onApprove: function() {
+				deleteApproved();
+			}
+		})
+  	.modal('show');
+}
+
+function deleteApproved() {
 	let appId = sessionStorage.getItem('appId');
 
 	const http = new XMLHttpRequest();
@@ -486,7 +501,9 @@ function onDeleteAppointment() {
 				// $('#fail-booking-modal')
     //       .modal('show');
     // 	}
-    alert(http.responseText);
+		  setTimeout(function() {
+		  	document.location.reload();
+		  }, 500);
     }
   }
   http.send(params);

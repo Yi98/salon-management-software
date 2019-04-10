@@ -26,7 +26,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <table class="ui striped table">
       <thead>
         <tr>
-          <th>User</th>
+          <th>User Id</th>
           <th>Date</th>
           <th>Time</th>
           <th>Details</th>
@@ -46,7 +46,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
               "<?php echo htmlspecialchars($row['typeOfServices']) ?>",
               "<?php echo htmlspecialchars($row['hairdresser']) ?>",
               "<?php echo htmlspecialchars($row['request']) ?>")'>
-            view details</a>
+            <span class="view-details-text">view details<span></a>
             </td>
           </tr>
         <?php endwhile; ?>
@@ -63,6 +63,27 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
         <button class="ui red button" onclick="onDeleteAppointment()"><i class="trash icon"></i>Delete appointment</button>
+      </div>
+    </div>
+
+     <div class="ui modal mini" id="delete-app-modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Delete appointment
+      </div>
+      <div class="content">
+        <div class="description">
+          <p>Please note that this action cannot be undone!</p>
+          <p>Are you sure you want to delete?</p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui deny button">
+          No, I don't mean it
+        </div>
+        <div class="ui red ok button">
+          Yes, delete it
+        </div>
       </div>
     </div>
 
