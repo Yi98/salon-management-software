@@ -84,7 +84,7 @@ CREATE TABLE `users` (
   `role` varchar(20) NOT NULL,
   `note` varchar(200) DEFAULT NULL,
   `lastSignIn` date DEFAULT NULL,
-    `forgotPasswordId` varchar(32) utf8_unicode_ci DEFAULT NULL
+    `forgotPasswordId` varchar(32) CHARSET=utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
