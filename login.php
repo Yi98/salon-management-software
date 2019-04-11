@@ -99,8 +99,8 @@
 ?>  
 
 <!-- Facebook login php  -->
-<?php
-     require "vendor/autoload.php";
+<?php 
+    require "vendor/autoload.php";
 
     $fb = new Facebook\Facebook([
         "app_id" => "2199009383524440",

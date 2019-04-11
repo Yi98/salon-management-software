@@ -199,7 +199,7 @@ ul {
     width:100%;
     vertical-align: top;
 }
-.signup-image, .login-image,.forgot-password-image, .reset-password-image {
+.signup-image, .login-image,.forgot-password-image, .   reset-password-image {
     padding:0;       
 }
 .existing-member {
