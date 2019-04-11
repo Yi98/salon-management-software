@@ -39,13 +39,13 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
-              <?php echo htmlspecialchars($row['appointmentId']) ?>,
-              <?php echo htmlspecialchars($row['userId']) ?>,
-              <?php echo htmlspecialchars($row['appointmentDate']) ?>,
-              <?php echo htmlspecialchars($row['appointmentTime']) ?>,
-              <?php echo htmlspecialchars($row['typeOfServices']) ?>,
-              <?php echo htmlspecialchars($row['hairdresser']) ?>,
-              <?php echo htmlspecialchars($row['request']) ?>)'>
+              "<?php echo htmlspecialchars($row['appointmentId']) ?>",
+              "<?php echo htmlspecialchars($row['userId']) ?>",
+              "<?php echo htmlspecialchars($row['appointmentDate']) ?>",
+              "<?php echo htmlspecialchars($row['appointmentTime']) ?>",
+              "<?php echo htmlspecialchars($row['typeOfServices']) ?>",
+              "<?php echo htmlspecialchars($row['hairdresser']) ?>",
+              "<?php echo htmlspecialchars($row['request']) ?>")'>
             <span class="view-details-text">view details<span></a>
             </td>
           </tr>

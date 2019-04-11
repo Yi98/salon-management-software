@@ -112,6 +112,7 @@
     $helper = $fb->getRedirectLoginHelper();
     $login_url = $helper->getLoginUrl("http://localhost/salon-management-software/login.php",["email"]);
     
+
     try {
         $accessToken = $helper->getAccessToken();
         if (isset($accessToken)) {
