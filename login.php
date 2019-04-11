@@ -111,8 +111,6 @@
     
     $helper = $fb->getRedirectLoginHelper();
     $login_url = $helper->getLoginUrl("http://localhost/salon-management-software/login.php",["email"]);
-    
-<<<<<<< HEAD
 
     try {
         $accessToken = $helper->getAccessToken();
@@ -154,7 +152,6 @@
                     } catch (Exception $exc) {
                         echo $exc->getTraceAsString();
                     }
->>>>>>> eb6b590a57c93ae3ece3cc8050c3f20fae9c54a0
                 }
 
                 //header("Location: index.php");
