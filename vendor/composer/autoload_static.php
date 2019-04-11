@@ -43,6 +43,10 @@ class ComposerStaticInit7f0e1977cd9aa063e434c52c65faf488
             'Firebase\\JWT\\' => 13,
             'Facebook\\' => 9,
         ),
+        'A' => 
+        array (
+            'Abraham\\TwitterOAuth\\' => 21,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -93,6 +97,10 @@ class ComposerStaticInit7f0e1977cd9aa063e434c52c65faf488
         'Facebook\\' => 
         array (
             0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
+        ),
+        'Abraham\\TwitterOAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/abraham/twitteroauth/src',
         ),
     );
 

@@ -34,9 +34,6 @@
         </style>
     </head>
     <body>
-        <?php echo $_SESSION["access_token"]; ?>
-        <?php echo $_SESSION["name"]; ?>
-        <?php echo $_SESSION["email"]; ?>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             <p id="indexSubtitle">HAIR SALON</p>

@@ -1,4 +1,5 @@
 <?php include "db_connect.php"; ?>
+<?php include "twitterBack.php"; ?>
 
 <!-- Overall login php -->
 <?php
@@ -96,6 +97,7 @@
     }
 
 ?>  
+
 <!-- Facebook login php  -->
 <?php
     require "vendor/autoload.php";
@@ -108,7 +110,7 @@
     ]);
     
     $helper = $fb->getRedirectLoginHelper();
-    $login_url = $helper->getLoginUrl("http://localhost/salon-management-software/login.php",["email"], "rerequest");
+    $login_url = $helper->getLoginUrl("http://localhost/salon-management-software/login.php",["email"]);
     
     try {
         $accessToken = $helper->getAccessToken();
@@ -176,7 +178,7 @@
                         <div class="social-media-login-container">
                             <a href="<?php echo $login_url; ?>" class="fa fa-facebook"></a>
                             <a href="<?php echo $authUrl; ?>" class="fa fa-google"></a>
-                            <a href="#" class="fa fa-twitter"></a>
+                            <a href="twitterLogin.php" class="fa fa-twitter"></a>
                         </div>
                         <div class="or-separator">
                             <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>

@@ -1,5 +1,5 @@
 <?php include "db_connect.php"; ?>
-
+<?php include "twitterBack.php"; ?>
 <?php
     $name = "";
     $email = "";
@@ -210,7 +210,7 @@
                         <div class="social-media-signup-container">
                             <a href="<?php echo $login_url; ?>" class="fa fa-facebook"></a>
                             <a href="<?php echo $authUrl; ?>" class="fa fa-google"></a>
-                            <a href="#" class="fa fa-twitter"></a>
+                            <a href="twitterLogin.php" class="fa fa-twitter"></a>
                         </div>
                         <div class="or-separator">
                             <p class="or-separator-line"><span class="or-separator-line-text">or</span></p>
