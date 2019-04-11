@@ -36,14 +36,19 @@
     <body>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
+            
             <p id="indexSubtitle">HAIR SALON</p>
+            
             <div class="columnLeft">
                 <img src="images/girl.jpg" alt="model">
             </div>
+            
             <div class="columnRight">
                 <img src="images/guy.jpg" alt="model">
             </div>
-            <button type="button" id="book-btn" class="btn btn-info">Book Now</button>
+            
+            <button type="button" id="book-btn" class="btn btn-info" onclick="window.location.href = 'appointment.php';">Book Now</button>
+            
             <div class="downArrow bounce">
                 <img width="40" height="40" alt="downarrow" src="images/down-arrow.png" />
             </div>
@@ -57,12 +62,15 @@
                         <li><p><a href="#">APPOINTMENT</a></p></li>
                         <li><p><a href="#">SHOP</a></p></li>
                         <li><p><a href="#">REVIEW</a></p></li>
+                        
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
                                 echo '<span>Welcome! '.$_SESSION["name"].'</span>';
                             }
                         ?>
+                        
                         <li id="after-login"><p id="booknav-btn"><a href="#">BOOK NOW</a></p></li>
+                        
                         <?php 
                             if (isset($_SESSION["access_token"])) {
                                 echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
@@ -92,8 +100,6 @@
             </div>
         </section>
         
-<!--        <div id="gap"></div>-->
-        
         <section>   
             <div class="appointment-container">
                 <div class="row">
@@ -113,26 +119,23 @@
             </div>
         </section>
         
-<!--        <div id="gap"></div>-->
-        
         <section>
-        <div class="product-container">
-            <ul class="logo">
-                <li><img src="images/eleven_logo.png" alt="elevenlogo"/></li>
-                <li><img src="images/kerastase_logo.png" alt="kerataselogo"/></li>
-                <li><img src="images/olaplex_logo.png" alt="olaplexlogo"/></li>
-                <li><img src="images/schwarzkopf_logo.png" alt="schwarzkopflogo"/>
-                </li>
-            </ul>
-            <ul class="product">
-                <li><img src="images/eleven_main.png" alt="elevenproduct"/></li>
-                <li><img src="images/kerastase_main.jpg" alt="kerastaseproduct"/></li>
-                <li><img src="images/olaplex_main.jpeg" alt="olaplexproduct"/></li>
-                <li><img src="images/schwarzkopf_main.jpg" alt="schwarzkopfproduct"/></li>
-            </ul>
-        
-            <button type="button" id="product-btn" class="btn btn-info">See More</button>      
-        </div>
+            <div class="product-container">
+                <ul class="logo">
+                    <li><img src="images/eleven_logo.png" alt="elevenlogo"/></li>
+                    <li><img src="images/kerastase_logo.png" alt="kerataselogo"/></li>
+                    <li><img src="images/olaplex_logo.png" alt="olaplexlogo"/></li>
+                    <li><img src="images/schwarzkopf_logo.png" alt="schwarzkopflogo"/>
+                    </li>
+                </ul>
+                <ul class="product">
+                    <li><img src="images/eleven_main.png" alt="elevenproduct"/></li>
+                    <li><img src="images/kerastase_main.jpg" alt="kerastaseproduct"/></li>
+                    <li><img src="images/olaplex_main.jpeg" alt="olaplexproduct"/></li>
+                    <li><img src="images/schwarzkopf_main.jpg" alt="schwarzkopfproduct"/></li>
+                </ul>
+                <button type="button" id="product-btn" class="btn btn-info">See More</button>      
+            </div>
         </section>
     </body>
     <footer>
@@ -148,7 +151,7 @@
             
         </div>
         <div id="lastfooter">
-        <p> Copyright &copy; 2019 Style and Smile Salon House All Rights Reserved</p>
+            <p> Copyright &copy; 2019 Style and Smile Salon House All Rights Reserved</p>
         </div>
     </footer>
 </html>

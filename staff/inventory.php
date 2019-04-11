@@ -11,7 +11,6 @@
     $status = "In stock";
     
     $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`) VALUES (:name,:description,:quantity,:retailprice,:price,:status)";
-    
     $pdoResult = $conn->prepare($pdoQuery);
     $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status));
   }
@@ -88,14 +87,13 @@
     <script src="../script.js"></script>
   
 </head>
-  <!--store the added inventory to database-->
-
+  
 <body>
     <div class="container">
         <h1>Staff Product View</h1>
       
+        <!--Display inventories in tabular form -->
         <table class="table table-bordered ttb">
-            
             <tr>
               <th>No.</th>
               <th>Item Name</th>
@@ -107,7 +105,7 @@
               <th>Actions</th>
             </tr>
             
-            <!-- Display Existing Product -->
+            <!-- Display all products -->
             <?php
               $query = "SELECT * FROM inventories";
               $data = $conn->query($query);
