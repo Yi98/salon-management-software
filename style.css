@@ -199,13 +199,13 @@ ul {
     width:100%;
     vertical-align: top;
 }
-.signup-image, .login-image,.forgot-password-image, .   reset-password-image {
+.signup-image, .login-image,.forgot-password-image, .reset-password-image {
     padding:0;       
 }
 .existing-member {
     float:right;
 }
-.signup-form .form-group, .login-form .form-group, .reset-password-form .form-group, .forgot-password-form .form-group {
+.signup-form .form-group, .login-form .form-group, .reset-password-form-inner .form-group, .forgot-password-form .form-group {
     margin: 7% 0 7% 0;
 }
 
@@ -216,11 +216,11 @@ ul {
     margin:0;
 }
 
-.signup-form .form-control, .login-form .form-control, .reset-password-form .form-control, .forgot-password-form .form-control {
+.signup-form .form-control, .login-form .form-control, .reset-password-form-inner .form-control, .forgot-password-form .form-control {
     border:none;
     border-bottom: 1px solid grey;
 }
-.signup-form .input-group-addon, .login-form .input-group-addon, .reset-password-form .input-group-addon, .forgot-password-form .input-group-addon{
+.signup-form .input-group-addon, .login-form .input-group-addon, .reset-password-form-inner .input-group-addon, .forgot-password-form .input-group-addon{
     border:none;
     border:1px solid grey;
 }
@@ -242,7 +242,7 @@ ul {
 input:focus::-webkit-input-placeholder {
     color:black;
 }
-#signup, #login, #resetpassword, #forgotpassword {
+#signup, #login, #resetpassword, #forgotpassword{
     width:30%;
     padding:2%;
 }

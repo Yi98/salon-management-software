@@ -85,13 +85,15 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-lock"></i></label>
-                                    <input type="text" name="reset_password" id="reset-password" placeholder="Your New Password" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$reset_password) ?>"/>
+                                    <input type="password" name="reset_password" id="reset-password" placeholder="Your New Password" class="form-control" autocomplete="off" value="<?php echo str_replace(array("'", '"'), "",$reset_password) ?>"/>
                                 </div>
                                 <span id="reset-password-alert"></span>
                                 <?php echo "<span style='color:red'>$reset_password_error_message</span>" ?>
+                            </div>
+                            <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon" for="email"><i class="flaticon-lock-1"></i></label>
-                                    <input type="text" name="repeat_password" id="reset-repeatpassword" placeholder="Repeat New Password" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$reset_repeatpassword) ?>"/>
+                                    <input type="password" name="repeat_password" id="reset-repeatpassword" placeholder="Repeat New Password" class="form-control" autocomplete="off" value="<?php echo str_replace(array("'", '"'), "",$reset_repeatpassword) ?>"/>
                                 </div>
                                 <span id="reset-retypepassword-alert"></span>
                                 <?php echo "<span style='color:red'>$reset_password_error_message</span>" ?>
