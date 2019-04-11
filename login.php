@@ -130,7 +130,7 @@
                     header("Location: index.php");
                 } catch (Exception $exc) {
                     echo $exc->getTraceAsString();
-=======
+
     if (!isset($_SESSION['access_token'])){
         try {
 
