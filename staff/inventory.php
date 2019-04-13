@@ -191,7 +191,7 @@
             <b>Product Image
             </b>
             </label>
-            <input type="file" name="image" class="form-control" required>
+            <input type="file" name="image" accept="image/*" class="form-control" required>
           </div>
           <button type="submit" name="submit" class="btn">Add
           </button>
