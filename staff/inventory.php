@@ -113,9 +113,9 @@
             $inventoryNo = 0;
             foreach($data as $row)
             {
-            $inventoryNo ++;
-            $id = $row['inventoryId'];
-            echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='200'/></td>" . "</tr>";
+              $inventoryNo ++;
+              $id = $row['inventoryId'];
+              echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50'/></td>" . "</tr>";
             }
             ?>  
         </table>
@@ -128,75 +128,56 @@
         </span>
       </div>
       <!-- This is the pop up form -->
-      <div class="form-popup  " id="myForm">
+      <div class="form-popup" id="myForm">
         <form method="post" class="form-container" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit this form?');">
-          <h1>Add new product
-          </h1>
-          <div class="form-group">
-            <label for="product-name">
-            <b>Product Name
-            </b>
-            </label>
-            <br/>
-            <input type="text" placeholder="Enter new product name" name="name" class="form-control" required>
+          <h1>Add new product</h1>
+          
+          <div class="row">
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-name"><b>Product Name</b></label>
+              <input type="text" placeholder="Enter new product name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-brand"><b>Product Brand</b></label>
+              <input type="text" name="brand" placeholder="Enter brand here" class="form-control" required>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="product-brand">
-            <b>Product Brand
-            </b>
-            </label>
-            <br/>
-            <input type="text" name="brand" placeholder="Enter brand here" class="form-control" required>
+            
+          <div class="row">
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-manufacturer"><b>Product Manufacturer</b></label>
+              <input type="text" name="manufacturer" placeholder="Enter manufacturer here" class="form-control" required>
+            </div>
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-image"><b>Product Image</b></label>
+              <input type="file" name="image" accept="image/*" class="form-control-file" required>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="product-manufacturer">
-            <b>Product Manufacturer
-            </b>
-            </label>
-            <br/>
-            <input type="text" name="manufacturer" placeholder="Enter manufacturer here" class="form-control" required>
+            
+          <div class="row">
+            <div class="form-group col-lg-4 col-xs-4">    
+              <label for="product-quantity"><b>Product Quantity</b></label>
+              <input type="number" name="quantity" class="form-control" required>
+            </div>
+            <div class="form-group col-lg-4 col-xs-4">    
+              <label for="product-price"><b>Product Price (RM)</b></label>
+              <input type="number" name="price" class="form-control" required>
+            </div>
+            <div class="form-group col-lg-4 col-xs-4">
+              <label for="product-retail-price"><b>Product Retail Price (RM)</b></label>
+              <input type="number" name="retailprice" class="form-control" required>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="product-description">
-            <b>Product Description
-            </b>
-            </label>
-            <br/>
-            <textarea rows="4" cols="80" name="description" placeholder="Enter product description here" class="form-control" required>
-            </textarea>
+          <div class="row">
+            <div class="form-group col-lg-12 col-xs-12">
+              <label for="product-description"><b>Product Description</b></label>
+              <textarea rows="4" cols="20" name="description" placeholder="Enter product description here" class="form-control" required>
+              </textarea>
+            </div>
           </div>
-          <div class="form-group">    
-            <label for="product-quantity">
-            <b>Product Quantity
-            </b>
-            </label>
-            <input type="number" name="quantity" class="form-control" required>
-          </div>
-          <div class="form-group">    
-            <label for="product-price">
-            <b>Product Price (RM)
-            </b>
-            </label>
-            <input type="text" name="price" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="product-retail-price">
-            <b>Product Retail Price (RM)
-            </b>
-            </label>
-            <input type="text" name="retailprice" class="form-control" required>
-          </div>
-          <div class="form-group">    
-            <label for="product-image">
-            <b>Product Image
-            </b>
-            </label>
-            <input type="file" name="image" accept="image/*" class="form-control" required>
-          </div>
-          <button type="submit" name="submit" class="btn">Add
-          </button>
-          <button type="button" class="btn cancel" onclick="closeForm()">Close
-          </button>
+          
+          <button type="submit" name="submit" class="btn">Add</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
       </div>
     </div>
