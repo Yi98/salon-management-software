@@ -154,6 +154,22 @@
       </div>
     </div>
 
+    <div class="ui basic modal modal-container" id="over-booking-modal">
+      <div class="ui icon header">
+        <i class="hand paper outline icon"></i>
+        Slow Down
+      </div>
+      <div class="content">
+        <p class="modal-message">You still have 2 unfulfilled appointments!</p>
+      </div>
+      <div class="actions">
+        <div class="ui red ok inverted button okay-button-modal">
+          <i class="checkmark icon"></i>
+          Okay
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

@@ -166,14 +166,19 @@ function onConfirmSummary() {
 
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
+        console.log(http.responseText);
       	if (http.responseText.trim() == "success") {
       		$('#success-booking-modal')
             .modal('show');
       	}
-      	else {
+      	else if (http.responseText.trim() == "fail") {
 					$('#fail-booking-modal')
             .modal('show');
       	}
+        else if (http.responseText.trim() == "over") {
+          $('#over-booking-modal')
+            .modal('show');
+        }
       }
     }
     http.send(params);
@@ -482,9 +487,9 @@ function onDeleteAppointment() {
 }
 
 function deleteApproved() {
-	let appId = sessionStorage.getItem('appId');
+  let appId = sessionStorage.getItem('appId');
 
-	const http = new XMLHttpRequest();
+  const http = new XMLHttpRequest();
   const url = '../appointment-process.php';
   const params = `appId=${appId}&action=delete`;
   http.open('POST', url, true);
