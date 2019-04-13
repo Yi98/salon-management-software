@@ -513,3 +513,19 @@ function deleteApproved() {
   }
   http.send(params);
 }
+
+function onHoverNext(context) {
+  context.childNodes[1].style.paddingLeft="7px";
+}
+
+function onLeaveNext(context) {
+    context.childNodes[1].style.padding = 0;
+}
+
+function onhoverPrevious(context) {
+  context.childNodes[0].style.paddingRight = "7px";
+}
+
+function onLeavePrevious(context) {
+  context.childNodes[0].style.padding = 0;
+}
