@@ -336,7 +336,6 @@ input:focus::-webkit-input-placeholder {
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
-  position: fixed;
   z-index: 9;
   top:0;
   bottom:0;
@@ -346,9 +345,9 @@ input:focus::-webkit-input-placeholder {
 
 /* Add styles to the form container */
 .form-container {
-  max-width:50%;
+  width:100%;
   padding: 10px;
-  background-color: white;
+  background-color: #e5ca00;
 }
 
 /* Full-width input fields */
@@ -843,8 +842,12 @@ i#close-app-mark {
 
 .ttb, .ttb th{
   text-align:center;
-  
 }
+
+.ttb > tbody > tr > td {
+  vertical-align: middle;
+}
+
 
 #delete-app-modal {
   position: absolute;
