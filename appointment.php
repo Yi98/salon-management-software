@@ -62,7 +62,7 @@
             <option value="15:00 - 17:00">15:00 - 17:00</option>
           </select>
         </div>
-      <button type="button" class="btn btn-primary next-button" onclick="onCompleteDateInfo()">Next <i class="arrow right icon"></i></button>
+      <button type="button" class="btn btn-primary next-button" onmouseover="onHoverNext(this)" onmouseleave="onLeaveNext(this)" onclick="onCompleteDateInfo()">Next <i class="arrow right icon arrow-next"></i></button>
     </form>
 
 
@@ -88,8 +88,8 @@
           <option value="Any">Any</option>
         </select>
       </div>
-      <button type="button" class="btn btn-primary next-button" onclick="onCompleteServicesInfo()">Next <i class="arrow right icon"></i></button>
-      <button type="button" class="btn btn-primary next-button" onclick="onBackToDate()"><i class="arrow left icon"></i> Back to previous</button>
+      <button type="button" class="btn btn-primary next-button" onmouseover="onHoverNext(this)" onmouseleave="onLeaveNext(this)" onclick="onCompleteServicesInfo()">Next <i class="arrow right icon arrow-next"></i></button>
+      <button type="button" class="btn btn-primary next-button" onmouseover="onhoverPrevious(this)" onmouseleave="onLeavePrevious(this)" onclick="onBackToDate()"><i class="arrow left icon"></i> Back to previous</button>
     </form>
 
     <!-- request form -->
@@ -104,8 +104,8 @@
           <label for="hasRequest">I do not have any special requests</label>
         </div>
       </div>
-      <button type="button" class="btn btn-primary next-button" onclick="onCompleteRequestInfo()">Next <i class="arrow right icon"></i></button>
-      <button type="button" class="btn btn-primary next-button" onclick="onBackToService()"><i class="arrow left icon"></i> Back to previous</button>
+      <button type="button" class="btn btn-primary next-button" onmouseover="onHoverNext(this)" onmouseleave="onLeaveNext(this)" onclick="onCompleteRequestInfo()">Next <i class="arrow right icon arrow-next"></i></button>
+      <button type="button" class="btn btn-primary next-button" onmouseover="onhoverPrevious(this)" onmouseleave="onLeavePrevious(this)" onclick="onBackToService()"><i class="arrow left icon"></i> Back to previous</button>
     </form>
 
 
@@ -145,6 +145,22 @@
       </div>
       <div class="content">
         <p class="modal-message">Please try again later :(</p>
+      </div>
+      <div class="actions">
+        <div class="ui red ok inverted button okay-button-modal">
+          <i class="checkmark icon"></i>
+          Okay
+        </div>
+      </div>
+    </div>
+
+    <div class="ui basic modal modal-container" id="over-booking-modal">
+      <div class="ui icon header">
+        <i class="hand paper outline icon"></i>
+        Slow Down
+      </div>
+      <div class="content">
+        <p class="modal-message">You still have 2 unfulfilled appointments!</p>
       </div>
       <div class="actions">
         <div class="ui red ok inverted button okay-button-modal">

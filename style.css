@@ -26,25 +26,6 @@ ul {
 	padding-left: 4%;
 }
 
-.add-to-cart-button {
-	margin-top: 5%;
-	width: 50%;
-	height: 8%;
-	color: white;
-	background-color: #F85700;
-	border: none;
-	box-shadow: none !important;
-}
-
-.add-to-cart-button:hover,
-.add-to-cart-button:active,
-.add-to-cart-button:visited {
-	box-shadow: none !important;
-	background-color: #F85700 !important;
-	color: white;
-	opacity: 0.9;
-}
-
 .next-button {
 	margin-top: 3%;
 	margin-left: 3%;
@@ -77,19 +58,6 @@ ul {
 	margin-bottom: 5%;
 	margin-top: 7%;
 	text-align: center;
-}
-
-.product-price {
-	font-size: 1.5em;
-}
-
-.product-description {
-	font-size: 1.3em;
-	text-align: justify;
-}
-
-.product-features {
-	font-size: 1.1em;
 }
 
 #date-form {
