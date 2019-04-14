@@ -8,13 +8,14 @@
   $retailprice = $_POST['retailprice'];
   $quantity = $_POST['quantity'];
   $status = "In stock";
+  $archive = "No";
   $brand = $_POST['brand'];
   $manufacturer = $_POST['manufacturer'];
   $mime = $_FILES['image']['type'];
   $image_name = file_get_contents($_FILES['image']['tmp_name']);
-  $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`,`brand`,`manufacturer`,`image_name`,`mime`) VALUES (:name,:description,:quantity,:retailprice,:price,:status,:brand,:manufacturer,:image_name,:mime)";
+  $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`,`brand`,`manufacturer`,`image_name`,`mime`, `archive`) VALUES (:name,:description,:quantity,:retailprice,:price,:status,:brand,:manufacturer,:image_name,:mime,:archive)";
   $pdoResult = $conn->prepare($pdoQuery);
-  $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status,":brand"=>$brand,":manufacturer"=>$manufacturer,":image_name"=>$image_name,":mime"=>$mime));
+  $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status,":brand"=>$brand,":manufacturer"=>$manufacturer,":image_name"=>$image_name,":mime"=>$mime,":archive"=>$archive));
   }
   ?>
 <!-- Change status module -->
@@ -55,7 +56,32 @@
   }
   }
   }
-  ?>
+?>
+
+<!-- Archive product module -->
+<?php
+  if(isset($_POST['idArc'])){
+    $id = $_POST['idArc'];
+    
+    $archive = "UPDATE inventories SET archive = 'Yes' WHERE inventoryId = '$id'";
+    $result = $conn->prepare($archive);
+    $execute = $result->execute();
+    
+  }
+?>
+
+<!-- Unarchive product module -->
+<?php
+  if(isset($_POST['idShowArc'])){
+    $id = $_POST['idShowArc'];
+    
+    $Showarchive = "UPDATE inventories SET archive = 'No' WHERE inventoryId = '$id'";
+    $result = $conn->prepare($Showarchive);
+    $execute = $result->execute();
+    
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -107,7 +133,7 @@
           </tr>
           <!-- Display all products -->
           <?php
-            $query = "SELECT * FROM inventories";
+            $query = "SELECT * FROM inventories WHERE archive = 'No'";
             $data = $conn->query($query);
             $data->execute();
             $inventoryNo = 0;
@@ -126,8 +152,63 @@
         </button>
         <span id="anp">Add new product
         </span>
+        
+        <button class="archiveItem" onclick="showArchive()">
+        <img src="../images/archive.png" alt="archive-btn">
+        </button>
+        <span id="anp">Show archive
+        </span>
       </div>
-      <!-- This is the pop up form -->
+      
+      <!-- This is the pop up list to show the list of archive product -->
+      <div class="form-popup" id="archiveList">
+        <h1>Archive products</h1>
+        
+        <tbody>
+        <table class="table table-bordered ttb">
+          <tr>
+            <th>No.
+            </th>
+            <th>Item Name
+            </th>
+            <th>Brand
+            </th>
+            <th>Manufacturer
+            </th>
+            <th>Quantity
+            </th>
+            <th>Price (MYR)
+            </th>
+            <th>Retail Price (MYR)
+            </th>
+            <th>Status
+            </th>
+            <th>Actions
+            </th>
+            <th>Image
+            </th>
+          </tr>
+          
+          <!-- Display all archive products -->
+          <?php
+            $query = "SELECT * FROM inventories WHERE archive ='Yes'";
+            $data = $conn->query($query);
+            $data->execute();
+            $inventoryNo = 0;
+            foreach($data as $row)
+            {
+              $inventoryNo ++;
+              $id = $row['inventoryId'];
+              echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idShowArc' value ='$id'>Show product</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50'/></td>" . "</tr>";
+            }
+            ?>  
+        </table>
+      </tbody>
+      
+      <button type="button" class="btn cancel" onclick="closeArchive()">Close</button>
+      </div>
+      
+      <!-- This is the pop up form to add new product -->
       <div class="form-popup" id="myForm">
         <form method="post" class="form-container" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit this form?');">
           <h1>Add new product</h1>
@@ -161,11 +242,11 @@
             </div>
             <div class="form-group col-lg-4 col-xs-4">    
               <label for="product-price"><b>Product Price (RM)</b></label>
-              <input type="number" name="price" class="form-control" required>
+              <input type="number" step="0.01" name="price" class="form-control" required>
             </div>
             <div class="form-group col-lg-4 col-xs-4">
               <label for="product-retail-price"><b>Product Retail Price (RM)</b></label>
-              <input type="number" name="retailprice" class="form-control" required>
+              <input type="number" step="0.01" name="retailprice" class="form-control" required>
             </div>
           </div>
           <div class="row">

@@ -529,3 +529,12 @@ function onhoverPrevious(context) {
 function onLeavePrevious(context) {
   context.childNodes[0].style.padding = 0;
 }
+
+function showArchive() {
+  document.getElementById("archiveList").style.display = "block";
+  
+}
+
+function closeArchive() {
+  document.getElementById("archiveList").style.display = "none";
+}

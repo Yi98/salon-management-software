@@ -33,7 +33,7 @@
         <h1>Products</h1>
         <!-- Display all products -->
         <?php
-          $query = "SELECT * FROM inventories";
+          $query = "SELECT * FROM inventories WHERE archive = 'No'";
           $data = $conn->query($query);
           $data->execute();
 
