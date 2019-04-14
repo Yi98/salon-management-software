@@ -25,6 +25,7 @@
                     $user = $res->getGraphUser();
                     $_SESSION["name"] = $user->getField("name");
                     $_SESSION["email"] = $user->getField("email");
+                    $_SESSION["role"] = "user";
                     header("Location: index.php");
                 } catch (Exception $exc) {
                     echo $exc->getTraceAsString();

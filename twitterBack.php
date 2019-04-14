@@ -28,6 +28,7 @@
         $_SESSION["access_token"] = $oauth_token;
         $_SESSION["name"] = $user_name;
         $_SESSION["email"] = $user_info->email;
+        $_SESSION["role"] = "user";
         unset($_SESSION['oauth_token']);
         header('Location: index.php');
     }else 

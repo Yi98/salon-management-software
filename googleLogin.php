@@ -38,6 +38,7 @@
         $_SESSION["access_token"] = implode(" ",($client->getAccessToken()));
         $_SESSION["name"] = $userData["name"];
         $_SESSION["email"] = $userData["email"];
+        $_SESSION["role"] = "user";
         header("Location: index.php");
       }
         
