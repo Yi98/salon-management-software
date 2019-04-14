@@ -7,7 +7,15 @@
   $price = $_POST['price'];
   $retailprice = $_POST['retailprice'];
   $quantity = $_POST['quantity'];
-  $status = "In stock";
+  if ($quantity <= 4){
+    $status = "Limited stock";
+  }
+  if ($quantity >= 5){
+    $status = "In stock";
+  }
+  if ($quantity == 0){
+    $status = "Out of stock";
+  }
   $archive = "No";
   $brand = $_POST['brand'];
   $manufacturer = $_POST['manufacturer'];
@@ -27,13 +35,19 @@
   $data->execute();
   foreach($data as $row)
   {
-  if ($row['status'] == "In stock"){
-  $update = "UPDATE inventories SET status = 'Out of stock' WHERE inventoryId = '$id'";
+  $quantity = intval($row['quantity']);
+  if ($quantity <= 4){
+  $update = "UPDATE inventories SET status = 'Limited stock' WHERE inventoryId = '$id'";
   $result = $conn->prepare($update);
   $execute = $result->execute();
   }
-  if ($row['status'] == "Out of stock"){
+  if ($quantity >= 5){
   $update = "UPDATE inventories SET status = 'In stock' WHERE inventoryId = '$id'";
+  $result = $conn->prepare($update);
+  $execute = $result->execute();
+  }
+  if ($quantity == 0){
+  $update = "UPDATE inventories SET status = 'Out of stock' WHERE inventoryId = '$id'";
   $result = $conn->prepare($update);
   $execute = $result->execute();
   }
@@ -103,7 +117,7 @@
     <script src="../script.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container staff-inventory-container">
       <h1>Staff Product View
       </h1>
       <!--Display inventories in tabular form -->
@@ -161,7 +175,7 @@
       </div>
       
       <!-- This is the pop up list to show the list of archive product -->
-      <div class="form-popup" id="archiveList">
+      <div class="form-popup container" id="archiveList">
         <h1>Archive products</h1>
         
         <tbody>
@@ -202,17 +216,22 @@
               echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idShowArc' value ='$id'>Show product</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50'/></td>" . "</tr>";
             }
             ?>  
+          <br/>
+          
         </table>
       </tbody>
-      
+        
       <button type="button" class="btn cancel" onclick="closeArchive()">Close</button>
+      <br/>
       </div>
       
+      
+      
       <!-- This is the pop up form to add new product -->
-      <div class="form-popup" id="myForm">
+      <div class="form-popup container" id="myForm">
         <form method="post" class="form-container" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit this form?');">
           <h1>Add new product</h1>
-          
+          <br/>
           <div class="row">
             <div class="form-group col-lg-6 col-xs-6">
               <label for="product-name"><b>Product Name</b></label>
@@ -252,8 +271,7 @@
           <div class="row">
             <div class="form-group col-lg-12 col-xs-12">
               <label for="product-description"><b>Product Description</b></label>
-              <textarea rows="4" cols="20" name="description" placeholder="Enter product description here" class="form-control" required>
-              </textarea>
+              <textarea rows="4" cols="80" name="description" placeholder="Enter product description here" class="form-control" required></textarea>
             </div>
           </div>
           

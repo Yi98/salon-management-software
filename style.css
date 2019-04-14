@@ -315,7 +315,6 @@ input:focus::-webkit-input-placeholder {
 .form-container {
   width:100%;
   padding: 10px;
-  background-color: #e5ca00;
 }
 
 /* Full-width input fields */
@@ -335,20 +334,15 @@ input:focus::-webkit-input-placeholder {
 
 /* Set a style for the add/close button */
 .form-container .btn {
-  background-color: #4CAF50;
   color: white;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
-  width: 49%;
+  width: 49.8%;
   margin-bottom:10px;
   opacity: 0.8;
 }
 
-/* Add a red background color to the cancel button */
-.form-container .cancel {
-  background-color: red;
-}
 
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
@@ -828,10 +822,73 @@ span.view-details-text {
   color: blue;
 }
 
+.product-list-img p{
+  text-align:center;
+  font-family: georgia,sans-serif;
+  font-size: 2.5rem;
+  margin:5% 0 15% 0;
+}
+
 .product-list-img{
-  height: 3%;
+  text-align: left;
+}
+
+.product-list-img .stock{
+  margin-right:69%; 
 }
 
 .archiveItem{
   margin-left:5%;
 }
+
+.user-inventory-container h1{
+  font-family: georgia,sans-serif;
+  font-size: 5rem;
+  margin:5% 0 5% 0;
+}
+
+#myForm, #archiveList{
+  margin-top:5%;
+  border-left-width:2px;
+  border-left-style:solid;
+  border-left-color:#e5ca00;
+/*  border: 2px dashed #e5ca00;*/
+}
+
+#myForm h1, #archiveList h1{
+  font-family:georgia, sans-serif;
+}
+
+.staff-inventory-container h1{
+  font-family:georgia,sans-serif;
+}
+
+
+#myForm button, #archiveList .cancel{
+    border-width: 3px;
+    border-color:black;
+    border-radius:0px;
+    border-style: solid;
+    background-color:green;
+    color:black;
+}
+
+#myForm .cancel, #archiveList .cancel{
+   background-color:red;
+}
+
+
+#archiveList{
+  padding: 1% 2% 1% 2%;
+}
+
+#archiveList .cancel{
+  width:50%;
+  padding: 16px 20px;
+ 
+}
+
+#myForm label{
+  font-size: 1.5rem;
+}
+

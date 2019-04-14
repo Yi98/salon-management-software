@@ -30,6 +30,7 @@
   
 <body>
     <div class="container">
+      <div class="user-inventory-container">
         <h1>Products</h1>
         <!-- Display all products -->
         <?php
@@ -39,10 +40,11 @@
 
           foreach($data as $row)
           {
-             echo "<div class='col-lg-4 col-xs-4 product-list-img'><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='300' height='300' /></br>
+             echo "<div class='col-lg-4 col-xs-4 product-list-img'><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='350' height='350' /></br><span class='stock'><b>" . $row['status'] . "</b></span><span><b>RM " . $row['unitPrice'] . "</b></span>
              <p>". $row['inventoryName'] ."</p></div>";
           }
-        ?>  
+        ?>
+        </div>
     </div>
 </body>
   

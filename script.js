@@ -438,6 +438,8 @@ function startResetPasswordValidate() {
 /* Show Hidden Form */
 function openForm() {
     document.getElementById("myForm").style.display = "block";
+    document.getElementById("archiveList").style.display="none";
+
 }
 
 function closeForm() {
@@ -532,6 +534,7 @@ function onLeavePrevious(context) {
 
 function showArchive() {
   document.getElementById("archiveList").style.display = "block";
+  document.getElementById("myForm").style.display="none";
   
 }
 
