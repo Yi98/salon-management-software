@@ -21,20 +21,15 @@
         $name = trim($name);
         $email = trim($email);
         
-        $user_check_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+        $user_check_query = "SELECT * FROM `users` WHERE `email` = :email LIMIT 1";
 
         $result = $conn->prepare($user_check_query);
-        $result->bindValue(":name", $name);
         $result->bindValue(":email", $email);
         $result->execute();
         
         $user = $result->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            if ($user["name"] === $name) {
-                array_push($errors, "Name already exits");
-                $name_existed_error = "Name already taken";
-            }
             if ($user["email"] === $email) {
                 array_push($errors, "email already exists");
                 $email_existed_error = "Email already taken";
