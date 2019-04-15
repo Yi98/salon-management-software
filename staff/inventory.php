@@ -261,11 +261,11 @@
             </div>
             <div class="form-group col-lg-4 col-xs-4">    
               <label for="product-price"><b>Product Price (RM)</b></label>
-              <input type="number" step="0.01" name="price" class="form-control" required>
+              <input type="number" step="0.01" value="0.00" name="price" class="form-control" required>
             </div>
             <div class="form-group col-lg-4 col-xs-4">
               <label for="product-retail-price"><b>Product Retail Price (RM)</b></label>
-              <input type="number" step="0.01" name="retailprice" class="form-control" required>
+              <input type="number" step="0.01" value="0.00" name="retailprice" class="form-control" required>
             </div>
           </div>
           <div class="row">
