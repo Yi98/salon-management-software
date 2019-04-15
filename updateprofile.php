@@ -10,7 +10,7 @@
     $query = "UPDATE `users` SET name = :name, email = :email WHERE userId = :id";
     $result = $conn->prepare($query);
     $result->bindValue(":id", $_SESSION["id"]);
-    $result->bindValue(":name", $name);
-    $result->bindValue(":email", $email);
+    $result->bindValue(":name", $conn->quote($name));
+    $result->bindValue(":email", $conn->quote($email));
     $result->execute();
 ?>
