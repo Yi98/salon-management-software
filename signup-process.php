@@ -51,7 +51,7 @@
             $result->bindValue(":email", $email);
             $result->execute();
             
-            // Select the signed user from database
+            // Select the signed user from database 
             $user_find_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
 
             $result = $conn->prepare($user_find_query);

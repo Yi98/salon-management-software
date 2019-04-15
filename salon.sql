@@ -96,6 +96,7 @@ CREATE TABLE `sales` (
 --
 
 CREATE TABLE `users` (
+  `image_path` varchar(100) DEFAULT NULL,
   `userId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
