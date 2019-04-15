@@ -54,7 +54,7 @@
   }
   }
   ?>
-<!-- Delete product module -->
+<!-- Delete product module -->  
 <?php 
   if(isset($_POST['idDel'])){
   $id = $_POST['idDel'];

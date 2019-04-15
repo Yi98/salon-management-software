@@ -13,7 +13,7 @@ require 'vendor/autoload.php';
 // book appointment
 if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
 
-  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=2";
+  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=1";
   $q = $conn->query($sql);
   $result = $q->fetch();
 
@@ -24,7 +24,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
     $hairdresser = $_POST['hairdresser'];
     $request = $_POST['request'];
 
-    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('2', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
+    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('1', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
 
     if ($conn->exec($sql)) {
       echo "success";
@@ -52,7 +52,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
           //Recipients
           $mail->setFrom('smileandstylesalon@gmail.com', 'Smile And Style Salon');
-          $mail->addAddress('ngyi07285@hotmail.com', 'Joe User');     // Add a recipient
+          $mail->addAddress('ngyi07285@hotmail.com', 'Ng Yi');     // Add a recipient
 
           // Content
           $mail->isHTML(true);                                  // Set email format to HTML
@@ -68,6 +68,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
           $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
+          header("location: index.php");
           // echo 'Message has been sent';
       } catch (Exception $e) {
           echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -94,6 +95,21 @@ if (!empty($_POST['action']) && !empty($_POST['appId'])) {
   }
   else {
     echo "fail";
+  }
+}
+
+if (!empty($_POST['action']) && !empty($_POST['date']) && !empty($_POST['time'])) {
+  $date = $_POST['date'];
+  $time = $_POST['time'];
+
+  if ($_POST['action'] === 'checkAvailability') {
+    $sql = "SELECT hairdresser FROM appointments WHERE appointmentDate='$date' AND appointmentTime='$time'";
+    $q = $conn->query($sql);
+    $q->setFetchMode(PDO::FETCH_ASSOC);
+    while ($row = $q->fetch()) {
+      echo "|";
+      print_r($row['hairdresser']);
+    }
   }
 }
 

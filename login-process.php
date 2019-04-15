@@ -8,8 +8,10 @@
         $login_error_message = "";
 
         if (!empty($_POST)) {
-            $login_email = $conn->quote($_POST["email"]);
-            $login_password = $conn->quote($_POST["password"]);
+            // $login_email = $conn->quote($_POST["email"]);
+            // $login_password = $conn->quote($_POST["password"]);
+            $login_email = $_POST["email"];
+            $login_password = $_POST["password"];
 
             $hashed_password = md5($login_password);
 

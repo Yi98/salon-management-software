@@ -26,9 +26,72 @@
         $username = $user_info->screen_name;
 
         $_SESSION["access_token"] = $oauth_token;
-        $_SESSION["name"] = $user_name;
-        $_SESSION["email"] = $user_info->email;
-        $_SESSION["role"] = "user";
+           
+        //
+        $user_check_query = "SELECT * FROM `users` WHERE `email` = :email LIMIT 1";
+
+        $result = $conn->prepare($user_check_query);
+        $result->bindValue(":email", $user_info->email);
+        $result->execute();
+
+        $userdatabase = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($userdatabase) {
+            if ($userdatabase["email"] == $user->getField("email")) {
+                $_SESSION["id"] = $userdatabase["userId"];
+                $_SESSION["name"] = $userdatabase["name"];
+                $_SESSION["email"] = $userdatabase["email"];
+                $_SESSION["role"] = "user";
+            } else {
+                $date = date("Y-m-d H:i:s");
+                $user_store_query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, NULL, :name, 'user', '', '$date')";
+                // Insert the user
+                $result = $conn->prepare($user_store_query);
+                $result->bindValue(":name",  $user_name);
+                $result->bindValue(":email", $user_info->email);
+                $result->execute();
+
+                 // Select the signed user from database 
+                $user_find_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+                $result = $conn->prepare($user_find_query);
+                $result->bindValue(":name",  $user_name);
+                $result->bindValue(":email", $user_info->email);
+                $result->execute();
+
+                $newUser = $result->fetch(PDO::FETCH_ASSOC);
+
+                $_SESSION["id"] = $newUser["userId"];
+                $_SESSION["name"] = $user_name;
+                $_SESSION["email"] = $user_info->email;
+                $_SESSION["role"] = "user";
+            }
+        } else {
+            $date = date("Y-m-d H:i:s");
+                $user_store_query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, NULL, :name, 'user', '', '$date')";
+                // Insert the user
+                $result = $conn->prepare($user_store_query);
+                $result->bindValue(":name",  $user_name);
+                $result->bindValue(":email", $user_info->email);
+                $result->execute();
+
+                 // Select the signed user from database 
+                $user_find_query = "SELECT * FROM `users` WHERE `name` = :name OR `email` = :email LIMIT 1";
+
+                $result = $conn->prepare($user_find_query);
+                $result->bindValue(":name",  $user_name);
+                $result->bindValue(":email", $user_info->email);
+                $result->execute();
+
+                $newUser = $result->fetch(PDO::FETCH_ASSOC);
+
+                $_SESSION["id"] = $newUser["userId"];
+                $_SESSION["name"] = $user_name;
+                $_SESSION["email"] = $user_info->email;
+                $_SESSION["role"] = "user";
+        }
+        //
+            
         unset($_SESSION['oauth_token']);
         header('Location: index.php');
     }else 

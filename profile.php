@@ -6,6 +6,10 @@
     }
 ?>
 
+<?php
+    //isset($_GET["id"])
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,44 +71,61 @@
     <div class="container profile-container">
         <div class="col-md-3 text-center">
             <figure style="margin:0 auto; width:250px; margin-top:5%;" class="profile-image-figure">
-                <img style="width:100%" src="images/profile-placeholder.png"/>
+                <?php
+                    $query = "SELECT * FROM `users` WHERE `userId`=:id";
+     
+                    $data = $conn->prepare($query);
+                    $data->bindValue(":id", $_SESSION["id"]);
+                    $data->execute();
+        
+                    $currentUser = $data->fetch(PDO::FETCH_ASSOC);
+        
+                    if ($currentUser["image_path"] != NULL) {
+                        $image_path = $currentUser['image_path'];
+                        echo "<span id='profile_image'><img style='width:100%' src='$image_path'/></span>";
+                    } else {
+                        echo "<span id='profile_image'><img style='width:100%' src='images/profile-placeholder.png'/>";
+                    }
+                ?>
             </figure>
             <p>Profile Image</p>
             
-            <!-- <button>Select File (250px x 250px)</button> -->
-            <input type="file" name="image" accept="image/*">
+            <input type="file" id="file" name="file" accept="image/*">
         </div>
         
         <div class="col-md-offset-1 col-md-7">
             <div class="profile_and_edit_section" style="display:flex;align-items: center;">
                 <p class="section_title" style="display:inline-block;">Profile</p>
                 <div class="edit-and-save-profile" style="display:inline-block; margin-left:auto;">
-                    <?php 
-                        if (isset($_SESSION["editprofile"])) {
-                            echo "<button>Save Profile</button>";
-                        } else {
-                            echo "<button>Edit Profile</button>";
-                        }
-                    ?>
-                </div>
+                    <button form="profile-form" id='save_profile_button' type='submit' name='saveProfile' >Save Profile</button>
+                    <button id='edit_profile_button' type='submit' name='editProfile'>Edit Profile</button>    
+                </div>  
             </div>
-            <p>Name: <strong><input type="text" name="profile-name" value=<?php echo $_SESSION["name"]?> disabled /></strong></p>
-            <p>Email: <strong><input type="text" name="profile-email" value=<?php echo $_SESSION["email"]?> disabled/></strong></p>
+            <form method="post" id="profile-form" name="profile-form">
+                <?php
+                    $profile_query = "SELECT * FROM `users` WHERE userId = :id";
+                    $result = $conn->prepare($profile_query);
+                    $result->bindValue(":id", $_SESSION["id"]);
+                    $result->execute();
+                    $currentUser = $result->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" value=<?php echo  htmlspecialchars($currentUser["name"]); ?> disabled/></strong></p>
+                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" value=<?php echo $currentUser["email"]?> disabled/></strong></p>
+                
+            </form>
             
             
-            <?php 
-                if (isset($_SESSION["role"])) {
-                    if ($_SESSION["role"] == "staff") {
-                        echo "  <div class='note_section' style='display:flex;align-items: center;'>
-                                    <p class='section_title' style='display:inline-block;'>Notes</p>";
-                        if (isset($_SESSION["editnote"])) {
-                            echo "<button style='display:inline-block; margin-left:auto;'>Edit Notes</button>";
-                        } else {
-                            echo "<button style='display:inline-block; margin-left:auto;'>Save Notes</button>";
-                        }
-                        echo "</div>";
-                        echo "<textarea id='notes_textarea' name='Notes'></textarea>";
-                    }
+            <?php
+                if ($currentUser["role"] == "staff") {
+                    echo "
+                        <div class='note_section' style='display:flex;align-items: center;'>
+                            <p class='section_title' style='display:inline-block;'>Notes</p>
+                            <div class='edit-and-save-note' style='display:inline-block; margin-left:auto;'>
+                                <button id='edit_note_button' type='submit' name='editNote' style='display:inline-block;'>Edit Notes</button>
+                                <button form='profile-form' id='save_note_button' type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
+                            </div>
+                        </div>
+                       <textarea id='notes_textarea' name='Notes' disabled>".(htmlspecialchars($currentUser['note']))."</textarea>";
                 }
             ?>
             
@@ -142,7 +163,7 @@
             <?php
                 $id = $_SESSION["id"];
                 $query = "SELECT * FROM appointments WHERE userId = '$id' AND status='fulfilled'";
-                $data = $conn->query($query);
+                $data = $conn->query($query);   
                 $data->execute();
                 $result = $data->fetch(PDO::FETCH_ASSOC);
             
@@ -159,7 +180,95 @@
     </div>
     
     <script>
+        // Profile Logic
+        $("#save_profile_button").hide();
+        $("#edit_profile_button").click(function() {
+            $(".profile-edit-input").removeAttr("disabled");
+            $(this).hide();
+            $("#save_profile_button").show();
+            $(".profile-edit-input").css("border","1px solid black");
+        }) 
+        $("#save_profile_button").click(function() {
+            $(".profile-edit-input").attr("disabled", true);
+            $(this).hide();
+            $("#edit_profile_button").show();
+        })
         
+        // Note Logic
+        $("#save_note_button").hide();
+        $("#edit_note_button").click(function() {
+            $("#notes_textarea").removeAttr("disabled");
+            $(this).hide();
+            $("#save_note_button").show();
+        }) 
+        $("#save_note_button").click(function() {
+            $("#notes_textarea").attr("disabled", true);
+            $(this).hide();
+            $("#edit_note_button").show();
+        })
+        
+        $(document).ready(function() {
+            $(document).on("change", "#file", function () {
+                var property = document.getElementById("file").files[0];
+                var image_name = property.name;
+                var image_extension = image_name.split(".").pop().toLowerCase();
+                if (jQuery.inArray(image_extension, ["gif", "png", "jpg", "jpeg"]) == -1) {
+                    alert("Invalid Image File");
+                }
+                var image_size = property.size;
+                if (image_size > 2000000) {
+                    alert("Image File Size is very big");
+                } else {
+                    var form_data = new FormData();
+                    form_data.append("file", property);
+                    $.ajax({
+                        url: "uploadprofileimage.php",
+                        method: "POST",
+                        data: form_data,
+                        contentType: false,
+                        cache:false,
+                        processData:false,
+                        success:function(data) 
+                        {
+                            $("#profile_image").html(data);    
+                        }
+                    })
+                }
+            });
+            $('#save_profile_button').click(function(){
+                if (confirm("Save your changes on profile?")) {
+                    var name = document.getElementById("profile-name").value;
+                    var email = document.getElementById("profile-email").value;
+                    $.ajax({
+                    type: "POST",
+                    url: "updateprofile.php",
+                    data: {'name': name, 'email': email},
+                    dataType:'json',
+                    success:function(data) 
+                    {
+                        location.reload();
+                    }
+                    });
+                }
+            }); 
+            $('#save_note_button').click(function(){
+                if (confirm("Save your changes on note?")) {
+                    var note = document.getElementById("notes_textarea").value;
+                    $.ajax({
+                        type: "POST",
+                        url: "updatenote.php",
+                        data: {'note': note},
+                        dataType:'json',
+                        success:function(data) 
+                        {
+                            location.reload();
+                        }
+                    });
+                }
+            }); 
+            
+        });
+
     </script>
 </body>
   

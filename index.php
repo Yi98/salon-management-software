@@ -65,7 +65,21 @@
                         
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
-                                echo '<span>Welcome! '.$_SESSION["name"].'</span>';
+                                $query = "SELECT * FROM `users` WHERE `userId`=:id";
+
+                                $data = $conn->prepare($query);
+                                $data->bindValue(":id", $_SESSION["id"]);
+                                $data->execute();
+
+                                $currentUser = $data->fetch(PDO::FETCH_ASSOC);
+                                
+                                if ($currentUser["image_path"] != NULL) {
+                                    $image_path = $currentUser['image_path'];
+                                    echo "<a style='color:black;text-decoration:none;' href='profile.php'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='$image_path'/></span>";
+                                } else {
+                                    echo "<a style='color:black;text-decoration:none;' href='profile.php'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
+                                }
+                                echo '<span>'.$_SESSION["name"].'</span></a>';
                             }
                         ?>
                         

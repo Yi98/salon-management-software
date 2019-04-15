@@ -9,7 +9,14 @@
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <script src="script.js"></script>
 </head>
-<body>
+<body id="appointment-page">
+  <div class="ui segment" id="appointment-loader">
+    <p></p>
+    <div class="ui active dimmer">
+      <div class="ui text large loader">Confirming appointment ...</div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="purchase-flow-other">
       <div class="ui steps">
@@ -128,7 +135,7 @@
         Appointment confirmed
       </div>
       <div class="content">
-        <p class="modal-message">You have successfully booked the appointment. Have a nice day :)</p>
+        <p class="modal-message">An appointment summary has been sent to your email.</p>
       </div>
       <div class="actions">
         <div class="ui orange ok inverted button okay-button-modal">

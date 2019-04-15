@@ -96,13 +96,15 @@ CREATE TABLE `sales` (
 --
 
 CREATE TABLE `users` (
+  `image_path` varchar(100) DEFAULT NULL,
   `userId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password` varchar(100),
   `name` varchar(150) NOT NULL,
   `role` varchar(20) NOT NULL,
   `note` varchar(200) DEFAULT NULL,
-  `lastSignIn` date DEFAULT NULL
+  `lastSignIn` date DEFAULT NULL,
+  `forgotPasswordId` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
