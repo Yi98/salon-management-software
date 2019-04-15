@@ -38,6 +38,40 @@ function onCompleteDateInfo() {
 		sessionStorage.setItem("date", appointmentDate);
 		sessionStorage.setItem("time", appointmentTime);
 
+		const date = sessionStorage.getItem("date");
+  	const time = sessionStorage.getItem("time");
+
+		const http = new XMLHttpRequest();
+    const url = 'appointment-process.php';
+    const params = `date=${date}&time=${time}&action=checkAvailability`;
+    http.open('POST', url, true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) {
+       let hairdressers = http.responseText.split("|");
+       console.log(hairdressers);
+
+       const hairdresserElement = document.getElementById('hairdresser');
+       const nodes = hairdresserElement.getElementsByTagName('option');
+
+
+       for(let i=0; i<nodes.length; i++) {
+       	if (hairdressers.includes(nodes[i].attributes.value.textContent)) {
+       		nodes[i].disabled = true;
+       		nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+       	}
+       	else {
+       		nodes[i].disabled = false;
+     			nodes[i].style.backgroundColor = "white";
+       	}
+       }
+      }
+    }
+
+    http.send(params);
+
 		dateForm.style.display = "none";
 		serviceForm.style.display = "block";
 
@@ -521,7 +555,7 @@ function onHoverNext(context) {
 }
 
 function onLeaveNext(context) {
-    context.childNodes[1].style.padding = 0;
+  context.childNodes[1].style.padding = 0;
 }
 
 function onhoverPrevious(context) {

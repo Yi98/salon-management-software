@@ -97,4 +97,19 @@ if (!empty($_POST['action']) && !empty($_POST['appId'])) {
   }
 }
 
+if (!empty($_POST['action']) && !empty($_POST['date']) && !empty($_POST['time'])) {
+  $date = $_POST['date'];
+  $time = $_POST['time'];
+
+  if ($_POST['action'] === 'checkAvailability') {
+    $sql = "SELECT hairdresser FROM appointments WHERE appointmentDate='$date' AND appointmentTime='$time'";
+    $q = $conn->query($sql);
+    $q->setFetchMode(PDO::FETCH_ASSOC);
+    while ($row = $q->fetch()) {
+      echo "|";
+      print_r($row['hairdresser']);
+    }
+  }
+}
+
 ?>
