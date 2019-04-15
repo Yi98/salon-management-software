@@ -68,6 +68,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
           $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
+          header("location: index.php");
           // echo 'Message has been sent';
       } catch (Exception $e) {
           echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

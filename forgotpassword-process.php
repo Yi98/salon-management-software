@@ -18,7 +18,7 @@ require 'vendor/autoload.php';
         header('location: index.php');
     } else {
         if (!empty($_POST)) {
-            $forgot_password_email = $conn->quote($_POST["email"]);
+            $forgot_password_email = $_POST["email"];
             
             $user_check_query = "SELECT * FROM `users` WHERE `email` = :email LIMIT 1";
 
