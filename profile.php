@@ -112,15 +112,19 @@
             </form>
             
             
-            <div class='note_section' style='display:flex;align-items: center;'>
-                <p class='section_title' style='display:inline-block;'>Notes</p>
-                <div class="edit-and-save-note" style="display:inline-block; margin-left:auto;">
-                    <button id="edit_note_button" type='submit' name='editNote' style='display:inline-block;'>Edit Notes</button>
-                    <button form="profile-form" id="save_note_button" type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
-                </div>
-            </div>
-           <textarea id='notes_textarea' name='Notes' disabled><?php echo htmlspecialchars($currentUser["note"]); ?></textarea>
-
+            <?php
+                if ($currentUser["role"] == "staff") {
+                    echo "
+                        <div class='note_section' style='display:flex;align-items: center;'>
+                            <p class='section_title' style='display:inline-block;'>Notes</p>
+                            <div class='edit-and-save-note' style='display:inline-block; margin-left:auto;'>
+                                <button id='edit_note_button' type='submit' name='editNote' style='display:inline-block;'>Edit Notes</button>
+                                <button form='profile-form' id='save_note_button' type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
+                            </div>
+                        </div>
+                       <textarea id='notes_textarea' name='Notes' disabled>".(htmlspecialchars($currentUser['note']))."</textarea>";
+                }
+            ?>
             
             <p class="section_title">Upcoming Appointment history</p>
             <?php
@@ -179,6 +183,7 @@
             $(".profile-edit-input").removeAttr("disabled");
             $(this).hide();
             $("#save_profile_button").show();
+            $(".profile-edit-input").css("border","1px solid black");
         }) 
         $("#save_profile_button").click(function() {
             $(".profile-edit-input").attr("disabled", true);
