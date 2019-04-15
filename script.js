@@ -9,6 +9,8 @@ function onCompleteDateInfo() {
 	const appointmentDate = document.getElementById('appointment-date').value;
 	const appointmentTime = document.getElementById('appointment-time').value;
 
+	let allSlotsFull = true;
+
 	if (!appointmentDate || appointmentTime == "none") {
 		if (!appointmentDate) {
 			$('#appointment-date')
@@ -57,8 +59,8 @@ function onCompleteDateInfo() {
        const nodes = hairdresserElement.getElementsByTagName('option');
 
 
-       for(let i=0; i<nodes.length; i++) {
-       	if (hairdressers.includes(nodes[i].attributes.value.textContent)) {
+       for (let i=0; i<nodes.length; i++) {
+       	if (hairdressers.includes(nodes[i].attributes.value.textContent) && nodes[i].attributes.value.textContent !== 'Any') {
        		nodes[i].disabled = true;
        		nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
        	}
@@ -67,6 +69,19 @@ function onCompleteDateInfo() {
      			nodes[i].style.backgroundColor = "white";
        	}
        }
+
+       for (let i=1; i<nodes.length-1; i++) {
+       		if (nodes[i].disabled == false) {
+       			allSlotsFull = false;
+       			console.log("yay");
+       		}
+       }
+
+       if (allSlotsFull) {
+	       	nodes[nodes.length-1].disabled = true;
+	       	nodes[nodes.length-1].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+       	}
+
       }
     }
 
