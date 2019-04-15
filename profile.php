@@ -81,7 +81,7 @@
                         $image_path = $currentUser['image_path'];
                         echo "<span id='profile_image'><img style='width:100%' src='$image_path'/></span>";
                     } else {
-                        echo "<img id='profile_image_placeholder' style='width:100%' src='images/profile-placeholder.png'/>";
+                        echo "<span id='profile_image'><img style='width:100%' src='images/profile-placeholder.png'/>";
                     }
                 ?>
             </figure>
@@ -106,7 +106,7 @@
                     $result->execute();
                     $currentUser = $result->fetch(PDO::FETCH_ASSOC);
                 ?>
-                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" value=<?php echo  htmlspecialchars("'".$currentUser["name"]."'"); ?> disabled/></strong></p>
+                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" value=<?php echo  htmlspecialchars($currentUser["name"]); ?> disabled/></strong></p>
                 <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" value=<?php echo $currentUser["email"]?> disabled/></strong></p>
                 
             </form>
