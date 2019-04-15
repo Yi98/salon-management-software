@@ -52,7 +52,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
           //Recipients
           $mail->setFrom('smileandstylesalon@gmail.com', 'Smile And Style Salon');
-          $mail->addAddress('ngyi07285@hotmail.com', 'Joe User');     // Add a recipient
+          $mail->addAddress($_SESSION["email"], $_SESSION["name"]);     // Add a recipient
 
           // Content
           $mail->isHTML(true);                                  // Set email format to HTML
