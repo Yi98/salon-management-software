@@ -73,7 +73,6 @@ function onCompleteDateInfo() {
        for (let i=1; i<nodes.length-1; i++) {
        		if (nodes[i].disabled == false) {
        			allSlotsFull = false;
-       			console.log("yay");
        		}
        }
 
@@ -219,6 +218,7 @@ function onConfirmSummary() {
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
         appointmentLoader.style.display = "none";
+        console.log(http.responseText);
       	if (http.responseText.trim() == "success") {
       		$('#success-booking-modal')
             .modal('show');
