@@ -9,7 +9,14 @@
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <script src="script.js"></script>
 </head>
-<body>
+<body id="appointment-page">
+  <div class="ui segment" id="appointment-loader">
+    <p></p>
+    <div class="ui active dimmer">
+      <div class="ui text large loader">A moment please :)</div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="purchase-flow-other">
       <div class="ui steps">
