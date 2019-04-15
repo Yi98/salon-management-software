@@ -892,3 +892,17 @@ span.view-details-text {
   font-size: 1.5rem;
 }
 
+
+#appointment-loader {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: none;
+}
+
+body#appointment-page {
+  overflow-y: hidden;
+}

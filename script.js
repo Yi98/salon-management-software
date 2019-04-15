@@ -177,6 +177,9 @@ function onCompleteRequestInfo() {
 
 
 function onConfirmSummary() {
+	const appointmentLoader = document.getElementById('appointment-loader');
+	appointmentLoader.style.display = "block";
+
 	const summaryForm = document.getElementById('summary-form');
 	const summaryStep = document.getElementById('summary-step');
 	const requestBox = document.getElementById('request-box');
@@ -200,7 +203,7 @@ function onConfirmSummary() {
 
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
-        console.log(http.responseText);
+        appointmentLoader.style.display = "none";
       	if (http.responseText.trim() == "success") {
       		$('#success-booking-modal')
             .modal('show');
