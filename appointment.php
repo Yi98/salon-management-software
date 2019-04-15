@@ -13,7 +13,7 @@
   <div class="ui segment" id="appointment-loader">
     <p></p>
     <div class="ui active dimmer">
-      <div class="ui text large loader">A moment please :)</div>
+      <div class="ui text large loader">Confirming appointment ...</div>
     </div>
   </div>
 

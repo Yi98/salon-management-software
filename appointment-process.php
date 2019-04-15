@@ -13,7 +13,7 @@ require 'vendor/autoload.php';
 // book appointment
 if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
 
-  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=2";
+  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=1";
   $q = $conn->query($sql);
   $result = $q->fetch();
 
@@ -24,7 +24,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
     $hairdresser = $_POST['hairdresser'];
     $request = $_POST['request'];
 
-    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('2', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
+    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('1', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
 
     if ($conn->exec($sql)) {
       echo "success";
