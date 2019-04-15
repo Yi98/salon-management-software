@@ -135,7 +135,7 @@
         Appointment confirmed
       </div>
       <div class="content">
-        <p class="modal-message">You have successfully booked the appointment. Have a nice day :)</p>
+        <p class="modal-message">An appointment summary has been sent to your email.</p>
       </div>
       <div class="actions">
         <div class="ui orange ok inverted button okay-button-modal">
