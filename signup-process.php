@@ -9,9 +9,13 @@
         $errors = array();
         
         // Get form data from form
-        $name = $conn->quote($_POST["name"]);
-        $email = $conn->quote($_POST["email"]);
-        $signup_password = $conn->quote($_POST["pass"]);
+        //$name = $conn->quote($_POST["name"]);
+        //$email = $conn->quote($_POST["email"]);
+        //$signup_password = $conn->quote($_POST["pass"]);
+        
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+        $signup_password = $_POST["pass"];
         
         // Trim the data
         $name = trim($name);
