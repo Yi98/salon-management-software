@@ -8,9 +8,6 @@
 
 <?php
     $urlId = $_GET["id"];
-    if ($_SESSION["role"] != "staff" && $_SESSION["id"] != $urlId) {
-        header("Location: index.php");
-    }
 ?>
 
 <!DOCTYPE html>
@@ -242,13 +239,14 @@
                 if (confirm("Save your changes on profile?")) {
                     var name = document.getElementById("profile-name").value;
                     var email = document.getElementById("profile-email").value;
+                    var urlId = <?php echo $urlId ?>;
                     $.ajax({
                     type: "POST",
                     url: "updateprofile.php",
-                    data: {'name': name, 'email': email},
+                    data: {'name': name, 'email': email, 'id': urlId},
                     success:function(data) 
                     {
-                        window.location = "profile.php";
+                        window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                     }
                     });
                 }
@@ -257,14 +255,15 @@
             $('#save_note_button').click(function(){
                 if (confirm("Save your changes on note?")) {
                     var note = document.getElementById("notes_textarea").value;
+                    var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
                         url: "updatenote.php",
-                        data: {'note': note},
+                        data: {'note': note,'id':urlId},
                         success:function(data) 
                         {
                             // Probably need to add something here
-                            window.location = "profile.php";
+                            window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                         }
                     });
                 }
