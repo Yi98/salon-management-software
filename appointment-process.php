@@ -24,7 +24,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
     $hairdresser = $_POST['hairdresser'];
     $request = $_POST['request'];
 
-    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('1', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
+    $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('2', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
 
     if ($conn->exec($sql)) {
       echo "success";

@@ -504,12 +504,12 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-function onViewAppointment(appointmentId, userId, date, time, service, hairdresser, request) {
+function onViewAppointment(appointmentId, email, date, time, service, hairdresser, request) {
 
 	if (!$('#appointment-details-modal').modal('is active')) {
 		sessionStorage.setItem('appId', appointmentId);
 
-		document.getElementById('appDetails-user').innerHTML = userId;
+		document.getElementById('appDetails-user').innerHTML = email;
 		document.getElementById('appDetails-date').innerHTML = date;
 		document.getElementById('appDetails-time').innerHTML = time;
 		document.getElementById('appDetails-service').innerHTML = service;

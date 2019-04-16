@@ -2,7 +2,8 @@
 
 <?php
 
-$sql = 'SELECT * from appointments';
+// $sql = 'SELECT * from appointments';
+$sql = 'SELECT * from appointments INNER JOIN users ON appointments.userId = users.userId';
 
 $q = $conn->query($sql);
 $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -35,12 +36,12 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       <tbody>
         <?php while ($row = $q->fetch()): ?>
           <tr>
-            <td><?php echo htmlspecialchars($row['userId']) ?></td>
+            <td><?php echo htmlspecialchars($row['email']) ?></td>
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
               "<?php echo htmlspecialchars($row['appointmentId']) ?>",
-              "<?php echo htmlspecialchars($row['userId']) ?>",
+              "<?php echo htmlspecialchars($row['email']) ?>",
               "<?php echo htmlspecialchars($row['appointmentDate']) ?>",
               "<?php echo htmlspecialchars($row['appointmentTime']) ?>",
               "<?php echo htmlspecialchars($row['typeOfServices']) ?>",
