@@ -237,6 +237,10 @@ function onConfirmSummary() {
           $('#over-booking-modal')
             .modal('show');
         }
+        else if (http.responseText.trim() == "duplicate") {
+        	$('#duplicate-booking-modal')
+            .modal('show');
+        }
       }
     }
     http.send(params);

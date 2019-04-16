@@ -1,8 +1,6 @@
 <?php include '../db_connect.php'; ?>
 
 <?php
-
-// $sql = 'SELECT * from appointments';
 $sql = 'SELECT * from appointments INNER JOIN users ON appointments.userId = users.userId';
 
 $q = $conn->query($sql);
@@ -27,7 +25,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <table class="ui striped table">
       <thead>
         <tr>
-          <th>User Id</th>
+          <th>Email</th>
           <th>Date</th>
           <th>Time</th>
           <th>Details</th>

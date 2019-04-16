@@ -177,6 +177,22 @@
       </div>
     </div>
 
+    <div class="ui basic modal modal-container" id="duplicate-booking-modal">
+      <div class="ui icon header">
+        <i class="calendar minus icon"></i>
+        Timeslot taken
+      </div>
+      <div class="content">
+        <p class="modal-message">The timeslot has already been taken by others!</p>
+      </div>
+      <div class="actions">
+        <div class="ui red ok inverted button okay-button-modal">
+          <i class="checkmark icon"></i>
+          Okay
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
