@@ -650,8 +650,12 @@ function filterAll(){
 }
 
 function searchUser() {
+<<<<<<< HEAD
  
   var input, filter, table, tr, td, i, txtValue,table2,tr2,td2,j,txtValue2;
+=======
+  var input, filter, table, tr, td, i, txtValue;
+>>>>>>> c8e63393970a4f11e43336ee0035ed77dd96286c
   input = document.getElementById("userInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("userTable");
@@ -668,6 +672,7 @@ function searchUser() {
       }
     } 
   }
+<<<<<<< HEAD
   
   table2 = document.getElementById("bannedUserTable");
   tr2 = table2.getElementsByTagName("tr");
@@ -704,3 +709,32 @@ function showBannedUser() {
 function hideBannedUser() {
   document.getElementById("bannedUserTable").style.display = "none";
 }
+=======
+}
+
+function onSwitchStatus() {
+	const appId = sessionStorage.getItem('appId');
+
+	const http = new XMLHttpRequest();
+  const url = '../appointment-process.php';
+  const params = `appId=${appId}&action=changeStatus`;
+  http.open('POST', url, true);
+
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200) {
+      console.log(http.responseText);
+    	if (http.responseText.trim() == "updated") {
+    		$('#success-update-modal')
+          .modal('show');
+    	}
+    	else if (http.responseText.trim() == "fail") {
+				$('#fail-booking-modal')
+          .modal('show');
+    	}
+    }
+  }
+  http.send(params);
+}
+>>>>>>> c8e63393970a4f11e43336ee0035ed77dd96286c

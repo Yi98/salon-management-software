@@ -13,13 +13,17 @@ require 'vendor/autoload.php';
 // book appointment
 if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
 
+  $userId = $_SESSION["id"];
+  $userEmail = $_SESSION["email"];
+  $username = $_SESSION["name"];
+
   $date = $_POST['date'];
   $time = $_POST['time'];
   $service = $_POST['service'];
   $hairdresser = $_POST['hairdresser'];
   $request = $_POST['request'];
 
-  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=2";
+  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=$userId";
   $q = $conn->query($sql);
   $result = $q->fetch();
 
@@ -29,7 +33,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
   if ($result['total'] < 2) {
     if (!$checkResult) {
-      $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ('2', '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
+      $sql = "INSERT INTO appointments (userId, appointmentDate, appointmentTime, typeOfServices, hairdresser, request, status) VALUES ($userId, '$date', '$time', '$service', '$hairdresser', '$request', 'unfulfilled')";
 
       if ($conn->exec($sql)) {
         echo "success";
@@ -57,7 +61,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
             //Recipients
             $mail->setFrom('smileandstylesalon@gmail.com', 'Smile And Style Salon');
-            $mail->addAddress('blabla@hotmail.com', 'User 1');     // Add a recipient
+            $mail->addAddress($userEmail, $username);     // Add a recipient
 
             // Content
             $mail->isHTML(true);                                  // Set email format to HTML
@@ -96,16 +100,19 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
 // delete appointment
 if (!empty($_POST['action']) && !empty($_POST['appId'])) {
-  $id = $_POST['appId'];
-  $sql = "DELETE FROM appointments WHERE appointmentId=$id";
+  if ($_POST['action'] === 'delete') {
+    $id = $_POST['appId'];
+    $sql = "DELETE FROM appointments WHERE appointmentId=$id";
 
-  if ($conn->exec($sql)) {
-    echo "success";
-  }
-  else {
-    echo "fail";
+    if ($conn->exec($sql)) {
+      echo "success";
+    }
+    else {
+      echo "fail";
+    }
   }
 }
+
 
 if (!empty($_POST['action']) && !empty($_POST['date']) && !empty($_POST['time'])) {
   $date = $_POST['date'];
@@ -118,6 +125,20 @@ if (!empty($_POST['action']) && !empty($_POST['date']) && !empty($_POST['time'])
     while ($row = $q->fetch()) {
       echo "|";
       print_r($row['hairdresser']);
+    }
+  }
+}
+
+if (!empty($_POST['action']) && !empty($_POST['appId'])) {
+  if ($_POST['action'] === 'changeStatus') {
+    $appId = $_POST['appId'];
+    $sql = "UPDATE appointments SET status='fulfilled' WHERE appointmentId=$appId";
+
+    if ($conn->exec($sql)) {
+      echo "updated";
+    }
+    else {
+      echo "fail";
     }
   }
 }
