@@ -13,7 +13,7 @@ require 'vendor/autoload.php';
 // book appointment
 if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']) && !empty($_POST['hairdresser']) && !empty($_POST['request'])) {
 
-  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=1";
+  $sql = "SELECT COUNT(*) AS 'total' from appointments WHERE userId=2";
   $q = $conn->query($sql);
   $result = $q->fetch();
 
@@ -52,7 +52,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
 
           //Recipients
           $mail->setFrom('smileandstylesalon@gmail.com', 'Smile And Style Salon');
-          $mail->addAddress('ngyi07285@hotmail.com', 'Ng Yi');     // Add a recipient
+          $mail->addAddress('blabla@hotmail.com', 'User 1');     // Add a recipient
 
           // Content
           $mail->isHTML(true);                                  // Set email format to HTML
@@ -68,7 +68,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
           $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
-          header("location: index.php");
+          // header("location: index.php");
           // echo 'Message has been sent';
       } catch (Exception $e) {
           echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

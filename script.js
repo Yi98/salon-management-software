@@ -52,35 +52,41 @@ function onCompleteDateInfo() {
 
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
-       let hairdressers = http.responseText.split("|");
-       console.log(hairdressers);
+				let hairdressers = http.responseText.split("|");
+				console.log(hairdressers);
 
-       const hairdresserElement = document.getElementById('hairdresser');
-       const nodes = hairdresserElement.getElementsByTagName('option');
+				const hairdresserElement = document.getElementById('hairdresser');
+				const nodes = hairdresserElement.getElementsByTagName('option');
 
+	     	if (hairdressers.length >= 4) {
+					for (let i=0; i<nodes.length; i++) {
+						nodes[i].disabled = true;
+						nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+					}
+	       }
+	       else {
+					for (let i=0; i<nodes.length; i++) {
+		       	if (hairdressers.includes(nodes[i].attributes.value.textContent) && nodes[i].attributes.value.textContent !== 'Any') {
+		       		nodes[i].disabled = true;
+		       		nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+		       	}
+		       	else {
+		       		nodes[i].disabled = false;
+		     			nodes[i].style.backgroundColor = "white";
+		       	}
+		       }
+	       }
 
-       for (let i=0; i<nodes.length; i++) {
-       	if (hairdressers.includes(nodes[i].attributes.value.textContent) && nodes[i].attributes.value.textContent !== 'Any') {
-       		nodes[i].disabled = true;
-       		nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
-       	}
-       	else {
-       		nodes[i].disabled = false;
-     			nodes[i].style.backgroundColor = "white";
-       	}
-       }
+				for (let i=1; i<nodes.length-1; i++) {
+					if (nodes[i].disabled == false) {
+						allSlotsFull = false;
+					}
+				}
 
-       for (let i=1; i<nodes.length-1; i++) {
-       		if (nodes[i].disabled == false) {
-       			allSlotsFull = false;
-       		}
-       }
-
-       if (allSlotsFull) {
-	       	nodes[nodes.length-1].disabled = true;
-	       	nodes[nodes.length-1].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
-       	}
-
+				if (allSlotsFull) {
+				 	nodes[nodes.length-1].disabled = true;
+				 	nodes[nodes.length-1].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+				}
       }
     }
 
