@@ -1,8 +1,11 @@
 <?php include "db_connect.php"; ?>
 
 <?php 
-    if (!isset($_SESSION["email"])) {
+    if (!isset($_SESSION["email"]) ) {
         header("Location: index.php");
+    }
+    if ( !isset($_GET["id"])) {
+        header("Location:profile.php?id=".$_SESSION["id"]);
     }
 ?>
 

@@ -183,7 +183,7 @@
         Timeslot taken
       </div>
       <div class="content">
-        <p class="modal-message">The timeslot has already been taken by others!</p>
+        <p class="modal-message">This timeslot has already been taken!</p>
       </div>
       <div class="actions">
         <div class="ui red ok inverted button okay-button-modal">

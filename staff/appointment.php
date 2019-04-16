@@ -22,12 +22,18 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
 <body>
   <div class="container">
     <h1 class="appointment-list-title">Appointment List</h1>
+    Filter by status:
+    <select>
+      <option>unfulfilled</option>
+      <option>fulfilled</option>
+    </select>
     <table class="ui striped table">
       <thead>
         <tr>
           <th>Email</th>
           <th>Date</th>
           <th>Time</th>
+          <th>Status</th>
           <th>Details</th>
         </tr>
       </thead>
@@ -37,6 +43,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
             <td><?php echo htmlspecialchars($row['email']) ?></td>
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
+            <td><?php echo htmlspecialchars($row['status']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
               "<?php echo htmlspecialchars($row['appointmentId']) ?>",
               "<?php echo htmlspecialchars($row['email']) ?>",
@@ -61,11 +68,12 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <p class="appointment-details-title">Service: <span id="appDetails-service" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
+        <button class="ui green button" onclick="onSwitchStatus()"><i class="check circle icon"></i>Mark as fulfilled</button>
         <button class="ui red button" onclick="onDeleteAppointment()"><i class="trash icon"></i>Delete appointment</button>
       </div>
     </div>
 
-     <div class="ui modal mini" id="delete-app-modal">
+    <div class="ui modal mini" id="delete-app-modal">
       <i class="close icon"></i>
       <div class="header">
         Delete appointment
@@ -85,7 +93,6 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
-
   </div>
 </body>
 </html>
