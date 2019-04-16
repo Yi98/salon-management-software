@@ -97,7 +97,7 @@
             <div class="profile_and_edit_section" style="display:flex;align-items: center;">
                 <p class="section_title" style="display:inline-block;">Profile</p>
                 <div class="edit-and-save-profile" style="display:inline-block; margin-left:auto;">
-                    <button form="profile-form" id='save_profile_button' type='submit' name='saveProfile' >Save Profile</button>
+                    <button form="profile-form"x id='save_profile_button' type='submit' name='saveProfile' >Save Profile</button>
                     <button id='edit_profile_button' type='submit' name='editProfile'>Edit Profile</button>    
                 </div>  
             </div>
@@ -193,7 +193,6 @@
             $(this).hide();
             $("#edit_profile_button").show();
         })
-        
         // Note Logic
         $("#save_note_button").hide();
         $("#edit_note_button").click(function() {
@@ -236,8 +235,7 @@
                 }
             });
   
-                
-                $('#save_profile_button').click(function(){
+            $('#save_profile_button').click(function(){
                 if (confirm("Save your changes on profile?")) {
                     var name = document.getElementById("profile-name").value;
                     var email = document.getElementById("profile-email").value;
@@ -245,16 +243,13 @@
                     type: "POST",
                     url: "updateprofile.php",
                     data: {'name': name, 'email': email},
-                    dataType:'json',
                     success:function(data) 
                     {
-                        location.reload();
+                        window.location = "profile.php";
                     }
                     });
                 }
             }); 
-        
-            
             
             $('#save_note_button').click(function(){
                 if (confirm("Save your changes on note?")) {
@@ -263,17 +258,16 @@
                         type: "POST",
                         url: "updatenote.php",
                         data: {'note': note},
-                        dataType:'json',
                         success:function(data) 
                         {
-                            location.reload();
+                            // Probably need to add something here
+                            window.location = "profile.php";
                         }
                     });
                 }
             }); 
             
         });
-
     </script>
 </body>
   
