@@ -59,7 +59,7 @@ function onCompleteDateInfo() {
 				const nodes = hairdresserElement.getElementsByTagName('option');
 
 	     	if (hairdressers.length >= 4) {
-					for (let i=0; i<nodes.length; i++) {
+					for (let i=1; i<nodes.length; i++) {
 						nodes[i].disabled = true;
 						nodes[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
 					}
