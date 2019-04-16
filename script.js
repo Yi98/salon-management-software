@@ -650,12 +650,8 @@ function filterAll(){
 }
 
 function searchUser() {
-<<<<<<< HEAD
  
   var input, filter, table, tr, td, i, txtValue,table2,tr2,td2,j,txtValue2;
-=======
-  var input, filter, table, tr, td, i, txtValue;
->>>>>>> c8e63393970a4f11e43336ee0035ed77dd96286c
   input = document.getElementById("userInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("userTable");
@@ -672,7 +668,6 @@ function searchUser() {
       }
     } 
   }
-<<<<<<< HEAD
   
   table2 = document.getElementById("bannedUserTable");
   tr2 = table2.getElementsByTagName("tr");
@@ -703,14 +698,12 @@ function closeUserEdit() {
 function showBannedUser() {
   document.getElementById("bannedUserTable").style.display = "block";
   
-  
 }
 
 function hideBannedUser() {
   document.getElementById("bannedUserTable").style.display = "none";
 }
-=======
-}
+
 
 function onSwitchStatus() {
 	const appId = sessionStorage.getItem('appId');
@@ -737,4 +730,3 @@ function onSwitchStatus() {
   }
   http.send(params);
 }
->>>>>>> c8e63393970a4f11e43336ee0035ed77dd96286c
