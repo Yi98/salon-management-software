@@ -7,7 +7,7 @@
 ?>
 
 <?php
-    //isset($_GET["id"])
+    $urlId = $_GET["id"];
 ?>
 
 <!DOCTYPE html>
@@ -75,13 +75,13 @@
                     $query = "SELECT * FROM `users` WHERE `userId`=:id";
      
                     $data = $conn->prepare($query);
-                    $data->bindValue(":id", $_SESSION["id"]);
+                    $data->bindValue(":id", $urlId);
                     $data->execute();
         
-                    $currentUser = $data->fetch(PDO::FETCH_ASSOC);
+                    $profileOwner = $data->fetch(PDO::FETCH_ASSOC);
         
-                    if ($currentUser["image_path"] != NULL) {
-                        $image_path = $currentUser['image_path'];
+                    if ($profileOwner["image_path"] != NULL) {
+                        $image_path = $profileOwner['image_path'];
                         echo "<span id='profile_image'><img style='width:100%' src='$image_path'/></span>";
                     } else {
                         echo "<span id='profile_image'><img style='width:100%' src='images/profile-placeholder.png'/>";
@@ -105,18 +105,18 @@
                 <?php
                     $profile_query = "SELECT * FROM `users` WHERE userId = :id";
                     $result = $conn->prepare($profile_query);
-                    $result->bindValue(":id", $_SESSION["id"]);
+                    $result->bindValue(":id", $urlId);
                     $result->execute();
-                    $currentUser = $result->fetch(PDO::FETCH_ASSOC);
+                    $profileOwner = $result->fetch(PDO::FETCH_ASSOC);
                 ?>
-                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($currentUser["name"]).'"' ?> disabled/></strong></p>
-                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$currentUser["email"].'"'?> disabled/></strong></p>
+                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($profileOwner["name"]).'"' ?> disabled/></strong></p>
+                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$profileOwner["email"].'"'?> disabled/></strong></p>
                 
             </form>
             
             
             <?php
-                if ($currentUser["role"] == "staff") {
+                if ($_SESSION["role"] == "staff") {
                     echo "
                         <div class='note_section' style='display:flex;align-items: center;'>
                             <p class='section_title' style='display:inline-block;'>Notes</p>
@@ -125,14 +125,14 @@
                                 <button form='profile-form' id='save_note_button' type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
                             </div>
                         </div>
-                       <textarea id='notes_textarea' name='Notes' disabled>".(htmlspecialchars($currentUser['note']))."</textarea>";
+                       <textarea id='notes_textarea' name='Notes' disabled>".(htmlspecialchars($profileOwner['note']))."</textarea>";
                 }
             ?>
             
             <p class="section_title">Upcoming Appointment history</p>
             <?php
                 $id = $_SESSION["id"];
-                $query = "SELECT * FROM appointments WHERE userId = '$id' AND status='unfulfilled'";
+                $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='unfulfilled'";
                 $data = $conn->query($query);
                 $data->execute();
                 $result = $data->fetch(PDO::FETCH_ASSOC);
@@ -162,7 +162,7 @@
             <p class="section_title">Previous Appointments history</p>
             <?php
                 $id = $_SESSION["id"];
-                $query = "SELECT * FROM appointments WHERE userId = '$id' AND status='fulfilled'";
+                $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='fulfilled'";
                 $data = $conn->query($query);   
                 $data->execute();
                 $result = $data->fetch(PDO::FETCH_ASSOC);
@@ -239,13 +239,14 @@
                 if (confirm("Save your changes on profile?")) {
                     var name = document.getElementById("profile-name").value;
                     var email = document.getElementById("profile-email").value;
+                    var urlId = <?php echo $urlId ?>;
                     $.ajax({
                     type: "POST",
                     url: "updateprofile.php",
-                    data: {'name': name, 'email': email},
+                    data: {'name': name, 'email': email, 'id': urlId},
                     success:function(data) 
                     {
-                        window.location = "profile.php";
+                        window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                     }
                     });
                 }
@@ -254,14 +255,15 @@
             $('#save_note_button').click(function(){
                 if (confirm("Save your changes on note?")) {
                     var note = document.getElementById("notes_textarea").value;
+                    var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
                         url: "updatenote.php",
-                        data: {'note': note},
+                        data: {'note': note,'id':urlId},
                         success:function(data) 
                         {
                             // Probably need to add something here
-                            window.location = "profile.php";
+                            window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                         }
                     });
                 }

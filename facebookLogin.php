@@ -44,7 +44,7 @@
                             $_SESSION["id"] = $userdatabase["userId"];
                             $_SESSION["name"] = $userdatabase["name"];
                             $_SESSION["email"] = $userdatabase["email"];
-                            $_SESSION["role"] = "user";
+                            $_SESSION["role"] = $userdatabase["role"];
                         } else {
                             $date = date("Y-m-d H:i:s");
                             $user_store_query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, NULL, :name, 'user', '', '$date')";
