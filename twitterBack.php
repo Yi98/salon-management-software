@@ -22,11 +22,14 @@
         $user_id = $user_info->id;
         $user_name = $user_info->name;
         $user_pic = $user_info->profile_image_url_https;
-        $text = $user_info->status->text;
+
         $username = $user_info->screen_name;
 
         $_SESSION["access_token"] = $oauth_token;
-           
+        $_SESSION["name"] = $user_name;
+        $_SESSION["email"] = $user_info->email;
+        $_SESSION["role"] = "user";
+            
         //
         $user_check_query = "SELECT * FROM `users` WHERE `email` = :email LIMIT 1";
 
@@ -35,15 +38,20 @@
         $result->execute();
 
         $userdatabase = $result->fetch(PDO::FETCH_ASSOC);
-
+        $date = date("Y-m-d H:i:s");
         if ($userdatabase) {
-            if ($userdatabase["email"] == $user->getField("email")) {
+            if ($userdatabase["email"] == $user_info->email) {
+                $user_update_query = "UPDATE `users` SET `lastSignIn`='$date' WHERE `userId`=:id";
+                $update = $conn->prepare($user_update_query);
+                $update->bindValue(":id",  $userdatabase["userId"]);
+                $update->execute();
+                
                 $_SESSION["id"] = $userdatabase["userId"];
                 $_SESSION["name"] = $userdatabase["name"];
-                $_SESSION["email"] = $userdatabase["email"];
+                $_SESSION["email"] = $user_info->email;
                 $_SESSION["role"] = "user";
+ 
             } else {
-                $date = date("Y-m-d H:i:s");
                 $user_store_query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, NULL, :name, 'user', '', '$date')";
                 // Insert the user
                 $result = $conn->prepare($user_store_query);
@@ -90,8 +98,8 @@
                 $_SESSION["email"] = $user_info->email;
                 $_SESSION["role"] = "user";
         }
-        //
-            
+            //
+        
         unset($_SESSION['oauth_token']);
         header('Location: index.php');
     }else 

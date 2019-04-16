@@ -109,8 +109,8 @@
                     $result->execute();
                     $currentUser = $result->fetch(PDO::FETCH_ASSOC);
                 ?>
-                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" value=<?php echo  htmlspecialchars($currentUser["name"]); ?> disabled/></strong></p>
-                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" value=<?php echo $currentUser["email"]?> disabled/></strong></p>
+                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($currentUser["name"]).'"' ?> disabled/></strong></p>
+                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$currentUser["email"].'"'?> disabled/></strong></p>
                 
             </form>
             
@@ -235,7 +235,9 @@
                     })
                 }
             });
-            $('#save_profile_button').click(function(){
+  
+                
+                $('#save_profile_button').click(function(){
                 if (confirm("Save your changes on profile?")) {
                     var name = document.getElementById("profile-name").value;
                     var email = document.getElementById("profile-email").value;
@@ -251,6 +253,9 @@
                     });
                 }
             }); 
+        
+            
+            
             $('#save_note_button').click(function(){
                 if (confirm("Save your changes on note?")) {
                     var note = document.getElementById("notes_textarea").value;

@@ -14,27 +14,33 @@
         $accessToken = $helper->getAccessToken();
         if (isset($accessToken)) {
             // Problem Here
-            $_SESSION["access_token"] = (string)$accessToken;
+            $_SESSION["facebook_access_token"] = (string)$accessToken;
             
-            if ($_SESSION["access_token"]) {
+            if ($_SESSION["facebook_access_token"]) {
                 try {
                     //$info = explode('=', $accessToken);
                     //$fb->setDefaultAccessToken($info[1]);
-                    $fb->setDefaultAccessToken($_SESSION["access_token"]);
-                    $res = $fb->get("/me?locale=en_US&fields=name,email", $_SESSION["access_token"]);
+                    $fb->setDefaultAccessToken($_SESSION["facebook_access_token"]);
+                    $res = $fb->get("/me?locale=en_US&fields=name,email", $_SESSION["facebook_access_token"]);
                     $user = $res->getGraphUser();
                     
                     // 
                     $user_check_query = "SELECT * FROM `users` WHERE `email` = :email LIMIT 1";
 
                     $result = $conn->prepare($user_check_query);
-                    $result->bindValue(":email", $email);
+                    $result->bindValue(":email", $user->getField("email"));
                     $result->execute();
 
                     $userdatabase = $result->fetch(PDO::FETCH_ASSOC);
 
                     if ($userdatabase) {
                         if ($userdatabase["email"] == $user->getField("email")) {
+                            $date = date("Y-m-d H:i:s");
+                            $user_update_query = "UPDATE `users` SET `lastSignIn`='$date' WHERE `userId`=:id";
+                            $update = $conn->prepare($user_update_query);
+                            $update->bindValue(":id",  $userdatabase["userId"]);
+                            $update->execute();
+
                             $_SESSION["id"] = $userdatabase["userId"];
                             $_SESSION["name"] = $userdatabase["name"];
                             $_SESSION["email"] = $userdatabase["email"];

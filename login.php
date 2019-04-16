@@ -1,6 +1,8 @@
 <?php include "db_connect.php"; ?>
 
 <!-- Social Media Login -->
+
+
 <?php include "twitterBack.php"; ?>
 <?php include "googleLogin.php"; ?>  
 <?php include "facebookLogin.php"; ?>
@@ -42,6 +44,7 @@
                         <h2 class="form-title">Log In</h2>
                         <p class="login-instruction">Log In with your social media account or email address</p>
                         <div class="social-media-login-container">
+                            <!-- FIX BUG WHEN GOOGLE KEEP HAVING PROBLEM -->
                             <a href="<?php echo $fb_login_url; ?>" class="fa fa-facebook"></a>
                             <a href="<?php echo $google_authUrl; ?>" class="fa fa-google"></a>
                             <a href="twitterLogin.php" class="fa fa-twitter"></a>
