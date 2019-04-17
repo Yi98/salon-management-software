@@ -807,7 +807,7 @@ i#close-app-mark {
 }
 
 
-.delete-app-modal {
+.delete-app-modal, .change-status-modal {
   position: absolute;
   top: 32%;
   left: 38%;
@@ -950,4 +950,11 @@ body#appointment-page {
 
 #cancel-app-link:hover {
   text-decoration: underline;
+}
+
+.change-status-modal {
+  position: absolute;
+  top: 32%;
+  left: 38%;
+  height: 180px;
 }

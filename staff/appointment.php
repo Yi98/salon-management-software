@@ -45,6 +45,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
             <td class="appStatus"><?php echo htmlspecialchars($row['status']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
+              "<?php echo htmlspecialchars($row['status']) ?>",
               "<?php echo htmlspecialchars($row['appointmentId']) ?>",
               "<?php echo htmlspecialchars($row['email']) ?>",
               "<?php echo htmlspecialchars($row['appointmentDate']) ?>",
@@ -68,7 +69,9 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <p class="appointment-details-title">Service: <span id="appDetails-service" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Hairdresser: <span id="appDetails-hairdresser" class="appointment-details-content"></span></p>
         <p class="appointment-details-title">Request: <span id="appDetails-request" class="appointment-details-content"></span></p>
-        <button class="ui green button" onclick="onSwitchStatus()"><i class="check circle icon"></i>Mark as fulfilled</button>
+        <button id="unfulfilled-swicth" class="ui purple button" onclick="onSwitchStatus('unfulfilled')"><i class="minus circle
+ icon"></i>Mark as unfulfilled</button>
+        <button id="fulfilled-swicth" class="ui green button" onclick="onSwitchStatus('fulfilled')"><i class="check circle icon"></i>Mark as fulfilled</button>
         <button class="ui red button" onclick="onDeleteAppointment()"><i class="trash icon"></i>Delete appointment</button>
       </div>
     </div>
@@ -93,6 +96,24 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
+
+    <div class="ui modal mini change-status-modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Status modified
+      </div>
+      <div class="content">
+        <div class="description">
+          <p>The appointment status has been modified!</p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui green ok button">
+          Okay
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

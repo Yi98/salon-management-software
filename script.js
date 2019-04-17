@@ -472,6 +472,7 @@ function resetPasswordValidation() {
     }
     return true;
 }
+
 function resetRepeatPasswordValidation() {
     let repeatPassword = document.getElementById("reset-repeatpassword").value;
     let password = document.getElementById("reset-password").value;
@@ -508,7 +509,7 @@ function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
 
-function onViewAppointment(appointmentId, email, date, time, service, hairdresser, request) {
+function onViewAppointment(status, appointmentId, email, date, time, service, hairdresser, request) {
 
 	if (!$('#appointment-details-modal').modal('is active')) {
 		sessionStorage.setItem('appId', appointmentId);
@@ -519,6 +520,18 @@ function onViewAppointment(appointmentId, email, date, time, service, hairdresse
 		document.getElementById('appDetails-service').innerHTML = service;
 		document.getElementById('appDetails-hairdresser').innerHTML = hairdresser;
 		document.getElementById('appDetails-request').innerHTML = request;
+		const unfulfilledBtn = document.getElementById('unfulfilled-swicth');
+		const fulfilledBtn = document.getElementById('fulfilled-swicth');
+
+		fulfilledBtn.style.display = "inline";
+		unfulfilledBtn.style.display = "inline";
+
+		if (status === 'fulfilled') {
+			fulfilledBtn.style.display = "none";
+		}
+		else {
+			unfulfilledBtn.style.display = "none";
+		}
 
 		$('#appointment-details-modal')
 	  	.modal('show');
@@ -705,26 +718,32 @@ function hideBannedUser() {
 }
 
 
-function onSwitchStatus() {
+function onSwitchStatus(stat) {
 	const appId = sessionStorage.getItem('appId');
 
 	const http = new XMLHttpRequest();
   const url = '../appointment-process.php';
-  const params = `appId=${appId}&action=changeStatus`;
+  const params = `appId=${appId}&action=changeStatus&status=${stat}`;
   http.open('POST', url, true);
 
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
   http.onreadystatechange = function() {
     if(http.readyState == 4 && http.status == 200) {
-      console.log(http.responseText);
+    	console.log(http.responseText);
     	if (http.responseText.trim() == "updated") {
-    		$('#success-update-modal')
+    		$('.change-status-modal')
+    			.modal({
+						onApprove: function() {
+							setTimeout(function() {
+						  	document.location.reload();
+						  }, 500);
+						}
+					})
           .modal('show');
     	}
     	else if (http.responseText.trim() == "fail") {
-				$('#fail-booking-modal')
-          .modal('show');
+    		alert("Something went wrong!");
     	}
     }
   }
@@ -767,7 +786,7 @@ function onUserCancelApp(appId) {
 
 
 function cancelAppApproved(appId) {
-	
+
   const http = new XMLHttpRequest();
   const url = 'appointment-process.php';
   const params = `appId=${appId}&action=delete`;

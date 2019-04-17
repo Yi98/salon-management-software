@@ -129,10 +129,17 @@ if (!empty($_POST['action']) && !empty($_POST['date']) && !empty($_POST['time'])
   }
 }
 
-if (!empty($_POST['action']) && !empty($_POST['appId'])) {
+if (!empty($_POST['action']) && !empty($_POST['appId']) && !empty($_POST['status'])) {
   if ($_POST['action'] === 'changeStatus') {
     $appId = $_POST['appId'];
-    $sql = "UPDATE appointments SET status='fulfilled' WHERE appointmentId=$appId";
+    $status = $_POST['status'];
+
+    if ($status == 'fulfilled') {
+      $sql = "UPDATE appointments SET status='fulfilled' WHERE appointmentId=$appId";
+    }
+    else {
+      $sql = "UPDATE appointments SET status='unfulfilled' WHERE appointmentId=$appId";
+    }
 
     if ($conn->exec($sql)) {
       echo "updated";
