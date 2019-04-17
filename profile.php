@@ -7,6 +7,18 @@
     if ( !isset($_GET["id"])) {
         header("Location:profile.php?id=".$_SESSION["id"]);
     }
+
+    $userId = $_GET["id"];
+
+    // query to get upcoming appoitnemnts
+    $getUpcomingQuery = "SELECT * from appointments WHERE userId=$userId AND status='unfulfilled'";
+    $upcomingApp = $conn->query($getUpcomingQuery);
+    $upcomingApp->setFetchMode(PDO::FETCH_ASSOC);
+
+    // query to get previous appoitnemnt
+    $getPreviousQuery = "SELECT * from appointments WHERE userId=$userId AND status='fulfilled'";
+    $previousApp = $conn->query($getPreviousQuery);
+    $previousApp->setFetchMode(PDO::FETCH_ASSOC);
 ?>
 
 <?php
@@ -133,52 +145,49 @@
             ?>
             
             <p class="section_title">Upcoming Appointment history</p>
-            <?php
-                $id = $_SESSION["id"];
-                $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='unfulfilled'";
-                $data = $conn->query($query);
-                $data->execute();
-                $result = $data->fetch(PDO::FETCH_ASSOC);
-        
-                if ($result) {
-                    echo "  <table class='ui striped table'>
-                                <thead>
-                                    <tr>
-                                      <th>User Id</th>
-                                      <th>Date</th>
-                                      <th>Time</th>
-                                      <th>Details</th>
-                                    </tr>
-                                </thead>
-                            </table>";
-                    foreach($data as $row)
-                    {
-                        echo "  <tbody>
-                                    
-                                </tbody>";
-                    }
-                } else {
-                    echo "No Upcoming appointments";
-                }
-            ?>  
+
+            <table class="ui striped table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Service</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php while ($row = $upcomingApp->fetch()): ?>
+                  <tr class="appRow">
+                    <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
+                    <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
+                    <td><?php echo htmlspecialchars($row['typeOfServices']); ?></td>
+                    <td><a onclick="onUserCancelApp(<?php echo htmlspecialchars($row['appointmentId']); ?>)">Cancel appointment</a></td>
+                  </tr>
+                <?php endwhile; ?>
+              </tbody>
+            </table>
             
             <p class="section_title">Previous Appointments history</p>
-            <?php
-                $id = $_SESSION["id"];
-                $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='fulfilled'";
-                $data = $conn->query($query);   
-                $data->execute();
-                $result = $data->fetch(PDO::FETCH_ASSOC);
-            
-                if ($result) {
-                    foreach($data as $row)
-                    {
-                        echo "1";
-                    }
-                } else {
-                    echo "No Previous Appointment history";
-                }
-            ?>  
+            <table class="ui striped table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Service</th>
+                  <th>Hairdresser</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php while ($row = $previousApp->fetch()): ?>
+                  <tr class="appRow">
+                    <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
+                    <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
+                    <td><?php echo htmlspecialchars($row['typeOfServices']); ?></td>
+                    <td><?php echo htmlspecialchars($row['hairdresser']); ?></td>
+                  </tr>
+                <?php endwhile; ?>
+              </tbody>
+            </table>
         </div>
     </div>
     

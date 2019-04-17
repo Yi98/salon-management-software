@@ -694,3 +694,52 @@ function onSwitchStatus() {
   }
   http.send(params);
 }
+
+function onFilterStatus() {
+	const filterBox = document.getElementById('filterBox');
+	const selectedValue = filterBox.options[filterBox.selectedIndex].value;
+
+	const appRows = document.getElementsByClassName('appRow');
+
+
+	for (row of appRows) {
+		row.style.display = "";
+	}
+
+	for (row of appRows) {
+		const stat = row.getElementsByClassName('appStatus')[0];
+		if (selectedValue == 'all') {
+			row.style.display = "";
+		}
+		else if (stat.textContent !== selectedValue) {
+			row.style.display = "none";
+		}
+	}
+
+}
+
+function onUserCancelApp(appId) {
+	const http = new XMLHttpRequest();
+  const url = 'appointment-process.php';
+  const params = `appId=${appId}&action=delete`;
+  http.open('POST', url, true);
+
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200) {
+    // 	if (http.responseText.trim() == "success") {
+    // 		$('#success-booking-modal')
+    //       .modal('show');
+    // 	}
+    // 	else {
+				// $('#fail-booking-modal')
+    //       .modal('show');
+    // 	}
+		  setTimeout(function() {
+		  	document.location.reload();
+		  }, 500);
+    }
+  }
+  http.send(params);
+}

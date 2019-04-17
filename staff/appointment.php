@@ -5,7 +5,6 @@ $sql = 'SELECT * from appointments INNER JOIN users ON appointments.userId = use
 
 $q = $conn->query($sql);
 $q->setFetchMode(PDO::FETCH_ASSOC);
-
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +22,10 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
   <div class="container">
     <h1 class="appointment-list-title">Appointment List</h1>
     Filter by status:
-    <select>
-      <option>unfulfilled</option>
-      <option>fulfilled</option>
+    <select name="status" id="filterBox" onchange="onFilterStatus()">
+      <option value="all">show all</option>
+      <option value="unfulfilled">unfulfilled</option>
+      <option value="fulfilled">fulfilled</option>
     </select>
     <table class="ui striped table">
       <thead>
@@ -39,11 +39,11 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       </thead>
       <tbody>
         <?php while ($row = $q->fetch()): ?>
-          <tr>
+          <tr class="appRow">
             <td><?php echo htmlspecialchars($row['email']) ?></td>
             <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
             <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
-            <td><?php echo htmlspecialchars($row['status']); ?></td>
+            <td class="appStatus"><?php echo htmlspecialchars($row['status']); ?></td>
             <td><a class="view-details-tag" onclick='onViewAppointment(
               "<?php echo htmlspecialchars($row['appointmentId']) ?>",
               "<?php echo htmlspecialchars($row['email']) ?>",
