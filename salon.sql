@@ -99,7 +99,7 @@ CREATE TABLE `sales` (
 CREATE TABLE `users` (
   `userId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `password` varchar(100),
   `name` varchar(150) NOT NULL,
   `role` varchar(20) NOT NULL,
   `note` varchar(200) DEFAULT NULL,
