@@ -156,10 +156,6 @@
             
             <p class="section_title">Upcoming Appointment history</p>
 
-            
-            <p class="section_title">Previous Appointments history</p>
-            
-
             <table class="ui striped table">
               <thead>
                 <tr>
