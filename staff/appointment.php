@@ -73,7 +73,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       </div>
     </div>
 
-    <div class="ui modal mini" id="delete-app-modal">
+    <div class="ui modal mini delete-app-modal">
       <i class="close icon"></i>
       <div class="header">
         Delete appointment
