@@ -27,7 +27,7 @@ if (!empty($_POST['date']) && !empty($_POST['time']) && !empty($_POST['service']
   $q = $conn->query($sql);
   $result = $q->fetch();
 
-  $checkSql = "SELECT * from appointments WHERE appointmentDate='$date' AND appointmentTime='$time'";
+  $checkSql = "SELECT * from appointments WHERE appointmentDate='$date' AND appointmentTime='$time' and hairdresser='$hairdresser'";
   $checkQuery = $conn->query($checkSql);
   $checkResult = $checkQuery->fetch();
 

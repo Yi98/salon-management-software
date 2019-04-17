@@ -224,7 +224,6 @@ function onConfirmSummary() {
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
         appointmentLoader.style.display = "none";
-        console.log(http.responseText);
       	if (http.responseText.trim() == "success") {
       		$('#success-booking-modal')
             .modal('show');
@@ -554,7 +553,7 @@ function onDeleteAppointment() {
 	    allowMultiple: false
 	  });
 
-	$('.mini.modal')
+	$('.delete-app-modal')
 		.modal({
 			onApprove: function() {
 				deleteApproved();
@@ -575,14 +574,6 @@ function deleteApproved() {
 
   http.onreadystatechange = function() {
     if(http.readyState == 4 && http.status == 200) {
-    // 	if (http.responseText.trim() == "success") {
-    // 		$('#success-booking-modal')
-    //       .modal('show');
-    // 	}
-    // 	else {
-				// $('#fail-booking-modal')
-    //       .modal('show');
-    // 	}
 		  setTimeout(function() {
 		  	document.location.reload();
 		  }, 500);
@@ -796,14 +787,6 @@ function cancelAppApproved(appId) {
 
   http.onreadystatechange = function() {
     if(http.readyState == 4 && http.status == 200) {
-    // 	if (http.responseText.trim() == "success") {
-    // 		$('#success-booking-modal')
-    //       .modal('show');
-    // 	}
-    // 	else {
-				// $('#fail-booking-modal')
-    //       .modal('show');
-    // 	}
 		  setTimeout(function() {
 		  	document.location.reload();
 		  }, 500);
