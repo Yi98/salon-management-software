@@ -4,13 +4,16 @@
     if (!isset($_SESSION["email"]) ) {
         header("Location: index.php");
     }
-    if ( !isset($_GET["id"])) {
+    if (!isset($_GET["id"])) {
         header("Location:profile.php?id=".$_SESSION["id"]);
     }
 ?>
 
 <?php
     $urlId = $_GET["id"];
+    if ($_SESSION["id"] != $urlId && $_SESSION["role"] != "staff") {
+        header("Location:profile.php?id=".$_SESSION["id"]);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -171,6 +174,16 @@
                 $result = $data->fetch(PDO::FETCH_ASSOC);
             
                 if ($result) {
+                    echo "  <table class='ui striped table'>
+                                <thead>
+                                    <tr>
+                                      <th>User Id</th>
+                                      <th>Date</th>
+                                      <th>Time</th>
+                                      <th>Details</th>
+                                    </tr>
+                                </thead>
+                            </table>";
                     foreach($data as $row)
                     {
                         echo "1";
