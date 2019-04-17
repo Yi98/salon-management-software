@@ -7,6 +7,9 @@
   $price = $_POST['price'];
   $retailprice = $_POST['retailprice'];
   $quantity = $_POST['quantity'];
+  $gender = $_POST['gender'];
+  $categories = $_POST['categories'];
+    
   if ($quantity <= 4){
     $status = "Limited stock";
   }
@@ -21,9 +24,9 @@
   $manufacturer = $_POST['manufacturer'];
   $mime = $_FILES['image']['type'];
   $image_name = file_get_contents($_FILES['image']['tmp_name']);
-  $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`,`brand`,`manufacturer`,`image_name`,`mime`, `archive`) VALUES (:name,:description,:quantity,:retailprice,:price,:status,:brand,:manufacturer,:image_name,:mime,:archive)";
+  $pdoQuery = "INSERT INTO `inventories` (`inventoryName`,`description`,`quantity`,`unitPrice`,`purchasingPrice`,`status`,`brand`,`manufacturer`,`image_name`,`mime`, `archive`,`gender`,`categories`) VALUES (:name,:description,:quantity,:retailprice,:price,:status,:brand,:manufacturer,:image_name,:mime,:archive,:gender,:categories)";
   $pdoResult = $conn->prepare($pdoQuery);
-  $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status,":brand"=>$brand,":manufacturer"=>$manufacturer,":image_name"=>$image_name,":mime"=>$mime,":archive"=>$archive));
+  $pdoExecute = $pdoResult->execute(array(":name"=>$name,":description"=>$description,":quantity"=>$quantity,":retailprice"=>$retailprice,":price"=>$price,":status"=>$status,":brand"=>$brand,":manufacturer"=>$manufacturer,":image_name"=>$image_name,":mime"=>$mime,":archive"=>$archive,":gender"=>$gender,":categories"=>$categories));
   }
   ?>
 <!-- Change status module -->
@@ -92,7 +95,109 @@
     $Showarchive = "UPDATE inventories SET archive = 'No' WHERE inventoryId = '$id'";
     $result = $conn->prepare($Showarchive);
     $execute = $result->execute();
+  }
+?>
+
+<!-- Edit product module -->
+<?php
+  if(isset($_POST['idEdit'])){
+    $idEdit = $_POST['idEdit'];
+    $query = "SELECT * FROM inventories WHERE inventoryId = '$idEdit'";
+    $data = $conn->query($query);
+    $data->execute();
+
+    foreach($data as $row){
+      $name = $row['inventoryName'];
+      $desc = $row['description'];
+      $quantity = $row['quantity'];
+      $price = $row['purchasingPrice'];
+      $retailprice = $row['unitPrice'];
+      $brand = $row['brand'];
+      $manufacturer = $row['manufacturer'];
+      
+
+      echo "<div class='container' id='userForm'><form method='post' class='editUser container' enctype='multipart/form-data'>
+      <h1>Edit product here</h1>
+      <div class='row'>
+        <div class='form-group col-lg-6 col-xs-6'>
+          <label for='name'><b>Product name</b></label>
+          <input type='text' name='name' class='form-control' value='$name'>
+        </div>
+
+        <div class='form-group col-lg-6 col-xs-6'>
+          <label for='brand'><b>Product brand</b></label>
+          <input type='text' name='brand' class='form-control' value='$brand'>
+        </div>
+      </div>
+      
+      <div class='row'>
+        <div class='form-group col-lg-6 col-xs-6'>
+          <label for='manufacturer'><b>Product manufacturer</b></label>
+          <input type='text' name='manufacturer' class='form-control' value='$manufacturer'>
+        </div>
+
+        <div class='form-group col-lg-6 col-xs-6'>
+          <label for='product-image'><b>Product Image</b></label>
+          <input type='file' name='editimage' accept='image/*' class='form-control-file' required>
+        </div>
+      </div>
+      <div class='row'>
+            <div class='form-group col-lg-4 col-xs-4'>    
+              <label for='product-quantity'><b>Product Quantity</b></label>
+              <input type='number' name='quantity' value='$quantity' class='form-control' required>
+            </div>
+            <div class='form-group col-lg-4 col-xs-4'>    
+              <label for='product-price'><b>Product Price (RM)</b></label>
+              <input type='number' step='0.01' value='$price' name='price' class='form-control' required>
+            </div>
+            <div class='form-group col-lg-4 col-xs-4'>
+              <label for='product-retail-price'><b>Product Retail Price (RM)</b></label>
+              <input type='number' step='0.01' value='$retailprice' name='retailprice' class='form-control' required>
+            </div>
+      </div> 
+      <div class='row'>
+            <div class='form-group col-lg-12 col-xs-12'>
+              <label for='product-description'><b>Product Description</b></label>
+              <textarea rows='4' cols='80' name='description' placeholder='Enter product description here' class='form-control' required>$desc</textarea>
+            </div>
+      </div>
+
+      <div class='row'>
+      <div class='form-group'>
+      <button type='submit' name='iesubmit' value='$idEdit' class='btn user-btn btn btn-primary col-lg-6 col-xs-6'>Edit</button><button type='button' class='btn user-cancel btn btn-danger user-btn col-lg-6 col-xs-6' onclick='closeUserEdit()'>Close</button></div>
+      </div></form></div>";
+    }
+  }
+?>
+
+<!-- Update value to database -->
+<?php 
+  if(isset($_POST['iesubmit'])){
+    $editid = $_POST['iesubmit'];
+    $editname = $_POST['name'];
+    $editdesc = $_POST['description'];
+    $editquantity = $_POST['quantity'];
+    $editprice = $_POST['price'];
+    $editretailprice = $_POST['retailprice'];
+    $editbrand = $_POST['brand'];
+    $editmanufacturer = $_POST['manufacturer'];
     
+    $editmime = $_FILES['editimage']['type'];
+    $editimage_name = file_get_contents($_FILES['editimage']['tmp_name']);
+    
+    $query = "UPDATE inventories SET inventoryName = :editname , description = :editdesc, quantity = :editquantity, unitPrice = :editretailprice, purchasingPrice = :editprice, brand = :editbrand, manufacturer = :editmanufacturer, image_name = :editimage_name, mime = :editmime WHERE inventoryId = :editid;";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':editname',$editname);
+    $stmt->bindParam(':editdesc',$editdesc);
+    $stmt->bindParam(':editquantity',$editquantity);
+    $stmt->bindParam(':editretailprice',$editretailprice);
+    $stmt->bindParam(':editprice',$editprice);
+    $stmt->bindParam(':editbrand',$editbrand);
+    $stmt->bindParam(':editmanufacturer',$editmanufacturer);
+    $stmt->bindParam(':editimage_name',$editimage_name, PDO::PARAM_LOB);
+    $stmt->bindParam(':editmime',$editmime);
+    $stmt->bindParam(':editid',$editid);
+    $stmt->execute();
   }
 ?>
 
@@ -117,49 +222,12 @@
     <script src="../script.js"></script>
   </head>
   <body>
+    
     <div class="container staff-inventory-container">
       <h1>Staff Product View
       </h1>
-      <!--Display inventories in tabular form -->
-      <tbody>
-        <table class="table table-bordered ttb">
-          <tr>
-            <th>No.
-            </th>
-            <th>Item Name
-            </th>
-            <th>Brand
-            </th>
-            <th>Manufacturer
-            </th>
-            <th>Quantity
-            </th>
-            <th>Price (MYR)
-            </th>
-            <th>Retail Price (MYR)
-            </th>
-            <th>Status
-            </th>
-            <th>Actions
-            </th>
-            <th>Image
-            </th>
-          </tr>
-          <!-- Display all products -->
-          <?php
-            $query = "SELECT * FROM inventories WHERE archive = 'No'";
-            $data = $conn->query($query);
-            $data->execute();
-            $inventoryNo = 0;
-            foreach($data as $row)
-            {
-              $inventoryNo ++;
-              $id = $row['inventoryId'];
-              echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50'/></td>" . "</tr>";
-            }
-            ?>  
-        </table>
-      </tbody>
+      
+      <br/>
       <div class="product-c">
         <button class="addItem" onclick="openForm()">
         <img src="../images/add.png" alt="add-btn">
@@ -167,19 +235,32 @@
         <span id="anp">Add new product
         </span>
         
-        <button class="archiveItem" onclick="showArchive()">
+        <button class="archiveItem" onclick="showArchive()" id="archiveButton">
         <img src="../images/archive.png" alt="archive-btn">
         </button>
-        <span id="anp">Show archive
+        <span id="anp">Show archive products
         </span>
+        <br/><br/>
+        <input type="text" id="userInput" onkeyup="searchItem()" placeholder="Search for item names..">
+        <span id="anp" class="archiveItem"><b>Gender Filters</b> </span>
+        <button class="btn btn-light btn" onclick="filterMale()">Male</button>
+        <button class="btn btn-light btn" onclick="filterFemale()">Female</button>
+        <button class="btn btn-light btn" onclick="filterUnisex()">Unisex</button>
+        <button class="btn btn-light btn" onclick="filterClear()">Clear</button>
+        
+        <span id="anp" class="archiveItem"><b>Category Filters</b> </span>
+        <button class="btn btn-light btn" onclick="filterShampoo()">Hair Shampoo</button>
+        <button class="btn btn-light btn" onclick="filterConditioner()">Conditioner</button>
+        <button class="btn btn-light btn" onclick="filterOils()">Hair Oils</button>
+        <button class="btn btn-light btn" onclick="filterWax()">Hair Wax</button>
+        <button class="btn btn-light btn" onclick="filterClear()">Clear</button>
       </div>
-      
       <!-- This is the pop up list to show the list of archive product -->
       <div class="form-popup container" id="archiveList">
         <h1>Archive products</h1>
         
         <tbody>
-        <table class="table table-bordered ttb">
+        <table class="table table-bordered ttb" id='archiveTable'>
           <tr>
             <th>No.
             </th>
@@ -213,20 +294,18 @@
             {
               $inventoryNo ++;
               $id = $row['inventoryId'];
-              echo "<tr><td>" . $inventoryNo . "</td>" . "<td>" . $row['inventoryName'] . "</td>" . "<td>" . $row['brand'] . "</td>" . "<td>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> ". " <button type='submit' class='btn btn-success' name='idShowArc' value ='$id'>Show product</button>"."</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50'/></td>" . "</tr>";
+              echo "<tr><td>" . $inventoryNo . "</td>" . "<td class='product-wctrl'>" . $row['inventoryName'] . "</td>" . "<td class='product-wctrl'>" . $row['brand'] . "</td>" . "<td class='product-wctrl'>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> " . " <button type='submit' class='btn btn-success' name='idShowArc' value ='$id'>Show product</button>"."</div></form></td>" ."<td><embed src='data:" . $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50' class='zoom'/></td>" . "<td id='gender'>".$row['gender']."</td><td id='categories'>". $row['categories']. "</td></tr>";
             }
             ?>  
           <br/>
           
         </table>
       </tbody>
-        
-      <button type="button" class="btn cancel" onclick="closeArchive()">Close</button>
       <br/>
       </div>
+      <br/>
       
-      
-      
+
       <!-- This is the pop up form to add new product -->
       <div class="form-popup container" id="myForm">
         <form method="post" class="form-container" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to submit this form?');">
@@ -251,6 +330,22 @@
             <div class="form-group col-lg-6 col-xs-6">
               <label for="product-image"><b>Product Image</b></label>
               <input type="file" name="image" accept="image/*" class="form-control-file" required>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-gender"><b>Suitable for</b></label><br/>
+              <label for="male" class="radio-inline"><b>Male</b></label> <input type="radio" name="gender" value="Male" required> 
+              <label for="female" class="radio-inline"><b>Female</b></label> <input type="radio" name="gender" value="Female" required> 
+              <label for="male" class="radio-inline"><b>Unisex</b></label> <input type="radio" name="gender" value="Unisex" required> 
+            </div>
+            <div class="form-group col-lg-6 col-xs-6">
+              <label for="product-categories"><b>Product Categories</b></label><br/>
+              <label for="shampoo" class="radio-inline"><b>Hair Shampoo</b></label> <input type="radio" name="categories" value="Hair Shampoo" required>
+              <label for="conditioner" class="radio-inline"><b>Conditioner</b></label> <input type="radio" name="categories" value="Conditioner" required>
+              <label for="oils" class="radio-inline"><b>Hair Oils</b></label> <input type="radio" name="categories" value="Hair Oils" required>
+              <label for="wax" class="radio-inline"><b>Hair Wax</b></label> <input type="radio" name="categories" value="Hair Wax" required>
             </div>
           </div>
             
@@ -279,6 +374,49 @@
           <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
       </div>
+      <br/>
+      <!--Display inventories in tabular form -->
+      <tbody>
+        <table class="table table-bordered ttb" id="itemTable">
+          <tr>
+            <th>No.
+            </th>
+            <th>Item Name
+            </th>
+            <th>Brand
+            </th>
+            <th>Manufacturer
+            </th>
+            <th>Quantity
+            </th>
+            <th>Price (MYR)
+            </th>
+            <th>Retail Price (MYR)
+            </th>
+            <th>Status
+            </th>
+            <th>Actions
+            </th>
+            <th>Image
+            </th>
+          </tr>
+          <!-- Display all products -->
+          <?php
+            $query = "SELECT * FROM inventories WHERE archive = 'No'";
+            $data = $conn->query($query);
+            $data->execute();
+            $inventoryNo = 0;
+            foreach($data as $row)
+            {
+              $inventoryNo ++;
+              $id = $row['inventoryId'];
+              echo "<tr><td>" . $inventoryNo . "</td>" . "<td class='product-wctrl'>" . $row['inventoryName'] . "</td>" . "<td class='product-wctrl'>" . $row['brand'] . "</td>" . "<td class='product-wctrl'>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . " <button type='submit' class='btn btn-primary' name='idEdit' value ='$id' onclick='openUserEdit()'>Edit</button>" . " <button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> " . " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>" . "</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50' class='zoom' /></td>" . "<td id='gender'>".$row['gender']."</td><td id='categories'>". $row['categories']. "</td></tr>";
+            }
+            ?>  
+        </table>
+      </tbody>
+      
+      
     </div>
   </body>
 </html>

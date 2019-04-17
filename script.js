@@ -598,17 +598,6 @@ function onLeavePrevious(context) {
   context.childNodes[0].style.padding = 0;
 }
 
-function showArchive() {
-  document.getElementById("archiveList").style.display = "block";
-  document.getElementById("myForm").style.display="none";
-  
-}
-
-function closeArchive() {
-  document.getElementById("archiveList").style.display = "none";
-}
-
-
 function filterUsers(){
   var table, tr, td, i;
   table = document.getElementById("userTable");
@@ -793,4 +782,274 @@ function cancelAppApproved(appId) {
     }
   }
   http.send(params);
+}
+
+$(document).ready(function(){
+    $("#archiveButton").click(function(){
+        $("#archiveList").toggle();
+    });
+});
+
+function searchItem() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue, table2, tr2, td2, j, txtValue2;
+  input = document.getElementById("userInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("itemTable");
+  table2 = document.getElementById("archiveTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (j = 0; j < tr2.length; j++) {
+    td2 = tr2[j].getElementsByTagName("td")[1];
+    if (td2) {
+      txtValue2 = td2.textContent || td2.innerText;
+      if (txtValue2.toUpperCase().indexOf(filter) > -1) {
+        tr2[j].style.display = "";
+      } else {
+        tr2[j].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterMale(){
+  var table, tr, td, i,table2,tr2,td2;
+  table = document.getElementById("archiveTable");
+  table2 = document.getElementById("itemTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[10];
+    if (td) {
+      if (td.textContent == 'Male') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[10];
+    if (td2) {
+      if (td2.textContent == 'Male') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterFemale(){
+  var table, tr, td, i;
+  table = document.getElementById("archiveTable");
+  tr = table.getElementsByTagName("tr");
+  table2 = document.getElementById("itemTable");
+  tr2 = table2.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[10];
+    if (td) {
+      if (td.textContent == 'Female') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[10];
+    if (td2) {
+      if (td2.textContent == 'Female') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterUnisex(){
+  var table, tr, td, i;
+  table = document.getElementById("archiveTable");
+  tr = table.getElementsByTagName("tr");
+  table2 = document.getElementById("itemTable");
+  tr2 = table2.getElementsByTagName("tr");
+
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[10];
+    if (td) {
+      if (td.textContent == 'Unisex') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[10];
+    if (td2) {
+      if (td2.textContent == 'Unisex') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterClear(){
+  var table, tr, td, i;
+  table = document.getElementById("archiveTable");
+  tr = table.getElementsByTagName("tr");
+  table2 = document.getElementById("itemTable");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+      tr[i].style.display = ""; 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+      tr2[i].style.display = ""; 
+  }
+  
+}
+
+function filterShampoo(){
+  var table, tr, td, i,table2,tr2,td2;
+  table = document.getElementById("archiveTable");
+  table2 = document.getElementById("itemTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[11];
+    if (td) {
+      if (td.textContent == 'Hair Shampoo') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[11];
+    if (td2) {
+      if (td2.textContent == 'Hair Shampoo') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterConditioner(){
+  var table, tr, td, i,table2,tr2,td2;
+  table = document.getElementById("archiveTable");
+  table2 = document.getElementById("itemTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[11];
+    if (td) {
+      if (td.textContent == 'Conditioner') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[11];
+    if (td2) {
+      if (td2.textContent == 'Conditioner') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterOils(){
+  var table, tr, td, i,table2,tr2,td2;
+  table = document.getElementById("archiveTable");
+  table2 = document.getElementById("itemTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[11];
+    if (td) {
+      if (td.textContent == 'Hair Oils') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[11];
+    if (td2) {
+      if (td2.textContent == 'Hair Oils') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
+}
+
+function filterWax(){
+  var table, tr, td, i,table2,tr2,td2;
+  table = document.getElementById("archiveTable");
+  table2 = document.getElementById("itemTable");
+  tr = table.getElementsByTagName("tr");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[11];
+    if (td) {
+      if (td.textContent == 'Hair Wax') {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+  
+  for (i = 0; i < tr2.length; i++) {
+    td2 = tr2[i].getElementsByTagName("td")[11];
+    if (td2) {
+      if (td2.textContent == 'Hair Wax') {
+        tr2[i].style.display = "";
+      } else {
+        tr2[i].style.display = "none";
+      }
+    } 
+  }
 }

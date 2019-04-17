@@ -315,6 +315,7 @@ input:focus::-webkit-input-placeholder {
 .form-container {
   width:100%;
   padding: 10px;
+  background-color: #e0b920;
 }
 
 /* Full-width input fields */
@@ -341,6 +342,7 @@ input:focus::-webkit-input-placeholder {
   width: 49.8%;
   margin-bottom:10px;
   opacity: 0.8;
+  
 }
 
 
@@ -355,9 +357,13 @@ input:focus::-webkit-input-placeholder {
 }
 
 .product-c button{
-    width: 5%;
+    width: 4%;
     border: none;
     padding:0;
+}
+
+.product-c .btn{
+  width:8%;
 }
 
 .product-c{
@@ -368,7 +374,6 @@ input:focus::-webkit-input-placeholder {
 #anp{
     margin-left:2%;
 }
-
 
 /* Index style */
 .main-container{
@@ -877,6 +882,7 @@ span.view-details-text {
 
 #archiveList{
   padding: 1% 2% 1% 2%;
+  
 }
 
 #archiveList .cancel{
@@ -957,4 +963,24 @@ body#appointment-page {
   top: 32%;
   left: 38%;
   height: 180px;
+}
+
+.zoom{
+  transition: transform .2s;
+}
+
+.zoom:hover {
+  transform: scale(5); 
+}
+
+#archiveTable .product-wctrl{
+  width:10%;
+}
+
+#itemTable .product-wctrl{
+  width:10%;
+}
+
+#gender , #categories{
+  display: none;
 }
