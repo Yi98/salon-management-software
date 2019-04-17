@@ -97,6 +97,7 @@ CREATE TABLE `sales` (
 --
 
 CREATE TABLE `users` (
+  `image_path` varchar(100) DEFAULT NULL,
   `userId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100),
@@ -104,6 +105,7 @@ CREATE TABLE `users` (
   `role` varchar(20) NOT NULL,
   `note` varchar(200) DEFAULT NULL,
   `lastSignIn` date DEFAULT NULL,
+  `forgotPasswordId` varchar(32) DEFAULT NULL,
   `banned` varchar(10) DEFAULT NULL,
   `bannedDate` date DEFAULT NULL,
   `bannedReason` varchar(255) DEFAULT NULL,
