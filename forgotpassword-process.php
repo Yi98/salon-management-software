@@ -1,13 +1,11 @@
 <?php
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+    // Import PHPMailer classes into the global namespace
+    // These must be at the top of your script, not inside a function
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
-// Load Composer's autoloader
-require 'vendor/autoload.php';
-?>
-<?php
+    // Load Composer's autoloader
+    require 'vendor/autoload.php';
     
     $forgot_password_error_message = "";
     $forgot_password_success_message = "";
@@ -20,24 +18,20 @@ require 'vendor/autoload.php';
         if (!empty($_POST)) {
             $forgot_password_email = $_POST["email"];
             
-            $user_check_query = "SELECT * FROM `users` WHERE `email` = :email AND `password` != NULL LIMIT 1";
+            $user_check_query = "SELECT * FROM `users` WHERE `email` = :email AND `password` IS NOT NULL";
 
             $result = $conn->prepare($user_check_query);
             $result->bindValue(":email", $forgot_password_email);
             $result->execute();
-
             $currentUser = $result->fetch(PDO::FETCH_ASSOC);
 
             if (is_array($currentUser)) {
-                // currently here 
-                // Generate a unique string
                 $uniqidStr = md5(uniqid(mt_rand()));
-                
-                // THIS ONE HAVEN'T BEING IMPLEMENTED YET
+    
                 $check_forgot_password_column_query = 
                 "IF COL_LENGTH(`users`, `forgotPasswordId`) IS NULL
                 BEGIN
-                    ALTER `forgotPasswordId` varchar(32) utf8_unicode_ci DEFAULT NULL,
+                    ALTER `forgotPasswordId` varchar(32) DEFAULT NULL,
                 END";
                 
                 // update data with forgot pass code
@@ -76,7 +70,6 @@ require 'vendor/autoload.php';
                         $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
                         $mail->send();
-                        //echo 'Message has been sent';
                     } catch (Exception $e) {
                         //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                     }
@@ -84,8 +77,6 @@ require 'vendor/autoload.php';
                     $status = "Success";
                     $message = "Please check your e-mail, we have sent a password reset link to your registered email.";
                     $forgot_password_success_message = $status." ".$message;
-                    //header('location: forgotpassword.php');
-                    //exit;
                 } else {
                     $status = "Error";
                     $message = "Some problem occurred, please try again.";

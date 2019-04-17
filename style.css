@@ -918,3 +918,32 @@ span.view-details-text {
 body#appointment-page {
   overflow-y: hidden;
 }
+
+.editUser{
+  position: none;
+  z-index: 9;
+  width:74.3%;
+  background-color:#e5ca00;
+}
+
+.editUser h1{
+  font-family: georgia;
+}
+
+.user-btn{
+  width:50%;
+  height:7%;
+  color:black;
+  opacity: 0.8;
+}
+
+.user-btn:hover{
+  opacity:1;
+  color:black;
+}
+
+#bannedUserTable{
+  display: none;
+  background-color:white;
+  border:none;
+}

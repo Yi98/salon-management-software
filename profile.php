@@ -4,7 +4,7 @@
     if (!isset($_SESSION["email"]) ) {
         header("Location: index.php");
     }
-    if ( !isset($_GET["id"])) {
+    if (!isset($_GET["id"])) {
         header("Location:profile.php?id=".$_SESSION["id"]);
     }
 
@@ -23,6 +23,9 @@
 
 <?php
     $urlId = $_GET["id"];
+    if ($_SESSION["id"] != $urlId && $_SESSION["role"] != "staff") {
+        header("Location:profile.php?id=".$_SESSION["id"]);
+    }
 ?>
 
 <!DOCTYPE html>

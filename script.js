@@ -650,7 +650,8 @@ function filterAll(){
 }
 
 function searchUser() {
-  var input, filter, table, tr, td, i, txtValue;
+ 
+  var input, filter, table, tr, td, i, txtValue,table2,tr2,td2,j,txtValue2;
   input = document.getElementById("userInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("userTable");
@@ -667,7 +668,42 @@ function searchUser() {
       }
     } 
   }
+  
+  table2 = document.getElementById("bannedUserTable");
+  tr2 = table2.getElementsByTagName("tr");
+  
+  for (j = 0; j < tr2.length; j++) {
+    td2 = tr2[j].getElementsByTagName("td")[2];
+    if (td2) {
+      txtValue2 = td2.textContent || td2.innerText;
+      if (txtValue2.toUpperCase().indexOf(filter) > -1) {
+        tr2[j].style.display = "";
+      } else {
+        tr2[j].style.display = "none";
+      }
+    } 
+  }
+  
 }
+
+function openUserEdit() {
+    document.getElementById("userForm").style.display = "block";
+}
+
+function closeUserEdit() {
+    document.getElementById("userForm").style.display = "none";
+
+}
+
+function showBannedUser() {
+  document.getElementById("bannedUserTable").style.display = "block";
+  
+}
+
+function hideBannedUser() {
+  document.getElementById("bannedUserTable").style.display = "none";
+}
+
 
 function onSwitchStatus() {
 	const appId = sessionStorage.getItem('appId');
@@ -694,6 +730,7 @@ function onSwitchStatus() {
   }
   http.send(params);
 }
+
 
 function onFilterStatus() {
 	const filterBox = document.getElementById('filterBox');
