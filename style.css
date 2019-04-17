@@ -794,10 +794,6 @@ i#close-app-mark {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 980c44c12c6b1a7a42faf71f6ef7edd91cee2de9
 #itemDesc{
   width: 20%;
 }
@@ -811,7 +807,7 @@ i#close-app-mark {
 }
 
 
-#delete-app-modal {
+.delete-app-modal {
   position: absolute;
   top: 32%;
   left: 38%;
@@ -946,4 +942,12 @@ body#appointment-page {
   display: none;
   background-color:white;
   border:none;
+}
+
+#cancel-app-link {
+  cursor: pointer;
+}
+
+#cancel-app-link:hover {
+  text-decoration: underline;
 }

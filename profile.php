@@ -41,6 +41,8 @@
     <!-- Bootstrap library -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -51,6 +53,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
     
     <script src="script.js"></script>
   
@@ -164,7 +171,7 @@
                     <td><?php echo htmlspecialchars($row['appointmentDate']); ?></td>
                     <td><?php echo htmlspecialchars($row['appointmentTime']); ?></td>
                     <td><?php echo htmlspecialchars($row['typeOfServices']); ?></td>
-                    <td><a onclick="onUserCancelApp(<?php echo htmlspecialchars($row['appointmentId']); ?>)">Cancel appointment</a></td>
+                    <td><a id="cancel-app-link" onclick="onUserCancelApp(<?php echo htmlspecialchars($row['appointmentId']); ?>)">Cancel appointment</a></td>
                   </tr>
                 <?php endwhile; ?>
               </tbody>
@@ -192,6 +199,27 @@
               </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="ui modal mini delete-app-modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Cancel appointment
+      </div>
+      <div class="content">
+        <div class="description">
+          <p>Please note that this action cannot be undone!</p>
+          <p>Are you sure you want to cancel?</p>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui deny button">
+          No, I don't mean it
+        </div>
+        <div class="ui red ok button">
+          Yes, cancel it
+        </div>
+      </div>
     </div>
     
     <script>

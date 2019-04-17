@@ -756,7 +756,19 @@ function onFilterStatus() {
 }
 
 function onUserCancelApp(appId) {
-	const http = new XMLHttpRequest();
+	$('.mini.modal')
+		.modal({
+			onApprove: function() {
+				cancelAppApproved(appId);
+			}
+		})
+  	.modal('show');
+}
+
+
+function cancelAppApproved(appId) {
+	
+  const http = new XMLHttpRequest();
   const url = 'appointment-process.php';
   const params = `appId=${appId}&action=delete`;
   http.open('POST', url, true);
