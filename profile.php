@@ -141,25 +141,24 @@
                 $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='unfulfilled'";
                 $data = $conn->query($query);
                 $data->execute();
-                $result = $data->fetch(PDO::FETCH_ASSOC);
+                $result = $data->fetchAll(PDO::FETCH_ASSOC);
         
                 if ($result) {
                     echo "  <table class='ui striped table'>
                                 <thead>
                                     <tr>
-                                      <th>User Id</th>
-                                      <th>Date</th>
-                                      <th>Time</th>
-                                      <th>Details</th>
+                                      <th>Appointment Id</th>
+                                      <th>Appointment Date</th>
+                                      <th>Appointment Time</th>
+                                      <th>Type of Services</th>
+                                      <th>Request</th>
                                     </tr>
-                                </thead>
-                            </table>";
-                    foreach($data as $row)
+                                </thead>";
+                    foreach($result as $row)
                     {
-                        echo "  <tbody>
-                                    
-                                </tbody>";
+                        echo "<tr><td>" . $row['appointmentId'] . "</td>" . "<td>" . $row['appointmentDate'] . "</td>"."<td>".$row["appointmentTime"]."</td>"."<td>".$row['typeOfServices']."</td>"."<td>".$row['request']."</td></tr>";
                     }
+                    echo "</table>";
                 } else {
                     echo "No Upcoming appointments";
                 }
@@ -171,23 +170,24 @@
                 $query = "SELECT * FROM appointments WHERE userId = '$urlId' AND status='fulfilled'";
                 $data = $conn->query($query);   
                 $data->execute();
-                $result = $data->fetch(PDO::FETCH_ASSOC);
+                $result = $data->fetchAll(PDO::FETCH_ASSOC);
             
                 if ($result) {
                     echo "  <table class='ui striped table'>
                                 <thead>
                                     <tr>
-                                      <th>User Id</th>
-                                      <th>Date</th>
-                                      <th>Time</th>
-                                      <th>Details</th>
+                                      <th>Appointment Id</th>
+                                      <th>Appointment Date</th>
+                                      <th>Appointment Time</th>
+                                      <th>Type of Services</th>
+                                      <th>Request</th>
                                     </tr>
-                                </thead>
-                            </table>";
-                    foreach($data as $row)
+                                </thead>";
+                    foreach($result as $row)
                     {
-                        echo "1";
+                        echo "<tr><td>" . $row['appointmentId'] . "</td>" . "<td>" . $row['appointmentDate'] . "</td>"."<td>".$row["appointmentTime"]."</td>"."<td>".$row['typeOfServices']."</td>"."<td>".$row['request']."</td></tr>";
                     }
+                    echo "</table>";
                 } else {
                     echo "No Previous Appointment history";
                 }
