@@ -62,8 +62,14 @@
     <script src="script.js"></script>
   
     <style>
-        .profile-container {
-            border: 1px solid black;
+        body {
+            margin-top:5%;
+        }
+        .row {
+            border: 1px solid grey;
+            padding:0;
+            display:flex;
+            flex-wrap: wrap;
         }
         .profile-container input {
             border: none;
@@ -83,9 +89,6 @@
             padding: 15px 0 0 0;
             
         }
-        .note_section, .profile_and_edit_section {
-            margin-bottom: 10px;
-        }
         .profile-container div:nth-child(1) input{
             width:auto;
         }
@@ -94,7 +97,8 @@
   
 <body>
     <div class="container profile-container">
-        <div class="col-md-3 text-center">
+        <div class="row">
+        <div class="col-lg-4 col-xs-12 text-center" style="background: #D3D3D3;">
             <figure style="margin:0 auto; width:250px; margin-top:5%;" class="profile-image-figure">
                 <?php
                     $query = "SELECT * FROM `users` WHERE `userId`=:id";
@@ -107,26 +111,27 @@
         
                     if ($profileOwner["image_path"] != NULL) {
                         $image_path = $profileOwner['image_path'];
-                        echo "<span id='profile_image'><img style='width:100%' src='$image_path'/></span>";
+                        echo "<span id='profile_image'><img  class='img-fluid img-rounded' style='width:100%' src='$image_path'/></span>";
                     } else {
-                        echo "<span id='profile_image'><img style='width:100%' src='images/profile-placeholder.png'/>";
+                        echo "<span id='profile_image'><img class='img-fluid img-rounded' style='width:100%' src='images/profile-placeholder.png'/>";
                     }
                 ?>
             </figure>
             <p>Profile Image</p>
             
-            <input type="file" id="file" name="file" accept="image/*">
+            <input style="display: inline-block; margin-bottom:5%;" type="file" id="file" name="file" accept="image/*">
         </div>
         
-        <div class="col-md-offset-1 col-md-7">
+        <div class="col-md-offset-1 col-lg-7 col-xs-12">
             <div class="profile_and_edit_section" style="display:flex;align-items: center;">
                 <p class="section_title" style="display:inline-block;">Profile</p>
+
                 <div class="edit-and-save-profile" style="display:inline-block; margin-left:auto;">
-                    <button form="profile-form"x id='save_profile_button' type='submit' name='saveProfile' >Save Profile</button>
-                    <button id='edit_profile_button' type='submit' name='editProfile'>Edit Profile</button>    
+                    <button class="btn btn-success" form="profile-form"x id='save_profile_button' type='submit' name='saveProfile' >Save Profile</button>
+                    <button class="btn btn-info" id='edit_profile_button' type='submit' name='editProfile'>Edit Profile</button>    
                 </div>  
             </div>
-            <form method="post" id="profile-form" name="profile-form">
+            <form class="form-group form-inline" method="post" id="profile-form" name="profile-form">
                 <?php
                     $profile_query = "SELECT * FROM `users` WHERE userId = :id";
                     $result = $conn->prepare($profile_query);
@@ -134,8 +139,8 @@
                     $result->execute();
                     $profileOwner = $result->fetch(PDO::FETCH_ASSOC);
                 ?>
-                <p>Name: <strong><input id="profile-name" class="profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($profileOwner["name"]).'"' ?> disabled/></strong></p>
-                <p>Email: <strong><input id="profile-email" class="profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$profileOwner["email"].'"'?> disabled/></strong></p>
+                <p><label for="profile-name">Name: </label><strong><input id="profile-name" class="form-control profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($profileOwner["name"]).'"' ?> disabled/></strong></p>
+                <p><label for="profile-email">Email:</label> <strong><input id="profile-email" class="form-control profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$profileOwner["email"].'"'?> disabled/></strong></p>
                 
             </form>
             
@@ -199,6 +204,7 @@
               </tbody>
             </table>
         </div>
+        </div>
     </div>
 
     <div class="ui modal mini delete-app-modal">
@@ -229,7 +235,7 @@
             $(".profile-edit-input").removeAttr("disabled");
             $(this).hide();
             $("#save_profile_button").show();
-            $(".profile-edit-input").css("border","1px solid black");
+            $(".profile-edit-input").css("border","2px solid #f4ad42");
         }) 
         $("#save_profile_button").click(function() {
             $(".profile-edit-input").attr("disabled", true);
