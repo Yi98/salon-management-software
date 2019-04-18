@@ -439,7 +439,7 @@ input:focus::-webkit-input-placeholder {
   }
 
     #indexTitle{
-        font-size:3rem;
+        font-size:4rem;
     }
 
 }
@@ -483,7 +483,7 @@ input:focus::-webkit-input-placeholder {
     top:35%;
     left:50%;
     transform: translate(-50%,-50%);
-    font-size: 5rem;
+    font-size: 8rem;
     white-space: nowrap;
     color:white;
     z-index: 1;
@@ -570,11 +570,11 @@ input:focus::-webkit-input-placeholder {
 
 .appointment-container nav ul li{
     display: inline-block;
-    margin:0 6.5% 0 5%;
+    margin:0 7% 0 7%;
 }
 
 #logout-button, #login-button {
-    margin-left:1%;
+    margin-left:7%;
 }
 
 #after-login {
@@ -582,7 +582,7 @@ input:focus::-webkit-input-placeholder {
 }
 
 .appointment-container nav ul li p{
-    margin-top:20%;
+    margin-top:30%;
 }
 
 .appointment-container nav ul li a{
@@ -681,7 +681,7 @@ nav{
 }
 
 .appointment-container{
-    height:80vh;
+    height:85vh;
     overflow:hidden;
 
 }
