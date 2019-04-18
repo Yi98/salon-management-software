@@ -1,3 +1,11 @@
+<?php include 'db_connect.php'; ?>
+<?php 
+if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) 
+    {
+        header('location: login.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

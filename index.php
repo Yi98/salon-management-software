@@ -13,6 +13,12 @@
       
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       
+        <!-- Bootstrap library -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Latest compiled Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Oswald" rel="stylesheet">
       
         <style>
@@ -54,15 +60,14 @@
             </div>
         </div>
         
-        <section>   
+        <section id="navigation-bar">   
             <div class="appointment-container">
                 <nav>
                     <ul>
-                        <li><p><a href="#">HOME</a></p></li>
-                        <li><p><a href="#">APPOINTMENT</a></p></li>
-                        <li><p><a href="#">SHOP</a></p></li>
-                        <li><p><a href="#">REVIEW</a></p></li>
-                        
+                        <li><p><a href="index.php">HOME</a></p></li>
+                        <li><p><a href="appointment.php">APPOINTMENT</a></p></li>
+                        <li><p><a href="inventory.php">SHOP</a></p></li>
+              
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
                                 $query = "SELECT * FROM `users` WHERE `userId`=:id";
@@ -84,8 +89,6 @@
                             }
                         ?>
                         
-                        <li id="after-login"><p id="booknav-btn"><a href="#">BOOK NOW</a></p></li>
-                        
                         <?php 
                             if (isset($_SESSION["access_token"])) {
                                 echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
@@ -97,7 +100,6 @@
                                 }
                             }
                         ?>
-                        
                     </ul>
                 </nav>
                 <div class="row">
@@ -108,8 +110,6 @@
                         <h1>Tired of waiting?</h1><br/>
                         <h2>BOOK AN APPOINTMENT AND GET THE NEW LOOK.</h2><br/>
                         <p>We’re known around town for our sexy and inventive hairstyles. Our team of professionals is always ready to provide you with an experience that will leave you satisfied and projecting confidence with your new look. The full customer experience we offer will match our clients’ aspirations with proven techniques and artistry to bring wishes to reality. Providing the ultimate beauty service, we will have you shine with brilliance and perfection.</p>
-
-                        <button type="button" id="appointment-btn" class="btn btn-info">Book Now</button>
                     </div>
                 </div>
             </div>
@@ -125,7 +125,7 @@
                     <br/>
                     <p><strong>Hair basic</strong> such as cuts, relaxers, perms, colors, shampoo, conditioning, curling, reconstructing, weaving, waving. <strong>Hair treatment</strong> for different hair types such as Damaged, Normal / Dry, Very Dry &amp; Sensitized, Colour Treated,Curly / Rebellious, Thinning. <strong>Scalp treatment</strong> for different scalp problems such as Oily scalp, Sensitive scalp, Hair loss / thinning, Dandruff</p>
                     
-                    <button type="button" id="appointment-btn" class="btn btn-info">Book Now</button>
+                    <button type="button" id="appointment-btn" class="btn btn-info" onclick="window.location.href = 'appointment.php';">Book Now</button>
                 </div>  
                 <div class="col-lg-7 main_column">
                     <img src="images/salon_main.jpg" title="salon"/>
@@ -149,7 +149,7 @@
                     <li><img src="images/olaplex_main.jpeg" alt="olaplexproduct"/></li>
                     <li><img src="images/schwarzkopf_main.jpg" alt="schwarzkopfproduct"/></li>
                 </ul>
-                <button type="button" id="product-btn" class="btn btn-info">See More</button>      
+                <button type="button" id="product-btn" class="btn btn-info" onclick="window.location.href = 'inventory.php';">See More</button>      
             </div>
         </section>
     </body>
@@ -163,10 +163,15 @@
             <div class="columnRight">
                 <img src="images/guy.jpg" alt="model">
             </div>
-            
+            <a href="#navigation-bar">Click Me to Smooth Scroll to Section 1 Above</a>
         </div>
         <div id="lastfooter">
             <p> Copyright &copy; 2019 Style and Smile Salon House All Rights Reserved</p>
         </div>
     </footer>
+    <script>
+        $(document).ready(function() {
+            
+        }
+    </script>
 </html>
