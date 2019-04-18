@@ -1,5 +1,9 @@
 <?php include "db_connect.php"; ?>
 
+<?php
+    //echo "<script type='text/javascript'>","location.href='index.php#navigation-bar';","</script>";
+?>
+
 <!-- Created By: Ng Chin Shu -->
 <!-- Date Created: 3/10/2019 -->
 <!DOCTYPE html>
@@ -39,7 +43,7 @@
           }
         </style>
     </head>
-    <body>
+    <body <?php echo "onload='directNavigationBar()'" ?>>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             
@@ -163,15 +167,14 @@
             <div class="columnRight">
                 <img src="images/guy.jpg" alt="model">
             </div>
-            <a href="#navigation-bar">Click Me to Smooth Scroll to Section 1 Above</a>
         </div>
         <div id="lastfooter">
             <p> Copyright &copy; 2019 Style and Smile Salon House All Rights Reserved</p>
         </div>
     </footer>
     <script>
-        $(document).ready(function() {
-            
+        function directNavigationBar() {
+            window.location.href="index.php#navigation-bar";
         }
     </script>
 </html>
