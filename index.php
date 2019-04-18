@@ -43,7 +43,7 @@
           }
         </style>
     </head>
-    <body <?php echo "onload='directNavigationBar()'" ?>>
+    <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?>>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             
@@ -117,8 +117,6 @@
                       
                     <button type="button" id="appointment-btn" class="btn btn-info">Book Now</button>
                     </div>
-                  
-                  
                 </div>
               
                 
