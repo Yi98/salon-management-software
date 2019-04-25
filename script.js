@@ -227,6 +227,8 @@ function onConfirmSummary() {
       	if (http.responseText.trim() == "success") {
       		$('#success-booking-modal')
             .modal('show');
+
+            window.location.href = 'index.php';
       	}
       	else if (http.responseText.trim() == "fail") {
 					$('#fail-booking-modal')

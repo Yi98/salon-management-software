@@ -70,7 +70,7 @@
                     <ul>
                         <li><p><a href="index.php">HOME</a></p></li>
                         <li><p><a href="appointment.php">APPOINTMENT</a></p></li>
-                        <li><p><a href="inventory.php">SHOP</a></p></li>
+                        <li><p><a href="inventory.php">PRODUCT</a></p></li>
               
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
