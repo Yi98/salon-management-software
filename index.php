@@ -41,6 +41,11 @@
           div{
               height:100%;
           }
+
+          nav#sticky-nav {
+            position: sticky;
+            top: 0;
+          }
         </style>
     </head>
     <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?>>
@@ -66,7 +71,7 @@
         
         <section id="navigation-bar">   
             <div class="appointment-container">
-                <nav>
+                <nav id="sticky-nav">
                     <ul>
                         <li><p><a href="index.php">HOME</a></p></li>
                         <li><p><a href="appointment.php">APPOINTMENT</a></p></li>
@@ -122,7 +127,8 @@
                 
             </div>
         </section>
-        <section>   
+        
+        <section>
             <div class="appointment-container">
                 <div class="row">
                     <div class="col-lg-5 col-xs-5 main2_column" id="ac2">

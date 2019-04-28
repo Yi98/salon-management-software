@@ -682,8 +682,7 @@ nav{
 
 .appointment-container{
     height:85vh;
-    overflow:hidden;
-
+    /*overflow:hidden;*/
 }
 
 .main_column img{
@@ -693,7 +692,7 @@ nav{
 }
 
 .main_column{
-    overflow:hidden;
+    /*overflow:hidden;*/
 }
 
 .main2_column h1{
