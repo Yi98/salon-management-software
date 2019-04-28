@@ -34,7 +34,7 @@
                 $_SESSION["id"] = trim($currentUser["userId"], "'");
                 $_SESSION["name"] = trim($currentUser["name"], "'");
                 $_SESSION["email"] = trim($currentUser["email"], "'");
-                $_SESSION["role"] = trim(newUser["role"], "'");
+                $_SESSION["role"] = trim($currentUser["role"], "'");
                 $_SESSION["success"] = "You are now logged in";
                 header('location: index.php');
                 exit;

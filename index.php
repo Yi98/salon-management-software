@@ -73,10 +73,29 @@
             <div class="appointment-container">
                 <nav id="sticky-nav">
                     <ul>
-                        <li><p><a href="index.php">HOME</a></p></li>
-                        <li><p><a href="appointment.php">APPOINTMENT</a></p></li>
-                        <li><p><a href="inventory.php">PRODUCT</a></p></li>
-              
+
+                    <?php 
+                        // Check whether the sign in user are staff
+                        if ( isset($_SESSION["id"]) && $_SESSION["role"] == "staff") {
+                            echo "<li><p><a href='staff/dashboard.php'>DASHBOARD</a></p></li>
+                            <li><p><a href='staff/appointment.php'>APPOINTMENT LIST</a></p></li>
+                            <li><p><a href='staff/inventory.php'>INVENTORY LIST</a></p></li>
+                            <li><p><a href='staff/user.php'>USER LIST</a></p></li>";
+                        } else {
+                            echo "<li><p><a href='index.php'>HOME</a></p></li>
+                            <li><p><a href='appointment.php'>APPOINTMENT</a></p></li>
+                            <li><p><a href='inventory.php'>PRODUCT</a></p></li>";
+                        }
+                    ?>
+                    <!-- STAFF NAVIGATION BAR AFTER LOG IN 
+                        POINT OF SALES SHOULD BE IN DASHBOARD OR IF NEEDED CREATE A NEW PAGE FOR IT
+                        <li><p><a href="staff/dashboard.php">DASHBOARD</a></p></li>
+                        <li><p><a href="staff/appointment.php">APPOINTMENT LIST</a></p></li>
+                        <li><p><a href="staff/inventory.php">INVENTORY LIST</a></p></li>
+                        <li><p><a href="staff/user.php">USER LIST</a></p></li>
+                    -->
+                        
+
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
                                 $query = "SELECT * FROM `users` WHERE `userId`=:id";
