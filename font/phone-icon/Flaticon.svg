@@ -1,0 +1,36 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2019-5-4: Created with FontForge (http://fontforge.org)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<metadata>
+Created by FontForge 20170731 at Sat May  4 07:12:52 2019
+ By root
+
+</metadata>
+<defs>
+<font id="Flaticon" horiz-adv-x="200" >
+  <font-face 
+    font-family="Flaticon"
+    font-weight="400"
+    font-stretch="normal"
+    units-per-em="512"
+    panose-1="2 0 5 3 0 0 0 0 0 0"
+    ascent="448"
+    descent="-64"
+    bbox="0 -64 512 448"
+    underline-thickness="25.6"
+    underline-position="-51.2"
+    unicode-range="U+0020-F100"
+  />
+    <missing-glyph />
+    <glyph glyph-name="space" unicode=" " 
+ />
+    <glyph glyph-name="001-auricular-phone-symbol-in-a-circle" unicode="&#xf100;" horiz-adv-x="512" 
+d="M256 416c-123.5 0 -224 -100.5 -224 -224s100.5 -224 224 -224s224 100.5 224 224s-100.5 224 -224 224zM256 448v0c141.375 0 256 -114.625 256 -256s-114.625 -256 -256 -256s-256 114.625 -256 256s114.625 256 256 256zM398.719 106.406
+c3.34277 -10.0625 -0.0302734 -24.4678 -7.53027 -31.9375l-20.5 -20.5c-3.65625 -3.65723 -14.375 -5.9375 -14.7197 -5.9375c-64.8428 -0.564453 -127.28 24.9053 -173.155 70.7803c-46 46.0312 -71.502 108.688 -70.8135 173.75c0 0.0322266 2.34375 10.4385 6 14.0635
+l20.5 20.5c7.5 7.53223 21.9062 10.9385 32 7.56348l4.31348 -1.43848c10.0615 -3.375 20.625 -14.5 23.4053 -24.75l10.3145 -37.8438c2.78125 -10.2812 -0.96875 -24.9062 -8.46875 -32.4062l-13.6885 -13.6885c13.4385 -49.75 52.4688 -88.7803 102.219 -102.25
+l13.6885 13.6885c7.53027 7.53125 22.1553 11.2812 32.4053 8.5l37.8428 -10.3438c10.25 -2.81348 21.375 -13.3135 24.75 -23.375z" />
+  </font>
+</defs></svg>

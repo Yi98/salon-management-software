@@ -1,7 +1,6 @@
 <?php include "db_connect.php"; ?>
 
 <!-- Social Media Login -->
-
 <?php include "twitterBack.php"; ?>
 <?php include "googleLogin.php"; ?>
 <?php include "facebookLogin.php"; ?>
@@ -18,6 +17,8 @@
     
     <!-- icon css link -->
     <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>
+    <link rel="stylesheet" type="text/css" href="font/phone-icon/flaticon.css"/>
+    
     
     <!-- Bootstrap library -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -68,6 +69,15 @@
                                 </div>
                                  <span id="signup-email-alert"></span>
                                  <?php echo "<span style='color:red'>$email_existed_error</span>" ?>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label class="input-group-addon" for="contact"><i class="flaticon-auricular-phone-symbol-in-a-circle"></i></label>
+                                    <input type="tel" name="contact" id="contact" placeholder="Your contact number" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$tel) ?>"/>
+                                   
+                                </div>
+                                 <span id="contact-email-alert"></span>
+                                 <?php echo "<span style='color:red'>$contact_existed_error</span>" ?>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">

@@ -12,6 +12,7 @@
       $email = $row['email'];
       $note = $row['note'];
       $name = $row['name'];
+      $contact = $row['contact'];
     
     echo "<div class='container' id='userForm'><form method='post' class='editUser container'>
     <h1>Edit user here</h1>
@@ -24,6 +25,12 @@
       <label for='name'><b>Name</b></label>
       <input type='text' name='name' class='form-control' value='$name'>
     </div>
+    
+    <div class='form-group col-lg-6 col-xs-6'>
+      <label for='name'><b>Contact</b></label>
+      <input type='text' name='name' class='form-control' value='$contact'>
+    </div>
+    
     
     <div class='form-group col-lg-12 col-xs-12'>
       <label for='Note'><b>Note</b></label>
@@ -141,6 +148,8 @@
             </th>
             <th>Email
             </th>
+              <th>Contact
+            </th>
             <th>Name
             </th>
             <th>Reason being banned
@@ -183,7 +192,7 @@
                 $result->execute();
               }
               
-              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['bannedReason'] . "</td><td><b>" . $days . "</b></td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to unban this user?\");'>" . "<button type='submit' class='btn btn-primary' name='idUnban' value ='$id'>Unban</button></form></td></tr>";
+              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['bannedReason'] . "</td><td><b>" . $days . "</b></td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to unban this user?\");'>" . "<button type='submit' class='btn btn-primary' name='idUnban' value ='$id'>Unban</button></form></td></tr>";
             }
           
             ?>  
@@ -198,6 +207,8 @@
             <th>No.
             </th>
             <th>Email
+            </th>
+            <th>Contact
             </th>
             <th>Name
             </th>
@@ -238,7 +249,7 @@
               
               $userNo ++;
               $id = $row['userId'];
-              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
+              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
             }
             ?>  
         </table>

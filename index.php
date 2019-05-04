@@ -175,8 +175,8 @@
                     <li><img src="images/schwarzkopf_logo.png" alt="schwarzkopflogo"/>
                     </li>
                 </ul>
-                <ul class="product">
-                    <li><img src="images/eleven_main.png" alt="elevenproduct"/></li>
+                <ul class="product" style="padding-left:60px;">
+                    <li><img src="images/eleven_main.png" alt="elevenproduct" style="max-width:120px;"/></li>
                     <li><img src="images/kerastase_main.jpg" alt="kerastaseproduct"/></li>
                     <li><img src="images/olaplex_main.jpeg" alt="olaplexproduct"/></li>
                     <li><img src="images/schwarzkopf_main.jpg" alt="schwarzkopfproduct"/></li>

@@ -352,6 +352,26 @@ function validateSignUpEmail() {
     }
     return true;
 }
+function validateContact() {
+    // Should meet the phone format
+    let contact = document.getElementById("contact").value;
+    let contactAlert = document.getElementById("contact-email-alert");
+    let regex = /^\d{3}-\d{6,7}$/;
+    let result = regex.test(contact);
+    if (contact.length == 0) {
+        contactAlert.textContent = "Contact should not be empty";
+        contactAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        contactAlert.textContent = "Contact should be following the following format: 0xx-xxxxxxx or 0xx-xxxxxx";
+        contactAlert.style.color = "red";
+        return false;
+    } else {
+        contactAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
 
 function validateSignUpPassword() {
     // Should between 6 to 12 characters
@@ -391,10 +411,11 @@ function validateSignUpRepeatPassword() {
 function startSignUpValidate() {
     let name = validateSignUpName();
     let email = validateSignUpEmail();
+    let contact = validateContact();
     let password = validateSignUpPassword();
     let repeatPassword = validateSignUpRepeatPassword();
 
-    if (name && email && password && repeatPassword) {
+    if (name && email && contact && password && repeatPassword) {
         return true;
     }
     return false;
@@ -497,11 +518,35 @@ function startResetPasswordValidate() {
     return false;
 }
 
+/***** Add new staff email validation *****/
+function addStaffValidation() {
+    let email = document.getElementById("add-staff-email").value;
+    let emailAlert = document.getElementById("add-staff-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        $.post("addstaff.php", { email: email },
+        function(data) {
+	        $('#add-staff-email-alert').html(data);
+            $('#add-staff-form')[0].reset();
+        });
+    }
+    return false;
+}
+
 /* Show Hidden Form */
 function openForm() {
     document.getElementById("myForm").style.display = "block";
     document.getElementById("archiveList").style.display="none";
-
 }
 
 function closeForm() {
@@ -826,233 +871,256 @@ function searchItem() {
   }
 }
 
-function filterMale(){
-  var table, tr, td, i,table2,tr2,td2;
-  table = document.getElementById("archiveTable");
-  table2 = document.getElementById("itemTable");
-  tr = table.getElementsByTagName("tr");
-  tr2 = table2.getElementsByTagName("tr");
+function genderFilter(gender){
+	var gender = gender.value;
+	if (gender == "male"){
+		var table, tr, td, i,table2,tr2,td2;
+        table = document.getElementById("archiveTable");
+        table2 = document.getElementById("itemTable");
+        tr = table.getElementsByTagName("tr");
+        tr2 = table2.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[10];
+          if (td) {
+            if (td.textContent == 'Male') {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          } 
+        }
+
+        for (i = 0; i < tr2.length; i++) {
+          td2 = tr2[i].getElementsByTagName("td")[10];
+          if (td2) {
+            if (td2.textContent == 'Male') {
+              tr2[i].style.display = "";
+            } else {
+              tr2[i].style.display = "none";
+            }
+          } 
+        }
+    }
   
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[10];
-    if (td) {
-      if (td.textContent == 'Male') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+    if(gender == "female"){
+      var table, tr, td, i;
+      table = document.getElementById("archiveTable");
+      tr = table.getElementsByTagName("tr");
+      table2 = document.getElementById("itemTable");
+      tr2 = table2.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[10];
+        if (td) {
+          if (td.textContent == 'Female') {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
       }
-    } 
+
+      for (i = 0; i < tr2.length; i++) {
+        td2 = tr2[i].getElementsByTagName("td")[10];
+        if (td2) {
+          if (td2.textContent == 'Female') {
+            tr2[i].style.display = "";
+          } else {
+            tr2[i].style.display = "none";
+          }
+        } 
+      }
+    }
+  
+  if(gender == "unisex"){
+    var table, tr, td, i;
+    table = document.getElementById("archiveTable");
+    tr = table.getElementsByTagName("tr");
+    table2 = document.getElementById("itemTable");
+    tr2 = table2.getElementsByTagName("tr");
+
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[10];
+      if (td) {
+        if (td.textContent == 'Unisex') {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      } 
+    }
+
+    for (i = 0; i < tr2.length; i++) {
+      td2 = tr2[i].getElementsByTagName("td")[10];
+      if (td2) {
+        if (td2.textContent == 'Unisex') {
+          tr2[i].style.display = "";
+        } else {
+          tr2[i].style.display = "none";
+        }
+      } 
+    }
   }
   
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[10];
-    if (td2) {
-      if (td2.textContent == 'Male') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
+  if(gender == "all"){
+    var table, tr, td, i;
+    table = document.getElementById("archiveTable");
+    tr = table.getElementsByTagName("tr");
+    table2 = document.getElementById("itemTable");
+    tr2 = table2.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = ""; 
+    }
+
+    for (i = 0; i < tr2.length; i++) {
+        tr2[i].style.display = ""; 
+    }
   }
 }
 
-function filterFemale(){
-  var table, tr, td, i;
-  table = document.getElementById("archiveTable");
-  tr = table.getElementsByTagName("tr");
-  table2 = document.getElementById("itemTable");
-  tr2 = table2.getElementsByTagName("tr");
 
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[10];
-    if (td) {
-      if (td.textContent == 'Female') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    } 
-  }
+function categoryFilter(category){
+    var category = category.value;
   
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[10];
-    if (td2) {
-      if (td2.textContent == 'Female') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
+    if(category == "all"){
+      var table, tr, td, i;
+      table = document.getElementById("archiveTable");
+      tr = table.getElementsByTagName("tr");
+      table2 = document.getElementById("itemTable");
+      tr2 = table2.getElementsByTagName("tr");
 
-function filterUnisex(){
-  var table, tr, td, i;
-  table = document.getElementById("archiveTable");
-  tr = table.getElementsByTagName("tr");
-  table2 = document.getElementById("itemTable");
-  tr2 = table2.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+          tr[i].style.display = ""; 
+      }
 
-  
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[10];
-    if (td) {
-      if (td.textContent == 'Unisex') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+      for (i = 0; i < tr2.length; i++) {
+          tr2[i].style.display = ""; 
       }
-    } 
-  }
-  
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[10];
-    if (td2) {
-      if (td2.textContent == 'Unisex') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
+    }
+    
+    if (category == "hs"){
+      var table, tr, td, i,table2,tr2,td2;
+      table = document.getElementById("archiveTable");
+      table2 = document.getElementById("itemTable");
+      tr = table.getElementsByTagName("tr");
+      tr2 = table2.getElementsByTagName("tr");
 
-function filterClear(){
-  var table, tr, td, i;
-  table = document.getElementById("archiveTable");
-  tr = table.getElementsByTagName("tr");
-  table2 = document.getElementById("itemTable");
-  tr2 = table2.getElementsByTagName("tr");
-  
-  for (i = 0; i < tr.length; i++) {
-      tr[i].style.display = ""; 
-  }
-  
-  for (i = 0; i < tr2.length; i++) {
-      tr2[i].style.display = ""; 
-  }
-  
-}
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[11];
+        if (td) {
+          if (td.textContent == 'Hair Shampoo') {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
 
-function filterShampoo(){
-  var table, tr, td, i,table2,tr2,td2;
-  table = document.getElementById("archiveTable");
-  table2 = document.getElementById("itemTable");
-  tr = table.getElementsByTagName("tr");
-  tr2 = table2.getElementsByTagName("tr");
-  
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[11];
-    if (td) {
-      if (td.textContent == 'Hair Shampoo') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+      for (i = 0; i < tr2.length; i++) {
+        td2 = tr2[i].getElementsByTagName("td")[11];
+        if (td2) {
+          if (td2.textContent == 'Hair Shampoo') {
+            tr2[i].style.display = "";
+          } else {
+            tr2[i].style.display = "none";
+          }
+        } 
       }
-    } 
-  }
+    }
   
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[11];
-    if (td2) {
-      if (td2.textContent == 'Hair Shampoo') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
+    if(category == "cd"){
+      var table, tr, td, i,table2,tr2,td2;
+      table = document.getElementById("archiveTable");
+      table2 = document.getElementById("itemTable");
+      tr = table.getElementsByTagName("tr");
+      tr2 = table2.getElementsByTagName("tr");
 
-function filterConditioner(){
-  var table, tr, td, i,table2,tr2,td2;
-  table = document.getElementById("archiveTable");
-  table2 = document.getElementById("itemTable");
-  tr = table.getElementsByTagName("tr");
-  tr2 = table2.getElementsByTagName("tr");
-  
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[11];
-    if (td) {
-      if (td.textContent == 'Conditioner') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[11];
+        if (td) {
+          if (td.textContent == 'Conditioner') {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
       }
-    } 
-  }
-  
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[11];
-    if (td2) {
-      if (td2.textContent == 'Conditioner') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
 
-function filterOils(){
-  var table, tr, td, i,table2,tr2,td2;
-  table = document.getElementById("archiveTable");
-  table2 = document.getElementById("itemTable");
-  tr = table.getElementsByTagName("tr");
-  tr2 = table2.getElementsByTagName("tr");
-  
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[11];
-    if (td) {
-      if (td.textContent == 'Hair Oils') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+      for (i = 0; i < tr2.length; i++) {
+        td2 = tr2[i].getElementsByTagName("td")[11];
+        if (td2) {
+          if (td2.textContent == 'Conditioner') {
+            tr2[i].style.display = "";
+          } else {
+            tr2[i].style.display = "none";
+          }
+        } 
       }
-    } 
-  }
-  
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[11];
-    if (td2) {
-      if (td2.textContent == 'Hair Oils') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
+    }
+    
+    if(category == "ho"){
+      var table, tr, td, i,table2,tr2,td2;
+      table = document.getElementById("archiveTable");
+      table2 = document.getElementById("itemTable");
+      tr = table.getElementsByTagName("tr");
+      tr2 = table2.getElementsByTagName("tr");
 
-function filterWax(){
-  var table, tr, td, i,table2,tr2,td2;
-  table = document.getElementById("archiveTable");
-  table2 = document.getElementById("itemTable");
-  tr = table.getElementsByTagName("tr");
-  tr2 = table2.getElementsByTagName("tr");
-  
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[11];
-    if (td) {
-      if (td.textContent == 'Hair Wax') {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[11];
+        if (td) {
+          if (td.textContent == 'Hair Oils') {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+
+      for (i = 0; i < tr2.length; i++) {
+        td2 = tr2[i].getElementsByTagName("td")[11];
+        if (td2) {
+          if (td2.textContent == 'Hair Oils') {
+            tr2[i].style.display = "";
+          } else {
+            tr2[i].style.display = "none";
+          }
+        } 
+      }
+    }
+    
+    if(category == "hw"){
+      var table, tr, td, i,table2,tr2,td2;
+      table = document.getElementById("archiveTable");
+      table2 = document.getElementById("itemTable");
+      tr = table.getElementsByTagName("tr");
+      tr2 = table2.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[11];
+        if (td) {
+          if (td.textContent == 'Hair Wax') {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+
+      for (i = 0; i < tr2.length; i++) {
+        td2 = tr2[i].getElementsByTagName("td")[11];
+        if (td2) {
+          if (td2.textContent == 'Hair Wax') {
+            tr2[i].style.display = "";
+          } else {
+            tr2[i].style.display = "none";
+          }
+        } 
       }
     } 
   }
-  
-  for (i = 0; i < tr2.length; i++) {
-    td2 = tr2[i].getElementsByTagName("td")[11];
-    if (td2) {
-      if (td2.textContent == 'Hair Wax') {
-        tr2[i].style.display = "";
-      } else {
-        tr2[i].style.display = "none";
-      }
-    } 
-  }
-}
 
 function onPayCart() {
 	$('#pay-cart-modal')

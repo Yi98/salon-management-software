@@ -110,6 +110,7 @@ CREATE TABLE `users` (
   `image_path` varchar(100) DEFAULT NULL,
   `userId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `contact` varchar(100) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
   `name` varchar(150) NOT NULL,
   `role` varchar(20) NOT NULL,
