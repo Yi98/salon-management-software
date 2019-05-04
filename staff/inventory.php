@@ -243,17 +243,20 @@
         <br/><br/>
         <input type="text" id="userInput" onkeyup="searchItem()" placeholder="Search for item names..">
         <span id="anp" class="archiveItem"><b>Gender Filters</b> </span>
-        <button class="btn btn-light btn" onclick="filterMale()">Male</button>
-        <button class="btn btn-light btn" onclick="filterFemale()">Female</button>
-        <button class="btn btn-light btn" onclick="filterUnisex()">Unisex</button>
-        <button class="btn btn-light btn" onclick="filterClear()">Clear</button>
-        
+		<select onchange="genderFilter(this)">
+			<option value="all" selected>-</option>
+			<option value="male">Male</option>  
+			<option value="female">Female</option>  
+			<option value="unisex">Unisex</option>  
+		</select>
         <span id="anp" class="archiveItem"><b>Category Filters</b> </span>
-        <button class="btn btn-light btn" onclick="filterShampoo()">Hair Shampoo</button>
-        <button class="btn btn-light btn" onclick="filterConditioner()">Conditioner</button>
-        <button class="btn btn-light btn" onclick="filterOils()">Hair Oils</button>
-        <button class="btn btn-light btn" onclick="filterWax()">Hair Wax</button>
-        <button class="btn btn-light btn" onclick="filterClear()">Clear</button>
+        <select onchange="categoryFilter(this)">
+			<option value="all" selected>-</option>
+			<option value="hs">Hair Shampoo</option>  
+			<option value="cd">Conditioner</option>  
+			<option value="ho">Hair Oils</option>  
+			<option value="hw">Hair Wax</option>  
+		</select> 
       </div>
       <!-- This is the pop up list to show the list of archive product -->
       <div class="form-popup container" id="archiveList">
