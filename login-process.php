@@ -1,15 +1,12 @@
 <?php 
+    $login_email = "";
+    $login_error_message = "";
     if (isset($_SESSION["id"]) && !empty($_SESSION["id"])) 
     {
         header('location: index.php');
-    } else 
+    } else if (isset($_POST["login"]))
     {
-        $login_email = "";
-        $login_error_message = "";
-
         if (!empty($_POST)) {
-            // $login_email = $conn->quote($_POST["email"]);
-            // $login_password = $conn->quote($_POST["password"]);
             $login_email = $_POST["email"];
             $login_password = $_POST["password"];
 
@@ -34,7 +31,7 @@
                 $_SESSION["id"] = trim($currentUser["userId"], "'");
                 $_SESSION["name"] = trim($currentUser["name"], "'");
                 $_SESSION["email"] = trim($currentUser["email"], "'");
-                $_SESSION["role"] = trim(newUser["role"], "'");
+                $_SESSION["role"] = trim($currentUser["role"], "'");
                 $_SESSION["success"] = "You are now logged in";
                 header('location: index.php');
                 exit;

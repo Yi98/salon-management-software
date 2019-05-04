@@ -352,6 +352,26 @@ function validateSignUpEmail() {
     }
     return true;
 }
+function validateContact() {
+    // Should meet the phone format
+    let contact = document.getElementById("contact").value;
+    let contactAlert = document.getElementById("contact-email-alert");
+    let regex = /^\d{3}-\d{6,7}$/;
+    let result = regex.test(contact);
+    if (contact.length == 0) {
+        contactAlert.textContent = "Contact should not be empty";
+        contactAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        contactAlert.textContent = "Contact should be following the following format: 0xx-xxxxxxx or 0xx-xxxxxx";
+        contactAlert.style.color = "red";
+        return false;
+    } else {
+        contactAlert.textContent = "";
+        return true;
+    }
+    return true;
+}
 
 function validateSignUpPassword() {
     // Should between 6 to 12 characters
@@ -391,10 +411,11 @@ function validateSignUpRepeatPassword() {
 function startSignUpValidate() {
     let name = validateSignUpName();
     let email = validateSignUpEmail();
+    let contact = validateContact();
     let password = validateSignUpPassword();
     let repeatPassword = validateSignUpRepeatPassword();
 
-    if (name && email && password && repeatPassword) {
+    if (name && email && contact && password && repeatPassword) {
         return true;
     }
     return false;
@@ -497,11 +518,35 @@ function startResetPasswordValidate() {
     return false;
 }
 
+/***** Add new staff email validation *****/
+function addStaffValidation() {
+    let email = document.getElementById("add-staff-email").value;
+    let emailAlert = document.getElementById("add-staff-email-alert");
+    let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+    let result = regex.test(email);
+    if (email.length == 0) {
+        emailAlert.textContent = "Email should not be empty";
+        emailAlert.style.color = "red";
+        return false;
+    } else if (!result) {
+        emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
+        emailAlert.style.color = "red";
+        return false;
+    } else {
+        emailAlert.textContent = "";
+        $.post("addstaff.php", { email: email },
+        function(data) {
+	        $('#add-staff-email-alert').html(data);
+            $('#add-staff-form')[0].reset();
+        });
+    }
+    return false;
+}
+
 /* Show Hidden Form */
 function openForm() {
     document.getElementById("myForm").style.display = "block";
     document.getElementById("archiveList").style.display="none";
-
 }
 
 function closeForm() {

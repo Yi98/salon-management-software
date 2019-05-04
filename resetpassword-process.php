@@ -1,6 +1,7 @@
 <?php
     $reset_password = "";
     $reset_repeatpassword = "";
+    $reset_password_error_message = "";
     $reset_password_status_suc_message = "";
     $reset_password_status_err_message = "";
 

@@ -41,9 +41,14 @@
           div{
               height:100%;
           }
+
+          nav#sticky-nav {
+            position: sticky;
+            top: 0;
+          }
         </style>
     </head>
-    <body <?php echo "onload='directNavigationBar()'" ?>>
+    <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?>>
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             
@@ -66,12 +71,31 @@
         
         <section id="navigation-bar">   
             <div class="appointment-container">
-                <nav>
+                <nav id="sticky-nav">
                     <ul>
-                        <li><p><a href="index.php">HOME</a></p></li>
-                        <li><p><a href="appointment.php">APPOINTMENT</a></p></li>
-                        <li><p><a href="inventory.php">SHOP</a></p></li>
-              
+
+                    <?php 
+                        // Check whether the sign in user are staff
+                        if ( isset($_SESSION["id"]) && $_SESSION["role"] == "staff") {
+                            echo "<li><p><a href='staff/dashboard.php'>DASHBOARD</a></p></li>
+                            <li><p><a href='staff/appointment.php'>APPOINTMENT LIST</a></p></li>
+                            <li><p><a href='staff/inventory.php'>INVENTORY LIST</a></p></li>
+                            <li><p><a href='staff/user.php'>USER LIST</a></p></li>";
+                        } else {
+                            echo "<li><p><a href='index.php'>HOME</a></p></li>
+                            <li><p><a href='appointment.php'>APPOINTMENT</a></p></li>
+                            <li><p><a href='inventory.php'>PRODUCT</a></p></li>";
+                        }
+                    ?>
+                    <!-- STAFF NAVIGATION BAR AFTER LOG IN 
+                        POINT OF SALES SHOULD BE IN DASHBOARD OR IF NEEDED CREATE A NEW PAGE FOR IT
+                        <li><p><a href="staff/dashboard.php">DASHBOARD</a></p></li>
+                        <li><p><a href="staff/appointment.php">APPOINTMENT LIST</a></p></li>
+                        <li><p><a href="staff/inventory.php">INVENTORY LIST</a></p></li>
+                        <li><p><a href="staff/user.php">USER LIST</a></p></li>
+                    -->
+                        
+
                         <?php
                             if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
                                 $query = "SELECT * FROM `users` WHERE `userId`=:id";
@@ -117,14 +141,13 @@
                       
                     <button type="button" id="appointment-btn" class="btn btn-info">Book Now</button>
                     </div>
-                  
-                  
                 </div>
               
                 
             </div>
         </section>
-        <section>   
+        
+        <section>
             <div class="appointment-container">
                 <div class="row">
                     <div class="col-lg-5 col-xs-5 main2_column" id="ac2">
@@ -152,8 +175,8 @@
                     <li><img src="images/schwarzkopf_logo.png" alt="schwarzkopflogo"/>
                     </li>
                 </ul>
-                <ul class="product">
-                    <li><img src="images/eleven_main.png" alt="elevenproduct"/></li>
+                <ul class="product" style="padding-left:60px;">
+                    <li><img src="images/eleven_main.png" alt="elevenproduct" style="max-width:120px;"/></li>
                     <li><img src="images/kerastase_main.jpg" alt="kerastaseproduct"/></li>
                     <li><img src="images/olaplex_main.jpeg" alt="olaplexproduct"/></li>
                     <li><img src="images/schwarzkopf_main.jpg" alt="schwarzkopfproduct"/></li>

@@ -177,44 +177,87 @@ ul {
 .existing-member {
     float:right;
 }
-.signup-form .form-group, .login-form .form-group, .reset-password-form-inner .form-group, .forgot-password-form .form-group {
+.signup-form .form-group, .login-form .form-group, .reset-password-form-inner .form-group, .forgot-password-form .form-group, .add-staff-form .form-group {
     margin: 7% 0 7% 0;
 }
 
 .forgot-password-form, .reset-password-form {
     border:1px solid grey;
 }
+
+.add-staff-popup {
+    background-color: rgba(0,0,0,0.5);
+    display:none;
+    z-index:10;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+}
+
+.vertical-center.add-staff-popup {
+    position:fixed;
+    height: 100%;
+}
+
+.add-staff-popup-active {
+    display:flex;
+    z-index:10;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    top:0;
+}
+.add-staff-form {
+    background-color:white;
+    border:1px solid grey;
+
+}
+
+#close_new_staff_button {
+    float:right;
+    border:1px solid black;
+    background-color: red;
+    color:white;
+    margin-top:5px;
+    width:30px;
+    height:30px;
+    border: none;
+}
+
 .login-form .form-group:nth-child(2) {
     margin:0;
 }
 
-.signup-form .form-control, .login-form .form-control, .reset-password-form-inner .form-control, .forgot-password-form .form-control {
+.signup-form .form-control, .login-form .form-control, .reset-password-form-inner .form-control, .forgot-password-form .form-control,  .add-staff-form .form-control {
     border:none;
     border-bottom: 1px solid grey;
 }
-.signup-form .input-group-addon, .login-form .input-group-addon, .reset-password-form-inner .input-group-addon, .forgot-password-form .input-group-addon{
+.signup-form .input-group-addon, .login-form .input-group-addon, .reset-password-form-inner .input-group-addon, .forgot-password-form .input-group-addon,  .add-staff-form .input-group-addon{
     border:none;
     border:1px solid grey;
 }
-.signup-form i::before, .login-form i::before, .reset-password-form i::before, .forgot-password-form i::before {
+.signup-form i::before, .login-form i::before, .reset-password-form i::before, .forgot-password-form i::before, .add-staff-form i::before {
      margin:0;
 }
-.signup-form label, .login-form label, .reset-password-form label, .forgot-password-form label{
+.signup-form label, .login-form label, .reset-password-form label, .forgot-password-form label, .add-staff-form label{
     background-color:white;
 }
-.signup-form .form-control, .signup-form label, .login-form .form-control, .forgot-password-form .form-control, .forgot-password-form label, .reset-password-form .form-control, .reset-password-form label {
+.signup-form .form-control, .signup-form label, .login-form .form-control, .forgot-password-form .form-control, .forgot-password-form label, .reset-password-form .form-control, .reset-password-form label,  .add-staff-form .form-control, .add-staff-form label {
     border-radius: 0;
 }
-.signup-form .form-control, .login-form .form-control, .forgot-password-form .form-control, .reset-password-form .form-control    {
+.signup-form .form-control, .login-form .form-control, .forgot-password-form .form-control, .reset-password-form .form-control, .add-staff-form .form-control     {
     box-shadow: none;
 }
-.signup-form input:focus, .login-form input:focus, .forgot-password-form input:focus, .reset-password-form input:focus  {
+.signup-form input:focus, .login-form input:focus, .forgot-password-form input:focus, .reset-password-form input:focus, .add-staff-form input:focus  {
     border-bottom:1px solid black;
 }
 input:focus::-webkit-input-placeholder {
     color:black;
 }
-#signup, #login, #resetpassword, #forgotpassword{
+#signup, #login, #resetpassword, #forgotpassword, #addstaff{
     width:30%;
     padding:2%;
 }
@@ -388,7 +431,6 @@ input:focus::-webkit-input-placeholder {
 .product-container{
     height:80vh;
     text-align: center;
-
 }
 
 .product-container .logo li img{
@@ -682,8 +724,7 @@ nav{
 
 .appointment-container{
     height:85vh;
-    overflow:hidden;
-
+    overflow-x:hidden;
 }
 
 .main_column img{
@@ -693,7 +734,7 @@ nav{
 }
 
 .main_column{
-    overflow:hidden;
+    overflow-x:hidden;
 }
 
 .main2_column h1{
