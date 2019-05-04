@@ -988,3 +988,50 @@ body#appointment-page {
 #gender , #categories{
   display: none;
 }
+
+
+div.price-summary {
+  margin-top: 4%;
+  float: right;
+  border: 1px solid rgb(236, 236, 236);
+  background-color: rgb(252, 252, 252);
+  padding: 2% 4%;
+}
+
+p.summary-title {
+  font-weight: bold;
+}
+
+
+span#total-price {
+  margin-left: 3%;
+  font-size: 2em;
+}
+
+span.summary-value {
+  text-align: right;
+}
+
+p.sub-content {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+img.cart-img {
+  width: 7%;
+  border: 1px solid rgb(209, 208, 208);
+}
+
+.cart-product-text {
+  font-size: 1.2rem;
+}
+
+#pay-cart-modal {
+  margin: 0 auto !important;
+  height: 45% !important;
+  position: relative;
+}
+
+p.changes-price {
+  font-size: 1.5rem;
+}

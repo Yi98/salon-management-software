@@ -1053,3 +1053,8 @@ function filterWax(){
     } 
   }
 }
+
+function onPayCart() {
+	$('#pay-cart-modal')
+  	.modal('show');
+}
