@@ -141,6 +141,7 @@
                 ?>
                 <p><label for="profile-name">Name: </label><strong><input id="profile-name" class="form-control profile-edit-input" type="text" name="profile-name" <?php echo 'value="'.htmlspecialchars($profileOwner["name"]).'"' ?> disabled/></strong></p>
                 <p><label for="profile-email">Email:</label> <strong><input id="profile-email" class="form-control profile-edit-input" type="text" name="profile-email" <?php echo 'value="'.$profileOwner["email"].'"'?> disabled/></strong></p>
+                <p><label for="profile-contact">Contact:</label> <strong><input id="profile-contact" class="form-control profile-edit-input" type="text" name="profile-contact" <?php echo 'value="'.$profileOwner["contact"].'"'?> disabled/></strong></p>
                 
             </form>
             
@@ -288,11 +289,12 @@
                 if (confirm("Save your changes on profile?")) {
                     var name = document.getElementById("profile-name").value;
                     var email = document.getElementById("profile-email").value;
+                    var contact = document.getElementById("profile-contact").value;
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                     type: "POST",
                     url: "updateprofile.php",
-                    data: {'name': name, 'email': email, 'id': urlId},
+                    data: {'name': name, 'email': email, 'contact': contact, 'id': urlId},
                     success:function(data) 
                     {
                         window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
