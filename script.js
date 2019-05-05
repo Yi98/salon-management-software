@@ -1133,7 +1133,11 @@ function onAddCart() {
 	const cartSelect = document.getElementById('cart-select').value;
 	const selected = JSON.parse(cartSelect);
 
-	let cartItems = document.getElementById("cart-ul").innerHTML;
+	let cartItems = document.getElementById('cart-ul').innerHTML;
+
+	if (document.getElementById('cart-ul').children.length > 0) {
+		document.getElementById('sample-li-cart').classList.add('hide-li');
+	}
 
 	document.getElementById("cart-ul").innerHTML += `
 		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
@@ -1151,6 +1155,7 @@ function onAddCart() {
 	            <i class="fas fa-plus" onclick="onModifyNum(this, 1)"></i>
 	        </div>
 	    </div>
+	    <p class="remove-text" onclick="onRemoveCart(this)">Remove</p>
 	  </li>`;
 
 	  sumUpCart();
@@ -1198,4 +1203,10 @@ function onCashPaidChange() {
 
 
 	document.getElementById('total-changes').innerHTML = changes > 0 ? changes : 0.00.toFixed(2);
+}
+
+function onRemoveCart(element) {
+	console.log(element.parentNode);
+	element.parentNode.remove();
+	sumUpCart();
 }

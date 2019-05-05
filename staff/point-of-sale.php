@@ -43,7 +43,9 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
 
     <div class="pos-contain mt-5">
       <p class="sub-content">Carts <i class="fas fa-shopping-cart"></i></p>
-      <ul class="list-group" id="cart-ul"></ul>
+      <ul class="list-group" id="cart-ul">
+        <li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2" id="sample-li-cart">No items added to cart.</li>
+      </ul>
 
       <div class="price-summary">
         <p class="summary-title">Price Summary</p>

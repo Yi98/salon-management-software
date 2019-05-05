@@ -1086,3 +1086,16 @@ img.cart-img {
 p.changes-price {
   font-size: 1.5rem;
 }
+
+li.hide-li {
+  display: none !important;
+}
+
+p.remove-text {
+  color: blue;
+  cursor: pointer;
+}
+
+p.remove-text:hover {
+  text-decoration: underline;
+}
