@@ -18,6 +18,9 @@ if (!isset($_SESSION["id"]) && empty($_SESSION["id"]))
   <script src="script.js"></script>
 </head>
 <body id="appointment-page">
+    
+    <!-- Include navigation bar -->
+    <?php include "navigationBar.php" ?>
   <div class="ui segment" id="appointment-loader">
     <p></p>
     <div class="ui active dimmer">

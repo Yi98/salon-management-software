@@ -19,6 +19,9 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
   <script src="../script.js"></script>
 </head>
 <body>
+    <!-- Include navigation bar -->
+    <?php include "../navigationBar.php" ?>
+    
   <div class="container">
     <h1 class="appointment-list-title">Appointment List</h1>
     Filter by status:

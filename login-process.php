@@ -33,7 +33,11 @@
                 $_SESSION["email"] = trim($currentUser["email"], "'");
                 $_SESSION["role"] = trim($currentUser["role"], "'");
                 $_SESSION["success"] = "You are now logged in";
-                header('location: index.php');
+                if ($_SESSION["role"] == "user") {
+                    header('location: index.php');
+                } else {
+                    header('location: staff/dashboard.php');
+                }
                 exit;
             } else {
                 $login_error_message = "Email or Password is incorrect";

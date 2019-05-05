@@ -96,6 +96,9 @@
 </head>
   
 <body>
+    <!-- Include navigation bar -->
+    <?php include "navigationBar.php" ?>
+    
     <div class="container profile-container">
         <div class="row">
         <div class="col-lg-4 col-xs-12 text-center" style="background: #D3D3D3;">
@@ -271,7 +274,7 @@
                     var form_data = new FormData();
                     form_data.append("file", property);
                     $.ajax({
-                        url: "uploadprofileimage.php",
+                        url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadprofileimage.php"; } else { echo "uploadprofileimage.php";} ?>,
                         method: "POST",
                         data: form_data,
                         contentType: false,
@@ -293,7 +296,7 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                     type: "POST",
-                    url: "updateprofile.php",
+                    url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadprofile.php"; } else { echo "uploadprofile.php";} ?>,
                     data: {'name': name, 'email': email, 'contact': contact, 'id': urlId},
                     success:function(data) 
                     {
@@ -309,7 +312,7 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
-                        url: "updatenote.php",
+                        url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadnote.php"; } else { echo "uploadnote.php";} ?>,
                         data: {'note': note,'id':urlId},
                         success:function(data) 
                         {

@@ -26,6 +26,9 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <!-- Include navigation bar -->
+    <?php include "navigationBar.php" ?>
+    
     <!-- Sign up form -->
     <div class="vertical-center">
         <div class="forgot-password-container container col-md-offset-2 col-md-8">

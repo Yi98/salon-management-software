@@ -132,6 +132,9 @@
     <script src="../script.js"></script>
   </head>
   <body>
+      <!-- Include navigation bar -->
+      <?php include "../navigationBar.php" ?>
+      
     <div class="container">
       <h1>User management</h1>
       <input type="text" id="userInput" onkeyup="searchUser()" placeholder="Search for names..">

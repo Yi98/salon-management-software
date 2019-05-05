@@ -98,10 +98,16 @@
                 $_SESSION["email"] = $user_info->email;
                 $_SESSION["role"] = "user";
         }
-            //
-        
+            
         unset($_SESSION['oauth_token']);
-        header('Location: index.php');
+        
+        if ($_SESSION["role"] == "staff") {
+            header('Location: staff/dashboard.php');    
+            exit();
+        } else {
+            header('Location: index.php');
+        }
+
     }else 
     {
         unset($_SESSION['oauth_token']);
