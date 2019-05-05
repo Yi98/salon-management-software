@@ -48,7 +48,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       <div class="price-summary">
         <p class="summary-title">Price Summary</p>
         <div class="row">
-          <div class="col-md-12"><p id="cart-total">Total: RM100</p></div>
+          <div class="col-md-12"><p id="cart-total">Total: RM<span id="total-amount">0.00</span></p></div>
         </div>
         <div class="row">
           <div class="col-md-12 text-center">

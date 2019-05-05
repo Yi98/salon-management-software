@@ -1150,6 +1150,8 @@ function onAddCart() {
 	        </div>
 	    </div>
 	  </li>`;
+
+	  sumUpCart();
 }
 
 function onModifyNum(element, action) {
@@ -1168,4 +1170,20 @@ function onModifyNum(element, action) {
 		parentCount.getElementsByTagName('span')[0].innerHTML--;
 		parentPrice.getElementsByTagName('span')[0].innerHTML = (currentPrice - unitPrice).toFixed(2);
 	}
+
+	sumUpCart();
+}
+
+
+function sumUpCart() {
+	const allPrices = [];
+
+	const totalAmount = document.getElementById('total-amount');
+	const allPricesElements = document.getElementsByClassName('price-num');
+
+	for (let i=0; i< allPricesElements.length; i++) {
+		allPrices.push(Number(allPricesElements[i].textContent));
+	}
+
+	totalAmount.innerHTML = (allPrices.reduce((num, total) => num + total)).toFixed(2);
 }
