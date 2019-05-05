@@ -131,10 +131,10 @@
                     </ul>
                 </nav>
                 <div class="row">
-                    <div class="col-lg-7 col-xs-7 main_column">
+                    <div class="col-lg-7 col-xs-12 main_column">
                         <img src="images/main_barber.jpg" title="barber"/>
                     </div>
-                    <div class="col-lg-5 col-xs-5 main2_column">
+                    <div class="col-lg-5 col-xs-12 main2_column">
                         <h1>Tired of waiting?</h1><br/>
                         <h2>BOOK AN APPOINTMENT AND GET THE NEW LOOK.</h2><br/>
                         <p>We’re known around town for our sexy and inventive hairstyles. Our team of professionals is always ready to provide you with an experience that will leave you satisfied and projecting confidence with your new look. The full customer experience we offer will match our clients’ aspirations with proven techniques and artistry to bring wishes to reality. Providing the ultimate beauty service, we will have you shine with brilliance and perfection.</p>
@@ -150,7 +150,7 @@
         <section>
             <div class="appointment-container">
                 <div class="row">
-                    <div class="col-lg-5 col-xs-5 main2_column" id="ac2">
+                    <div class="col-lg-5 col-xs-12 main2_column" id="ac2">
                     <h1>What can we do?</h1>
                     <br/>
                     <h2>BASICALLY EVERYTHING. </h2>
@@ -159,7 +159,7 @@
                     
                     <button type="button" id="appointment-btn" class="btn btn-info" onclick="window.location.href = 'appointment.php';">Book Now</button>
                 </div>  
-                <div class="col-lg-7 col-xs-7 main_column">
+                <div class="col-lg-7 col-xs-12 main_column">
                     <img src="images/salon_main.jpg" title="salon"/>
                 </div>
                 </div>

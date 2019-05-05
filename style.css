@@ -612,11 +612,12 @@ input:focus::-webkit-input-placeholder {
 
 .appointment-container nav ul li{
     display: inline-block;
-    margin:0 7% 0 7%;
+    /*margin:0 7% 0 7%;*/
+    padding: 0 5% 0 5%;
 }
 
 #logout-button, #login-button {
-    margin-left:7%;
+    
 }
 
 #after-login {
@@ -646,13 +647,13 @@ ul {
 
 nav{
     height:10vh;
+    min-height:90px;
 /*    background-image:url(Images/pipes.png);*/
     text-align: center;
     position:relative;
     z-index: 1;
     background-color:#FAFAFA;
     position:sticky;
-
 }
 
 
@@ -722,19 +723,27 @@ nav{
   }
 }
 
+.main2_column {
+    margin-bottom: 100px;
+}
+.product-container {
+    height:auto;
+}
+.product-container #product-btn {
+    margin-bottom:100px;
+}
 .appointment-container{
-    height:85vh;
     overflow-x:hidden;
 }
 
 .main_column img{
     width:100%;
     object-fit:cover;
-    height: auto;
 }
 
-.main_column{
-    overflow-x:hidden;
+.appointment-container .row {
+    margin-bottom: 100px;
+    border-top: 1px solid black;
 }
 
 .main2_column h1{
