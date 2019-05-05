@@ -4,6 +4,10 @@
 //     {
 //         header('location: login.php');
 //     }
+$sql = 'SELECT * from inventories';
+
+$q = $conn->query($sql);
+$q->setFetchMode(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -23,53 +27,20 @@
     <h1 class="text-center">Point of sale</h1>
     <p class="sub-content">Items <i class="fas fa-store"></i></p>
     <div class="input-group">
-      <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+      <select class="custom-select" id="cart-select" aria-label="Example select with button addon">
         <option selected>Choose...</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <?php while ($row = $q->fetch()): ?>    
+          <option value='{"price": <?php echo htmlspecialchars($row['unitPrice']) ?>, "name": "<?php echo htmlspecialchars($row['inventoryName']) ?>"}'><?php echo htmlspecialchars($row['inventoryName']) ?></option>
+        <?php endwhile; ?>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-primary" type="button">Add</button>
+        <button class="btn btn-primary" type="button" onclick="onAddCart()">Add</button>
       </div>
     </div>
 
     <div class="pos-contain mt-5">
       <p class="sub-content">Carts <i class="fas fa-shopping-cart"></i></p>
-      <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-          <img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
-          <p class="cart-product-title m-0 cart-product-text">LadBad Hair Wax</p>
-          <p class="cart-product-price m-0 cart-product-text" id="<%= product.title %>-price">RM 99</p>
-          <div class="row">
-              <div class="col 5">
-                  <i class="fas fa-minus" onclick="onModifyNum('<%= product.title %>', -1)"></i>
-              </div>
-              <dv class="col-2 cart-badge-num" style="padding: 0;">
-                  <span class="badge badge-primary badge-pill" id="<%= product.title %>-num">5</span>
-              </dv>
-              <div class="col-5">
-                  <i class="fas fa-plus" onclick="onModifyNum('<%= product.title %>', 1)"></i>
-              </div>
-          </div>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-          <img class="cart-img" src="../images/olaplex_main.jpeg" alt="Product item">
-          <p class="cart-product-title m-0 cart-product-text">LadBad Hair Wax</p>
-          <p class="cart-product-price m-0 cart-product-text" id="<%= product.title %>-price">RM 99</p>
-          <div class="row">
-              <div class="col 5">
-                  <i class="fas fa-minus" onclick="onModifyNum('<%= product.title %>', -1)"></i>
-              </div>
-              <dv class="col-2 cart-badge-num" style="padding: 0;">
-                  <span class="badge badge-primary badge-pill" id="<%= product.title %>-num">5</span>
-              </dv>
-              <div class="col-5">
-                  <i class="fas fa-plus" onclick="onModifyNum('<%= product.title %>', 1)"></i>
-              </div>
-          </div>
-        </li>
-      </ul>
+      <ul class="list-group" id="cart-ul"></ul>
 
       <div class="price-summary">
         <p class="summary-title">Price Summary</p>
@@ -83,24 +54,6 @@
         </div>
       </div>
     </div>
-
-<!--     <div class="ui basic modal modal-container" id="pay-cart-modal">
-      <div class="ui icon header">
-        <i class="calendar minus icon"></i>
-        Totaal Amount: RM100
-      </div>
-      <div class="content">
-        <input type="text" name="staffId">
-        <input type="number" name="cashPaid">
-        <p class="modal-message">This timeslot has already been taken!</p>
-      </div>
-      <div class="actions">
-        <div class="ui red ok inverted button okay-button-modal">
-          <i class="checkmark icon"></i>
-          Okay
-        </div>
-      </div>
-    </div> -->
 
     <div class="ui tiny modal text-center" id="pay-cart-modal">
       <i class="close icon"></i>

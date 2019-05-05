@@ -1126,3 +1126,46 @@ function onPayCart() {
 	$('#pay-cart-modal')
   	.modal('show');
 }
+
+function onAddCart() {
+	const cartSelect = document.getElementById('cart-select').value;
+	const selected = JSON.parse(cartSelect);
+
+	let cartItems = document.getElementById("cart-ul").innerHTML;
+
+	document.getElementById("cart-ul").innerHTML += `
+		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
+	    <img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
+	    <p class="cart-product-title m-0 cart-product-text">${selected.name}</p>
+	    <p class="cart-product-price m-0 cart-product-text">RM <span class="price-num">${selected.price.toFixed(2)}</span></p>
+	    <div class="row">
+	        <div class="col 5">
+	            <i class="fas fa-minus" onclick="onModifyNum(this, 0)"></i>
+	        </div>
+	        <div class="col-2 cart-badge-num" style="padding: 0;">
+	            <span class="badge badge-primary badge-pill cart-num">1</span>
+	        </div>
+	        <div class="col-5">
+	            <i class="fas fa-plus" onclick="onModifyNum(this, 1)"></i>
+	        </div>
+	    </div>
+	  </li>`;
+}
+
+function onModifyNum(element, action) {
+	const parentCount = element.parentNode.parentNode;
+	let num = parentCount.getElementsByTagName('span')[0].innerHTML;
+
+	const parentPrice = parentCount.parentNode;
+	let currentPrice = Number(parentPrice.getElementsByTagName('span')[0].innerHTML);
+	let unitPrice = currentPrice / parentCount.getElementsByTagName('span')[0].innerHTML;
+
+	if (action) {
+		parentCount.getElementsByTagName('span')[0].innerHTML++;
+		parentPrice.getElementsByTagName('span')[0].innerHTML = (currentPrice + unitPrice).toFixed(2);
+	}
+	else if (num != 1) {
+		parentCount.getElementsByTagName('span')[0].innerHTML--;
+		parentPrice.getElementsByTagName('span')[0].innerHTML = (currentPrice - unitPrice).toFixed(2);
+	}
+}
