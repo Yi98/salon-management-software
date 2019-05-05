@@ -23,6 +23,9 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
   <script src="../script.js"></script>
 </head>
 <body>
+    <!-- Include navigation bar -->
+    <?php include "../navigationBar.php" ?>
+    
   <div class="container pt-5" id="pos-container">
     <h1 class="text-center">Point of sale</h1>
     <p class="sub-content">Items <i class="fas fa-store"></i></p>

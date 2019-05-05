@@ -69,85 +69,27 @@
             </div>
         </div>
         
-        <section id="navigation-bar">   
+        <!-- Include navigation bar -->
+        <?php include "navigationBar.php" ?>
+        
+        <section>
             <div class="appointment-container">
-                <nav id="sticky-nav">
-                    <ul>
-
-                    <?php 
-                        // Check whether the sign in user are staff
-                        if ( isset($_SESSION["id"]) && $_SESSION["role"] == "staff") {
-                            echo "<li><p><a href='staff/dashboard.php'>DASHBOARD</a></p></li>
-                            <li><p><a href='staff/appointment.php'>APPOINTMENT LIST</a></p></li>
-                            <li><p><a href='staff/inventory.php'>INVENTORY LIST</a></p></li>
-                            <li><p><a href='staff/user.php'>USER LIST</a></p></li>";
-                        } else {
-                            echo "<li><p><a href='index.php'>HOME</a></p></li>
-                            <li><p><a href='appointment.php'>APPOINTMENT</a></p></li>
-                            <li><p><a href='inventory.php'>PRODUCT</a></p></li>";
-                        }
-                    ?>
-                    <!-- STAFF NAVIGATION BAR AFTER LOG IN 
-                        POINT OF SALES SHOULD BE IN DASHBOARD OR IF NEEDED CREATE A NEW PAGE FOR IT
-                        <li><p><a href="staff/dashboard.php">DASHBOARD</a></p></li>
-                        <li><p><a href="staff/appointment.php">APPOINTMENT LIST</a></p></li>
-                        <li><p><a href="staff/inventory.php">INVENTORY LIST</a></p></li>
-                        <li><p><a href="staff/user.php">USER LIST</a></p></li>
-                    -->
-                        
-
-                        <?php
-                            if (isset($_SESSION["id"]) && !empty($_SESSION["id"]) || isset($_SESSION["access_token"])) {
-                                $query = "SELECT * FROM `users` WHERE `userId`=:id";
-
-                                $data = $conn->prepare($query);
-                                $data->bindValue(":id", $_SESSION["id"]);
-                                $data->execute();
-
-                                $currentUser = $data->fetch(PDO::FETCH_ASSOC);
-                                $id = $_SESSION["id"];
-                                if ($currentUser["image_path"] != NULL) {
-                                    $image_path = $currentUser['image_path'];
-                                    echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='$image_path'/></span>";
-                                } else {
-                                    
-                                    echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
-                                }
-                                echo '<span>'.$_SESSION["name"].'</span></a>';
-                            }
-                        ?>
-                        
-                        <?php 
-                            if (isset($_SESSION["access_token"])) {
-                                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-                            } else {
-                                if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) {
-                                    echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
-                                } else {
-                                    echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-                                }
-                            }
-                        ?>
-                    </ul>
-                </nav>
-                <div class="row">
-                    <div class="col-lg-7 col-xs-12 main_column">
-                        <img src="images/main_barber.jpg" title="barber"/>
+                <div class='row'>
+                    <div class='col-lg-7 col-xs-12 main_column'>
+                        <img src='images/main_barber.jpg' title='barber'/>
                     </div>
-                    <div class="col-lg-5 col-xs-12 main2_column">
+                    <div class='col-lg-5 col-xs-12 main2_column'>
                         <h1>Tired of waiting?</h1><br/>
                         <h2>BOOK AN APPOINTMENT AND GET THE NEW LOOK.</h2><br/>
                         <p>We’re known around town for our sexy and inventive hairstyles. Our team of professionals is always ready to provide you with an experience that will leave you satisfied and projecting confidence with your new look. The full customer experience we offer will match our clients’ aspirations with proven techniques and artistry to bring wishes to reality. Providing the ultimate beauty service, we will have you shine with brilliance and perfection.</p>
-                      
-                    <button type="button" id="appointment-btn" class="btn btn-info">Book Now</button>
+
+                    <button type='button' id='appointment-btn' class='btn btn-info'>Book Now</button>
                     </div>
                 </div>
-              
-                
             </div>
         </section>
-        
         <section>
+            
             <div class="appointment-container">
                 <div class="row">
                     <div class="col-lg-5 col-xs-12 main2_column" id="ac2">

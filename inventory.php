@@ -29,6 +29,9 @@
 </head>
   
 <body>
+    <!-- Include navigation bar -->
+    <?php include "navigationBar.php" ?>
+    
     <div class="container">
       <div class="user-inventory-container">
         <h1>Products</h1>

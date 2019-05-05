@@ -70,7 +70,11 @@
             $_SESSION["email"] = trim($newUser["email"], "'");
             $_SESSION["role"] = trim($newUser["role"], "'");
             $_SESSION["success"] = "You are now logged in";
-            header('location: index.php');
+            if ($_SESSION["role"] == "user") {
+                header('location: index.php');
+            } else {
+                header('location: ../dashboard.php');
+            }
             exit;
         }
     }

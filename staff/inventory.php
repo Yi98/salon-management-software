@@ -222,7 +222,9 @@
     <script src="../script.js"></script>
   </head>
   <body>
-    
+    <!-- Include navigation bar -->
+    <?php include "../navigationBar.php" ?>
+      
     <div class="container staff-inventory-container">
       <h1>Staff Product View
       </h1>
