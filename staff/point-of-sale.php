@@ -58,7 +58,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <div class="ui tiny modal text-center" id="pay-cart-modal">
       <i class="close icon"></i>
       <div class="header">
-        Total Amount: RM100
+        Total Amount: RM<span id="header-amount">100</span>
       </div>
       <div class="content">
         <div class="description">
@@ -73,10 +73,10 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
               <div class="row">
                 <div class="col-md-12 text-left font-weight-bold"><label for="cashPaid">Cash Paid</label></div>
               </div>
-              <input type="number" class="form-control mb-4" id="cashPaid" placeholder="Enter cash paid">
+              <input type="number" class="form-control mb-4" id="cash-paid" placeholder="Enter cash paid" onkeyup="onCashPaidChange()">
             </div>
             <div class="form-group">
-              <p class="font-weight-bold changes-price">Changes: RM 5.90</p>
+              <p class="font-weight-bold changes-price">Changes: RM <span id="total-changes">0.00</span></p>
             </div>
         </div>
       </div>

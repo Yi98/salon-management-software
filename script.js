@@ -1123,6 +1123,8 @@ function categoryFilter(category){
   }
 
 function onPayCart() {
+	const price = document.getElementById('total-amount').innerHTML;
+	document.getElementById('header-amount').innerHTML = price;
 	$('#pay-cart-modal')
   	.modal('show');
 }
@@ -1186,4 +1188,14 @@ function sumUpCart() {
 	}
 
 	totalAmount.innerHTML = (allPrices.reduce((num, total) => num + total)).toFixed(2);
+}
+
+function onCashPaidChange() {
+	const cashPaid = document.getElementById('cash-paid').value;
+	const totalAmount = document.getElementById('header-amount').innerHTML;
+
+	let changes = (cashPaid - totalAmount).toFixed(2);
+
+
+	document.getElementById('total-changes').innerHTML = changes > 0 ? changes : 0.00.toFixed(2);
 }
