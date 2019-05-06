@@ -103,7 +103,6 @@ function onCompleteDateInfo() {
 
 
 function onCompleteServicesInfo() {
-	// use xhr here
 	const serviceForm = document.getElementById('service-form');
 	const requestForm = document.getElementById('request-form');
 	const serviceStep = document.getElementById('service-step');
@@ -1124,14 +1123,82 @@ function categoryFilter(category){
 
 function onPayCart() {
 	const price = document.getElementById('total-amount').innerHTML;
+	const items = [];
+
 	document.getElementById('header-amount').innerHTML = price;
+
+	const carts = document.getElementById('cart-ul');
+
+	for (let i=1; i<carts.children.length; i++) {
+		let cart = carts.children[i];
+
+		let id = cart.getElementsByClassName('inventoryId')[0].value;
+		let num = cart.getElementsByClassName('cart-num')[0].innerHTML;
+
+		items.push({id, num});
+	}
+
+	const stringItems = JSON.stringify(items);
+
+	// console.log(items);
+
+
 	$('#pay-cart-modal')
+		.modal({
+			closable: false,
+			onApprove: function() {
+				const totalAmount = document.getElementById('header-amount').innerHTML;
+				const staffId = document.getElementById('staffId').value;
+
+				const http = new XMLHttpRequest();
+		    const url = 'staff/../pos-process.php';
+		    const params = `staffId=${staffId}&salesAmount=${totalAmount}&items=${stringItems}`;
+		    http.open('POST', url, true);
+
+		    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+		    http.onreadystatechange = function() {
+		      if(http.readyState == 4 && http.status == 200) {
+		      	// if (http.responseText.trim() == "success") {
+		      		// alert('Sale recorded to database');
+		      		console.log(http.responseText);
+		      	// };
+		     //    appointmentLoader.style.display = "none";
+		     //  	if (http.responseText.trim() == "success") {
+		     //  		$('#success-booking-modal')
+		     //        .modal('show');
+		     //  	}
+		     //  	else if (http.responseText.trim() == "fail") {
+							// $('#fail-booking-modal')
+		     //        .modal('show');
+		     //  	}
+		     //    else if (http.responseText.trim() == "over") {
+		     //      $('#over-booking-modal')
+		     //        .modal('show');
+		     //    }
+		     //    else if (http.responseText.trim() == "duplicate") {
+		     //    	$('#duplicate-booking-modal')
+		     //        .modal('show');
+		     //    }
+		      }
+		    }
+		    http.send(params);
+  		}
+		})
   	.modal('show');
 }
 
 function onAddCart() {
 	const cartSelect = document.getElementById('cart-select').value;
 	const selected = JSON.parse(cartSelect);
+	let productName;
+
+	if (selected.name.length > 15) {
+		productName = selected.name.substring(0, 15) + "...";
+	}	else {
+		productName = selected.name;
+	}
+	
 
 	let cartItems = document.getElementById('cart-ul').innerHTML;
 
@@ -1151,7 +1218,7 @@ function onAddCart() {
 					<img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
 				</div>
 				<div class="col-md-2 cart-criteria">
-					<p class="cart-product-title m-0 cart-product-text">${selected.name}</p>
+					<p class="cart-product-title m-0 cart-product-text" title="${selected.name}">${productName}</p>
 				</div>
 				<div class="col-md-2 cart-criteria">
 					<p class="cart-product-price m-0 cart-product-text">RM <span class="price-num">${selected.price.toFixed(2)}</span></p>
@@ -1166,6 +1233,7 @@ function onAddCart() {
 	    		<p class="remove-text" onclick="onRemoveCart(this)">Remove</p>		
 				</div>
 			</div>
+			<input type="hidden" class="inventoryId" value="${selected.id}">
 	  </li>`;
 
 	  sumUpCart();

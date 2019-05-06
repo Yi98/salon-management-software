@@ -93,9 +93,7 @@ INSERT INTO `inventories` (`inventoryId`, `inventoryName`, `description`, `quant
 
 CREATE TABLE `sales` (
   `salesId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
   `staffId` int(11) NOT NULL,
-  `types` varchar(30) NOT NULL,
   `salesAmount` double NOT NULL,
   `dateOfSales` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -156,7 +154,6 @@ ALTER TABLE `inventories`
 --
 ALTER TABLE `sales`
   ADD PRIMARY KEY (`salesId`),
-  ADD KEY `userId` (`userId`),
   ADD KEY `staffId` (`staffId`);
 
 --
@@ -207,7 +204,6 @@ ALTER TABLE `appointments`
 -- Constraints for table `sales`
 --
 ALTER TABLE `sales`
-  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`),
   ADD CONSTRAINT `sales_ibfk_2` FOREIGN KEY (`staffId`) REFERENCES `users` (`userId`);
 COMMIT;
 

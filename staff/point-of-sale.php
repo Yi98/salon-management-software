@@ -8,6 +8,7 @@ $sql = 'SELECT * from inventories';
 
 $q = $conn->query($sql);
 $q->setFetchMode(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +34,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       <select class="custom-select" id="cart-select" aria-label="Example select with button addon">
         <option selected>Choose...</option>
         <?php while ($row = $q->fetch()): ?>    
-          <option value='{"price": <?php echo htmlspecialchars($row['unitPrice']) ?>, "name": "<?php echo htmlspecialchars($row['inventoryName']) ?>"}'><?php echo htmlspecialchars($row['inventoryName']) ?></option>
+          <option value='{"id": <?php echo htmlspecialchars($row['inventoryId']) ?>, "price": <?php echo htmlspecialchars($row['unitPrice']) ?>, "name": "<?php echo htmlspecialchars($row['inventoryName']) ?>"}'><?php echo htmlspecialchars($row['inventoryName']) ?></option>
         <?php endwhile; ?>
       </select>
       <div class="input-group-append">
