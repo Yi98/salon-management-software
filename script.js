@@ -1136,26 +1136,36 @@ function onAddCart() {
 	let cartItems = document.getElementById('cart-ul').innerHTML;
 
 	if (document.getElementById('cart-ul').children.length > 0) {
-		document.getElementById('sample-li-cart').classList.add('hide-li');
+		document.getElementById('sample-li-cart').classList.remove('show-li');
+		document.getElementById('sample-li-cart').classList.add('hide-li');	
+	}
+	else {
+		document.getElementById('sample-li-cart').classList.add('show-li');
+		document.getElementById('sample-li-cart').classList.remove('hide-li');
 	}
 
 	document.getElementById("cart-ul").innerHTML += `
 		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-	    <img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
-	    <p class="cart-product-title m-0 cart-product-text">${selected.name}</p>
-	    <p class="cart-product-price m-0 cart-product-text">RM <span class="price-num">${selected.price.toFixed(2)}</span></p>
-	    <div class="row">
-	        <div class="col 5">
-	            <i class="fas fa-minus" onclick="onModifyNum(this, 0)"></i>
-	        </div>
-	        <div class="col-2 cart-badge-num" style="padding: 0;">
-	            <span class="badge badge-primary badge-pill cart-num">1</span>
-	        </div>
-	        <div class="col-5">
-	            <i class="fas fa-plus" onclick="onModifyNum(this, 1)"></i>
-	        </div>
-	    </div>
-	    <p class="remove-text" onclick="onRemoveCart(this)">Remove</p>
+			<div class="row">
+				<div class="col-md-2">
+					<img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
+				</div>
+				<div class="col-md-2 cart-criteria">
+					<p class="cart-product-title m-0 cart-product-text">${selected.name}</p>
+				</div>
+				<div class="col-md-2 cart-criteria">
+					<p class="cart-product-price m-0 cart-product-text">RM <span class="price-num">${selected.price.toFixed(2)}</span></p>
+				</div>
+				<div class="col-md-2"></div>
+				<div class="col-md-2 cart-badge-num cart-criteria">
+					<i class="fas fa-minus" onclick="onModifyNum(this, 0)"></i>
+          <span class="badge badge-primary badge-pill cart-num">1</span>   
+          <i class="fas fa-plus" onclick="onModifyNum(this, 1)"></i>
+        </div>
+				<div class="col-md-2 cart-criteria">
+	    		<p class="remove-text" onclick="onRemoveCart(this)">Remove</p>		
+				</div>
+			</div>
 	  </li>`;
 
 	  sumUpCart();
@@ -1163,18 +1173,18 @@ function onAddCart() {
 
 function onModifyNum(element, action) {
 	const parentCount = element.parentNode.parentNode;
-	let num = parentCount.getElementsByTagName('span')[0].innerHTML;
+	let num = parentCount.getElementsByTagName('span')[1].innerHTML;
 
 	const parentPrice = parentCount.parentNode;
 	let currentPrice = Number(parentPrice.getElementsByTagName('span')[0].innerHTML);
-	let unitPrice = currentPrice / parentCount.getElementsByTagName('span')[0].innerHTML;
+	let unitPrice = currentPrice / parentCount.getElementsByTagName('span')[1].innerHTML;
 
 	if (action) {
-		parentCount.getElementsByTagName('span')[0].innerHTML++;
+		parentCount.getElementsByTagName('span')[1].innerHTML++;
 		parentPrice.getElementsByTagName('span')[0].innerHTML = (currentPrice + unitPrice).toFixed(2);
 	}
 	else if (num != 1) {
-		parentCount.getElementsByTagName('span')[0].innerHTML--;
+		parentCount.getElementsByTagName('span')[1].innerHTML--;
 		parentPrice.getElementsByTagName('span')[0].innerHTML = (currentPrice - unitPrice).toFixed(2);
 	}
 
@@ -1192,7 +1202,12 @@ function sumUpCart() {
 		allPrices.push(Number(allPricesElements[i].textContent));
 	}
 
-	totalAmount.innerHTML = (allPrices.reduce((num, total) => num + total)).toFixed(2);
+	if (allPrices.length !== 0) {
+		totalAmount.innerHTML = (allPrices.reduce((num, total) => num + total)).toFixed(2);
+	}
+	else {
+		totalAmount.innerHTML = (0).toFixed(2);
+	}
 }
 
 function onCashPaidChange() {
@@ -1206,7 +1221,15 @@ function onCashPaidChange() {
 }
 
 function onRemoveCart(element) {
-	console.log(element.parentNode);
-	element.parentNode.remove();
+	element.parentNode.parentNode.parentNode.remove();
 	sumUpCart();
+
+	if (document.getElementById('cart-ul').children.length > 1) {
+		document.getElementById('sample-li-cart').classList.remove('show-li');
+		document.getElementById('sample-li-cart').classList.add('hide-li');	
+	}
+	else {
+		document.getElementById('sample-li-cart').classList.add('show-li');
+		document.getElementById('sample-li-cart').classList.remove('hide-li');
+	}
 }

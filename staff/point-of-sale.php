@@ -95,9 +95,6 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </div>
       </div>
     </div>
-    
-
-
   </div>
 </body>
 </html>

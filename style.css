@@ -1069,7 +1069,7 @@ p.sub-content {
 }
 
 img.cart-img {
-  width: 7%;
+  width: 55%;
   border: 1px solid rgb(209, 208, 208);
 }
 
@@ -1091,6 +1091,10 @@ li.hide-li {
   display: none !important;
 }
 
+li.show-li {
+  display: block !important;
+}
+
 p.remove-text {
   color: blue;
   cursor: pointer;
@@ -1098,4 +1102,8 @@ p.remove-text {
 
 p.remove-text:hover {
   text-decoration: underline;
+}
+
+.cart-criteria {
+  padding-top: 2.5%;
 }
