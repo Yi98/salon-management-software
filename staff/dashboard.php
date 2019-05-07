@@ -1,2 +1,2 @@
 <!-- Include navigation bar -->
-<?php include "navigationBar.php" ?>
+<?php include "../navigationBar.php" ?>

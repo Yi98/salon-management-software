@@ -217,6 +217,8 @@
             </th>
             <th>Note
             </th>
+            <th>Status
+            </th>
             <th>Last Online
             </th>
             <th>Role
@@ -238,6 +240,13 @@
               $dateToday = strtotime("$today");
               $dateLastSignIn = strtotime("$lastSignIn"); 
               $days = ($dateToday - $dateLastSignIn)/60/60/24;
+              if ($days <= 30){
+                $src = "../images/active-icon.png";
+              }
+              
+              if ($days > 30){
+                $src = "../images/inactive-icon.png";
+              }
           
               if($days < 1){
                 $show = "today";
@@ -252,7 +261,7 @@
               
               $userNo ++;
               $id = $row['userId'];
-              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
+              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "<img src='$src' alt='$src'/>" . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
             }
             ?>  
         </table>
