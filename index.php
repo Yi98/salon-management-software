@@ -48,7 +48,7 @@
           }
         </style>
     </head>
-    <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?>>
+    <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?> >
         <div class="main-container">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             
