@@ -6,28 +6,33 @@ if (!empty($_POST['staffId']) && !empty($_POST['salesAmount']) && !empty($_POST[
   $staffId = $_POST['staffId'];
   $salesAmount = $_POST['salesAmount'];
   $items = json_decode($_POST['items']);
-  // $items = json_decode('[{"id": 5}]');
   $date = date("Y-m-d");
 
   $sql = "INSERT INTO sales (staffId, salesAmount, dateOfSales) VALUES ('$staffId', '$salesAmount', '$date')";
 
-  for ($i=0; $i<sizeof($items); $i++) {
-    $id = $items[$i]->id;
-    $num = $items[$i]->num;
-
-    $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES (34, '$id', '$num')";
-  }
-
   if ($conn->exec($sql)) {
-    // echo sizeof($items);
+    $salesIdQuery = "SELECT salesId FROM sales ORDER BY salesId DESC LIMIT 1";
+
+    $currentObj = $conn->query($salesIdQuery);
+    $currentObj->setFetchMode(PDO::FETCH_ASSOC);
+    while ($row = $currentObj->fetch()) {
+      $currentId = $row['salesId'];
+    }
+
+    for ($i=0; $i<sizeof($items); $i++) {
+      $id = $items[$i]->id;
+      $num = $items[$i]->num;
+
+      $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES ('$currentId', '$id', '$num')";
+
+      if ($conn->exec($detailsSql)) {
+        echo 'success';
+      }
+    }
   }
   else {
     echo "failed";
   }
-
-  // if ($conn->exec($detailsSql)) {
-  //   echo 'success';
-  // }
 }
 
 ?>
