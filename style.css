@@ -150,7 +150,6 @@ ul {
 
 .vertical-center {
     min-height: 100%;
-    min-height: 100vh;
     display:flex;
     align-items: center;
 }
@@ -185,6 +184,9 @@ ul {
     border:1px solid grey;
 }
 
+.add-staff-content {
+    margin: 0 auto;
+}
 .add-staff-popup {
     background-color: rgba(0,0,0,0.5);
     display:none;
@@ -213,7 +215,7 @@ ul {
 .add-staff-form {
     background-color:white;
     border:1px solid grey;
-
+    margin: 0 auto;
 }
 
 #close_new_staff_button {
@@ -644,8 +646,8 @@ input:focus::-webkit-input-placeholder {
     color:#e5ca00;
 }
 #navigation-bar nav ul {
-    margin-top: 1%;
-    margin-bottom: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 #navigation-bar ul, #navigation-bar ul li p  {
@@ -816,6 +818,10 @@ nav{
     font-family: 'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
 
+.display-4 {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 #navigation-bar li a {
  font-size: 14px;
 }
@@ -823,6 +829,7 @@ nav{
 #navigation-bar ul {
  font-size: 14px;
 }
+
 
 footer {
     clear: both;
@@ -844,7 +851,10 @@ footer {
     letter-spacing: 5px;
     text-transform: uppercase; 
 }
-
+h1.display-4 {
+    margin-top:14px;
+    font-size: 36px;
+}
 h1.appointment-list-title {
   text-align: center;
   margin-top: 5%;
@@ -939,11 +949,6 @@ span.view-details-text {
 #myForm h1, #archiveList h1{
   font-family:georgia, sans-serif;
 }
-
-.staff-inventory-container h1{
-  font-family:georgia,sans-serif;
-}
-
 
 #myForm button, #archiveList .cancel{
     border-width: 3px;
@@ -1148,5 +1153,5 @@ p.remove-text:hover {
 }
 
 #navigation-bar {
-    border-bottom:1px solid black;
+    border-bottom:1px solid grey;
 }

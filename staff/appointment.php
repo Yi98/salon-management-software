@@ -1,5 +1,9 @@
 <?php include '../db_connect.php'; ?>
-
+<?php
+    if ($_SESSION["role"] != "staff") {
+        header("location: ../index.php");
+    }
+?>
 <?php
 $sql = 'SELECT * from appointments INNER JOIN users ON appointments.userId = users.userId';
 
@@ -23,7 +27,8 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <?php include "../navigationBar.php" ?>
     
   <div class="container">
-    <h1 class="appointment-list-title">Appointment List</h1>
+    <!--<h1 class="appointment-list-title">Appointment List</h1>-->
+    <h1 class="display-4  text-center">Appointment List</h1>
     Filter by status:
     <select name="status" id="filterBox" onchange="onFilterStatus()">
       <option value="all">show all</option>

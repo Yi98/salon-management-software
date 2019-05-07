@@ -533,7 +533,7 @@ function addStaffValidation() {
         return false;
     } else {
         emailAlert.textContent = "";
-        $.post("addstaff.php", { email: email },
+        $.post("../addstaff.php", { email: email },
         function(data) {
 	        $('#add-staff-email-alert').html(data);
             $('#add-staff-form')[0].reset();

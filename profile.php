@@ -149,20 +149,12 @@
 
     <?php 
         if (isset($_SESSION["access_token"])) {
-            if ($_SESSION["role"] == "staff") {
-                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-            } else {
-                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-            }
+            echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
         } else {
             if (!isset($_SESSION["id"])) {
                 echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
             } else {
-                if ($_SESSION["role"] == "staff") {
-                    echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-                } else {
-                    echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
-                }
+                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
             }
         }
     ?>
@@ -171,9 +163,11 @@
         echo "</ul>
                 </nav>
             </div>
-        </section>"
+        </section>";
     ?>
     
+    
+      <h1 class="display-4 text-center"><?php echo $_SESSION["name"]?>'s Profile</h1>
     <div class="container profile-container">
         <div class="row">
         <div class="col-lg-4 col-xs-12 text-center" style="background: #D3D3D3;">
@@ -349,7 +343,7 @@
                     var form_data = new FormData();
                     form_data.append("file", property);
                     $.ajax({
-                        url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadprofileimage.php"; } else { echo "uploadprofileimage.php";} ?>,
+                        url: "uploadprofileimage.php",
                         method: "POST",
                         data: form_data,
                         contentType: false,
@@ -371,7 +365,7 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                     type: "POST",
-                    url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadprofile.php"; } else { echo "uploadprofile.php";} ?>,
+                    url: "uploadprofile.php",
                     data: {'name': name, 'email': email, 'contact': contact, 'id': urlId},
                     success:function(data) 
                     {
@@ -387,7 +381,7 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
-                        url: <?php if ($_SESSION["role"] == "staff") { echo "../uploadnote.php"; } else { echo "uploadnote.php";} ?>,
+                        url: "../uploadnote.php",
                         data: {'note': note,'id':urlId},
                         success:function(data) 
                         {

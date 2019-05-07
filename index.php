@@ -1,5 +1,9 @@
 <?php include "db_connect.php"; ?>
-
+<?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+        header("location: staff/dashboard.php");
+    }
+?>
 <?php
     //echo "<script type='text/javascript'>","location.href='index.php#navigation-bar';","</script>";
 ?>
@@ -42,10 +46,7 @@
               height:100%;
           }
 
-          nav#sticky-nav {
-            position: sticky;
-            top: 0;
-          }
+
         </style>
     </head>
     <body <?php if (isset($_SESSION["id"])) {echo "onload='directNavigationBar()'";} ?> >

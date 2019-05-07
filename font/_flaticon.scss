@@ -1,6 +1,6 @@
     /*
     Flaticon icon font: Flaticon
-    Creation date: 06/04/2019 07:07
+    Creation date: 07/05/2019 16:01
     */
 
     @font-face {
@@ -37,12 +37,14 @@
   font-smoothing: antialiased;
     }
 
-    .flaticon-id-card:before { content: "\f100"; }
-.flaticon-email:before { content: "\f101"; }
-.flaticon-lock:before { content: "\f102"; }
-.flaticon-lock-1:before { content: "\f103"; }
+    .flaticon-auricular-phone-symbol-in-a-circle:before { content: "\f100"; }
+.flaticon-privacy:before { content: "\f101"; }
+.flaticon-mail:before { content: "\f102"; }
+.flaticon-lock:before { content: "\f103"; }
+.flaticon-lock-1:before { content: "\f104"; }
     
-    $font-Flaticon-id-card: "\f100";
-    $font-Flaticon-email: "\f101";
-    $font-Flaticon-lock: "\f102";
-    $font-Flaticon-lock-1: "\f103";
+    $font-Flaticon-auricular-phone-symbol-in-a-circle: "\f100";
+    $font-Flaticon-privacy: "\f101";
+    $font-Flaticon-mail: "\f102";
+    $font-Flaticon-lock: "\f103";
+    $font-Flaticon-lock-1: "\f104";

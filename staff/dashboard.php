@@ -1,5 +1,15 @@
 <!-- Include navigation bar -->
 <?php include '../db_connect.php'; ?>
+<?php
+    if ($_SESSION["role"] != "staff") {
+        header("location: ../index.php");
+    }
+?>
+<?php
+    $add_staff_email = "";
+    $add_staff_success_message = "";
+    $add_staff_error_message = "";  
+?>
 
 <html lang="en">
   <head>
@@ -12,9 +22,44 @@
   </head>
   <body>
     <?php include "../navigationBar.php" ?>
-    
+      
     <div id="dashboard-bg">
       <div class="container dashboard-container text-center">
+        <!-- Add new staff button -->
+        <button id="add_new_staff_button" class="btn btn-info">Add new staff</button>
+    
+        <div class="vertical-center add-staff-popup">
+            <div class="add-staff-container container col-md-offset-2 col-md-8">
+                <div class="row equal">
+                    <div class="add-staff-content">
+                        <div class="add-staff-form  col-md-6 col-md-offset-3">
+                            <button id="close_new_staff_button">
+                                &times;
+                            </button>
+
+                            <h2 class="form-title">Add new staff</h2>
+                            <p class="add-staff-instruction">Enter new staff email (new staff required to signed up as a existing user before this action can be proceed)</p>
+                            <form method="POST" class="add-staff-form-inner" id="add-staff-form" onSubmit="return addStaffValidation()">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
+                                        <input type="text" name="add-staff-email" id="add-staff-email" placeholder="New staff email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$add_staff_email) ?>"/>
+                                    </div>
+                                    <span id="add-staff-email-alert"></span>
+                                    <?php echo "<span style='color:green'>$add_staff_success_message</span>" ?>
+                                    <?php echo "<span style='color:red'>$add_staff_error_message</span>" ?>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="addstaff" id="addstaff" class="btn btn-info" value="Add Staff"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+          
+          
         <h1 class="display-4">Dashboard For Staff</h1>
         <a class="weatherwidget-io" href="https://forecast7.com/en/1d61110d38/kuching/" data-label_1="KUCHING" data-label_2="WEATHER" data-icons="Climacons Animated" data-days="3" data-theme="clear" >KUCHING WEATHER</a>
         <script>
@@ -106,7 +151,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     
-
+    <script src="../script.js"></script>
+    <script>
+        $("#add_new_staff_button").on("click", function(){
+            $(".add-staff-popup").addClass("add-staff-popup-active");
+        });
+        $("#close_new_staff_button").on("click", function(){
+            $(".add-staff-popup").removeClass("add-staff-popup-active");
+        });
+    </script>
   </body>
   
 <!--

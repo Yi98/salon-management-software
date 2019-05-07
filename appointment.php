@@ -1,4 +1,11 @@
 <?php include 'db_connect.php'; ?>
+
+<?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+        header("location: staff/dashboard.php");
+    }
+?>
+
 <?php 
 if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) 
     {
@@ -18,9 +25,11 @@ if (!isset($_SESSION["id"]) && empty($_SESSION["id"]))
   <script src="script.js"></script>
 </head>
 <body id="appointment-page">
-    
+
     <!-- Include navigation bar -->
     <?php include "navigationBar.php" ?>
+    
+      <h1 class="display-4 text-center">Appointment</h1>
   <div class="ui segment" id="appointment-loader">
     <p></p>
     <div class="ui active dimmer">

@@ -1,5 +1,9 @@
 <?php include "db_connect.php"; ?>
-
+<?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+        header("location: staff/dashboard.php");
+    }
+?>
 <!-- Social Media Login -->
 <?php include "twitterBack.php"; ?>
 <?php include "googleLogin.php"; ?>
@@ -16,9 +20,7 @@
     <title>Sign Up</title>
     
     <!-- icon css link -->
-    <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>
-    <link rel="stylesheet" type="text/css" href="font/phone-icon/flaticon.css"/>
-    
+    <link rel="stylesheet" type="text/css" href="font/flaticon.css"/>    
     
     <!-- Bootstrap library -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -39,7 +41,7 @@
     
     <!-- Include navigation bar -->
     <?php include "navigationBar.php" ?>
-    
+    <h1 class="display-4  text-center">Sign Up</h1>
     <!-- Sign up form -->
     <div class="vertical-center">
         <div class="sign-up-container container col-md-offset-2 col-md-8">
@@ -59,7 +61,7 @@
                         <form method="POST" class="register-form" id="register-form" autocomplete="autocomplete" action="signup.php" onSubmit="return startSignUpValidate()">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label class="input-group-addon" for="name"><i class="flaticon-id-card"></i></label>
+                                    <label class="input-group-addon" for="name"><i class="flaticon-privacy"></i></label>
                                     <input type="text" name="name" id="name" placeholder="Your Name" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$name) ?>"/>
                                 </div>
                                 <span id="signup-name-alert"></span>
@@ -67,7 +69,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
+                                    <label class="input-group-addon" for="email"><i class="flaticon-mail"></i></label>
                                     <input type="text" name="email" id="email" placeholder="Your Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$email) ?>"/>
                                    
                                 </div>
