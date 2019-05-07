@@ -113,8 +113,7 @@
       $price = $row['purchasingPrice'];
       $retailprice = $row['unitPrice'];
       $brand = $row['brand'];
-      $manufacturer = $row['manufacturer'];
-      
+      $manufacturer = $row['manufacturer'];  
 
       echo "<div class='container' id='userForm'><form method='post' class='editUser container' enctype='multipart/form-data'>
       <h1>Edit product here</h1>
@@ -141,6 +140,7 @@
           <input type='file' name='editimage' accept='image/*' class='form-control-file' required>
         </div>
       </div>
+      
       <div class='row'>
             <div class='form-group col-lg-4 col-xs-4'>    
               <label for='product-quantity'><b>Product Quantity</b></label>
