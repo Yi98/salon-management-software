@@ -11,13 +11,23 @@ if (!empty($_POST['staffId']) && !empty($_POST['salesAmount']) && !empty($_POST[
 
   $sql = "INSERT INTO sales (staffId, salesAmount, dateOfSales) VALUES ('$staffId', '$salesAmount', '$date')";
 
+  for ($i=0; $i<sizeof($items); $i++) {
+    $id = $items[$i]->id;
+    $num = $items[$i]->num;
+
+    $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES (34, '$id', '$num')";
+  }
+
   if ($conn->exec($sql)) {
-    // echo "success";
-    echo $items[0]->id;
+    // echo sizeof($items);
   }
   else {
     echo "failed";
   }
+
+  // if ($conn->exec($detailsSql)) {
+  //   echo 'success';
+  // }
 }
 
 ?>
