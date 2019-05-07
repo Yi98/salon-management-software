@@ -5,11 +5,17 @@
 ?>
 <?php 
     // Check whether the sign in user are staff
-    if ( isset($_SESSION["id"]) && $_SESSION["role"] == "staff") {
-        echo "<li><p><a href='dashboard.php'>DASHBOARD</a></p></li>
-        <li><p><a href='appointment.php'>APPOINTMENT LIST</a></p></li>
-        <li><p><a href='inventory.php'>INVENTORY LIST</a></p></li>
-        <li><p><a href='user.php'>USER LIST</a></p></li>";
+    if (isset($_SESSION["id"]) ) {
+        if ($_SESSION["role"] == "staff") {
+            echo "<li><p><a href='dashboard.php'>DASHBOARD</a></p></li>
+            <li><p><a href='appointment.php'>APPOINTMENT LIST</a></p></li>
+            <li><p><a href='inventory.php'>INVENTORY LIST</a></p></li>
+            <li><p><a href='user.php'>USER LIST</a></p></li>";
+        } else {
+            echo "<li><p><a href='index.php'>HOME</a></p></li>
+            <li><p><a href='appointment.php'>APPOINTMENT</a></p></li>
+            <li><p><a href='inventory.php'>PRODUCT</a></p></li>";
+        }
     } else {
         echo "<li><p><a href='index.php'>HOME</a></p></li>
         <li><p><a href='appointment.php'>APPOINTMENT</a></p></li>
@@ -48,18 +54,18 @@
 <?php 
     if (isset($_SESSION["access_token"])) {
         if ($_SESSION["role"] == "staff") {
-            echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
+            echo '<li id="logout-button"><p><a id="logout-nav-btn" href="logout.php">LOG OUT</a></p></li>';
         } else {
-            echo '<li id="logout-button"><p id="logout-nav-btn"><a href="../logout.php">LOG OUT</a></p></li>';
+            echo '<li id="logout-button"><p><a id="logout-nav-btn" href="../logout.php">LOG OUT</a></p></li>';
         }
     } else {
-        if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) {
-            echo '<li id="login-button" ><p id="login-nav-btn"><a href="login.php">LOG IN</a></p></li>';
+        if (!isset($_SESSION["id"])) {
+            echo '<li id="login-button" ><p><a id="login-nav-btn" href="login.php">LOG IN</a></p></li>';
         } else {
             if ($_SESSION["role"] == "staff") {
-                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="logout.php">LOG OUT</a></p></li>';
+                echo '<li id="logout-button"><p><a  id="logout-nav-btn" href="../logout.php">LOG OUT</a></p></li>';
             } else {
-                echo '<li id="logout-button"><p id="logout-nav-btn"><a href="../logout.php">LOG OUT</a></p></li>';
+                echo '<li id="logout-button"><p><a  id="logout-nav-btn" href="logout.php">LOG OUT</a></p></li>';
             }
         }
     }

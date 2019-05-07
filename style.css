@@ -25,11 +25,11 @@ body {
 	width: 1000px;
 	height: 600px;
 }
-
+/*
 ul {
 	padding-left: 4%;
 }
-
+*/
 .next-button {
 	margin-top: 3%;
 	margin-left: 3%;
@@ -613,7 +613,7 @@ input:focus::-webkit-input-placeholder {
 .appointment-container nav ul li{
     display: inline-block;
     /*margin:0 7% 0 7%;*/
-    padding: 0 5% 0 5%;
+    /*padding: 0 5% 0 5%;*/
 }
 
 #logout-button, #login-button {
@@ -624,21 +624,33 @@ input:focus::-webkit-input-placeholder {
     margin:0 1% 0 1%;
 }
 
-.appointment-container nav ul li p{
-    margin-top:30%;
+#navigation-bar nav ul li p{
+    /*margin-top:30%;*/
 }
 
-.appointment-container nav ul li a{
+#navigation-bar nav ul li a{
     text-decoration: none;
     font-family: 'Oswald', sans-serif; 
     font-weight:bold;
-    letter-spacing: 1px;
     color:black;
 }
 
-.appointment-container nav ul li p a:hover{
+#navigation-bar nav ul li {
+    margin: 0 5% 0 5%;
+}
+
+#navigation-bar nav ul li p a:hover{
     text-decoration: none;
     color:#e5ca00;
+}
+#navigation-bar nav ul {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#navigation-bar ul, #navigation-bar ul li p  {
+    padding: 0;
+    margin:0;   
 }
 /* Prevent the navigation bar from wrapping */
 ul {
@@ -646,8 +658,7 @@ ul {
 }
 
 nav{
-    height:10vh;
-    min-height:90px;
+    vertical-align: middle; 
 /*    background-image:url(Images/pipes.png);*/
     text-align: center;
     position:relative;
@@ -732,9 +743,6 @@ nav{
 .product-container #product-btn {
     margin-bottom:100px;
 }
-.appointment-container{
-    overflow-x:hidden;
-}
 
 .main_column img{
     width:100%;
@@ -742,7 +750,6 @@ nav{
 }
 
 .appointment-container .row {
-    margin-bottom: 100px;
     border-top: 1px solid black;
 }
 
@@ -772,6 +779,10 @@ nav{
 
 }
 
+#navigation-bar nav ul li#logout-button {
+    margin-left:1%;
+}
+
 #booknav-btn, #login-nav-btn, #logout-nav-btn{
     border-width: 2px;
     border-color:black;
@@ -783,6 +794,7 @@ nav{
 
 #booknav-btn:hover, #login-nav-btn:hover, #logout-nav-btn:hover{
     background-color:#e5ca00;
+    color: black;
 }
 
 #booknav-btn a:hover, #login-nav-btn a:hover, #logout-nav-btn a:hover{
@@ -798,6 +810,18 @@ nav{
 
 #gap{
     height:10vh;
+}
+
+#navigation-bar span {
+    font-family: 'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+#navigation-bar li a {
+ font-size: 14px;
+}
+
+#navigation-bar ul {
+ font-size: 14px;
 }
 
 footer {
@@ -1121,4 +1145,8 @@ p.remove-text:hover {
 
 #dashboard-bg{
   background-color:whitesmoke;
+}
+
+#navigation-bar {
+    border-bottom:1px solid black;
 }

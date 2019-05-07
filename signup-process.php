@@ -10,11 +10,6 @@
         $signup_password = "";
         $errors = array();
         
-        // Get form data from form
-        //$name = $conn->quote($_POST["name"]);
-        //$email = $conn->quote($_POST["email"]);
-        //$signup_password = $conn->quote($_POST["pass"]);
-        
         $name = $_POST["name"];
         $email = $_POST["email"];
         $contact = $_POST["contact"];
@@ -72,10 +67,11 @@
             $_SESSION["success"] = "You are now logged in";
             if ($_SESSION["role"] == "user") {
                 header('location: index.php');
+                exit;
             } else {
-                header('location: ../dashboard.php');
+                header('location: staff/dashboard.php');
             }
-            exit;
+          
         }
     }
 ?>
