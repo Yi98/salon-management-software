@@ -1233,3 +1233,4 @@ function onRemoveCart(element) {
 		document.getElementById('sample-li-cart').classList.remove('hide-li');
 	}
 }
+
