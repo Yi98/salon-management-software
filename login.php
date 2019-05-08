@@ -1,5 +1,9 @@
 <?php include "db_connect.php"; ?>
-
+<?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+        header("location: staff/dashboard.php");
+    }
+?>
 <!-- Social Media Login -->
 
 
@@ -39,6 +43,7 @@
     <!-- Include navigation bar -->
     <?php include "navigationBar.php" ?>
     
+    <h1 class="display-4  text-center">Login</h1>
     <!-- Log In form -->
     <div class="vertical-center">
         <div class="log-in-container container col-md-offset-2 col-md-8">
@@ -59,7 +64,7 @@
                         <form method="POST" class="login-form" id="login-form" onSubmit="return validateLogInEmail()">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
+                                    <label class="input-group-addon" for="email"><i class="flaticon-mail"></i></label>
                                     <input type="text" name="email" id="login-email" placeholder="Your Login Email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$login_email) ?>"/>
                                 </div>
                                 <span id="login-email-alert"></span>
@@ -85,57 +90,9 @@
         </div>    
     </div>
     
-    <!-- Pop up form, here for testing, later need to change to dashboard -->
-    <?php
-        $add_staff_email = "";
-        $add_staff_success_message = "";
-        $add_staff_error_message = "";
-                        
-        
-    ?>
-    <button id="add_new_staff_button" class="btn btn-info">Add new staff</button>
-    
-    <div class="vertical-center add-staff-popup">
-        <div class="add-staff-container container col-md-offset-2 col-md-8">
-            <div class="row equal">
-                <div class="add-staff-content">
-                    <div class="add-staff-form  col-md-6 col-md-offset-3">
-                        <button id="close_new_staff_button">
-                            &times;
-                        </button>
-                        
-                        <h2 class="form-title">Add new staff</h2>
-                        <p class="add-staff-instruction">Enter new staff email (new staff required to signed up as a existing user before this action can be proceed)</p>
-                        <form method="POST" class="add-staff-form-inner" id="add-staff-form" onSubmit="return addStaffValidation()">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
-                                    <input type="text" name="add-staff-email" id="add-staff-email" placeholder="New staff email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$add_staff_email) ?>"/>
-                                </div>
-                                <span id="add-staff-email-alert"></span>
-                                <?php echo "<span style='color:green'>$add_staff_success_message</span>" ?>
-                                <?php echo "<span style='color:red'>$add_staff_error_message</span>" ?>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" name="addstaff" id="addstaff" class="btn btn-info" value="Add Staff"/>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>    
-    </div>
-    
-    <!-- script.js -->
+
+        <!-- script.js -->
     <script src="script.js"></script>
-    <script>
-        $("#add_new_staff_button").on("click", function(){
-            $(".add-staff-popup").addClass("add-staff-popup-active");
-        });
-        $("#close_new_staff_button").on("click", function(){
-            $(".add-staff-popup").removeClass("add-staff-popup-active");
-        });
-    </script>
 </body>
 
 </html>

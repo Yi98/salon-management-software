@@ -1,5 +1,9 @@
 <?php include "db_connect.php"; ?>
-
+<?php
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+        header("location: staff/dashboard.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,8 +37,8 @@
     <?php include "navigationBar.php" ?>
     
     <div class="container">
+    <h1 class="display-4 text-center">Products</h1>
       <div class="user-inventory-container">
-        <h1>Products</h1>
         <div class="row">
         <!-- Display all products -->
         <?php

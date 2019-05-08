@@ -1,3 +1,19 @@
+var navTop = $("#navigation-bar").offset().top;
+
+var stickyNav = function(){
+    if ($(window).scrollTop() > navTop){
+        $("#navigation-bar").addClass("sticky");
+    } else {
+        $("#navigation-bar").removeClass("sticky");
+    }
+};
+
+stickyNav();
+
+$(window).scroll(function(){
+    stickyNav();
+});
+
 // functions when user presses next in booking appointment
 
 function onCompleteDateInfo() {
@@ -533,7 +549,7 @@ function addStaffValidation() {
         return false;
     } else {
         emailAlert.textContent = "";
-        $.post("addstaff.php", { email: email },
+        $.post("../addstaff.php", { email: email },
         function(data) {
 	        $('#add-staff-email-alert').html(data);
             $('#add-staff-form')[0].reset();

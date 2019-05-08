@@ -1,5 +1,9 @@
 <?php include "../db_connect.php"; ?>
-
+<?php
+    if ($_SESSION["role"] != "staff") {
+        header("location: ../index.php");
+    }
+?>
 <!-- Edit user module -->
 <?php 
   if(isset($_POST['idEdit'])){
@@ -136,7 +140,7 @@
       <?php include "../navigationBar.php" ?>
       
     <div class="container">
-      <h1>User management</h1>
+      <h1 class="display-4 text-center">User management</h1>
       <input type="text" id="userInput" onkeyup="searchUser()" placeholder="Search for names..">
       
       <div class="col-lg-6 col-xs-6">Filters <button type="button" onclick="filterUsers()" class="btn btn-light">Users</button> <button type="button" onclick="filterStaffs()" class="btn btn-light">Staffs</button> <button type="button" onclick="filterAll()" class="btn btn-light">All</button></div>
@@ -267,5 +271,6 @@
         </table>
       </tbody>
     </div>
+          <script src="../script.js"></script>
   </body>
 </html>

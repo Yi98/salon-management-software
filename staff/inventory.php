@@ -1,4 +1,9 @@
 <?php include "../db_connect.php"; ?>
+<?php
+    if ($_SESSION["role"] != "staff") {
+        header("location: ../index.php");
+    }
+?>
 <!-- Insert new product module -->
 <?php
   if(isset($_POST['submit'])){
@@ -226,7 +231,7 @@
     <?php include "../navigationBar.php" ?>
       
     <div class="container staff-inventory-container">
-      <h1>Staff Product View
+      <h1 class="display-4 text-center">Staff Product View
       </h1>
       
       <br/>
@@ -423,5 +428,6 @@
       
       
     </div>
+          <script src="../script.js"></script>
   </body>
 </html>

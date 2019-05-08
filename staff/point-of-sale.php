@@ -1,4 +1,9 @@
 <?php include '../db_connect.php'; ?>
+<?php
+    if ($_SESSION["role"] != "staff") {
+        header("location: ../index.php");
+    }
+?>
 <?php 
 // if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) 
 //     {
@@ -28,7 +33,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
     <?php include "../navigationBar.php" ?>
     
   <div class="container pt-5" id="pos-container">
-    <h1 class="text-center">Point of sale</h1>
+    <h1 class="display-4 text-center">Point of sale</h1>
     <p class="sub-content">Items <i class="fas fa-store"></i></p>
     <div class="input-group">
       <select class="custom-select" id="cart-select" aria-label="Example select with button addon">
@@ -97,6 +102,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
+              <script src="../script.js"></script>
 </body>
 </html>
 
