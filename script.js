@@ -1140,9 +1140,6 @@ function onPayCart() {
 
 	const stringItems = JSON.stringify(items);
 
-	// console.log(items);
-
-
 	$('#pay-cart-modal')
 		.modal({
 			closable: false,
@@ -1237,6 +1234,8 @@ function onAddCart() {
 	  </li>`;
 
 	  sumUpCart();
+
+    checkDisableCart();
 }
 
 function onModifyNum(element, action) {
@@ -1300,5 +1299,25 @@ function onRemoveCart(element) {
 		document.getElementById('sample-li-cart').classList.add('show-li');
 		document.getElementById('sample-li-cart').classList.remove('hide-li');
 	}
+
+  checkDisableCart(); 
+
 }
 
+
+function checkDisableCart() {
+  const select = document.getElementById('cart-select').options;
+  const exists = document.getElementsByClassName('cart-product-title');
+
+  for (let i=0; i<select.length; i++) {
+    select[i].disabled = false;
+    select[i].style.backgroundColor = "white";
+    for (let j=0; j<exists.length; j++) {
+      if (select[i].innerHTML === exists[j].title) {
+        console.log(select[i].innerHTML);
+        select[i].disabled = true;
+        select[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
+      }
+    }
+  }
+}
