@@ -1,3 +1,19 @@
+var navTop = $("#navigation-bar").offset().top;
+
+var stickyNav = function(){
+    if ($(window).scrollTop() > navTop){
+        $("#navigation-bar").addClass("sticky");
+    } else {
+        $("#navigation-bar").removeClass("sticky");
+    }
+};
+
+stickyNav();
+
+$(window).scroll(function(){
+    stickyNav();
+});
+
 // functions when user presses next in booking appointment
 
 function onCompleteDateInfo() {

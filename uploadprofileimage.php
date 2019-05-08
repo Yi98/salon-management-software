@@ -9,7 +9,6 @@ if ($_FILES["file"]["name"] != "")
     $name = rand(100, 999).".".$extension;
     $location = "images/".$name;
     move_uploaded_file($_FILES["file"]["tmp_name"], $location);
-    echo "<img style='width:100%' src='".$location."'/>";
 
     $image_name = file_get_contents($location);
     

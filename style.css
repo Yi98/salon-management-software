@@ -626,10 +626,6 @@ input:focus::-webkit-input-placeholder {
     margin:0 1% 0 1%;
 }
 
-#navigation-bar nav ul li p{
-    /*margin-top:30%;*/
-}
-
 #navigation-bar nav ul li a{
     text-decoration: none;
     font-family: 'Oswald', sans-serif; 
@@ -1153,5 +1149,14 @@ p.remove-text:hover {
 }
 
 #navigation-bar {
+    z-index:100;
     border-bottom:1px solid grey;
+}
+
+/* For sticky navigation bar*/
+.sticky {
+    position: fixed; /* Set the navbar to fixed position */
+      top: 0; /* Position the navbar at the top of the page */
+      width: 100%; /* Full width */
+    background-color:red;
 }

@@ -352,6 +352,7 @@
                         success:function(data) 
                         {
                             $("#profile_image").html(data);    
+                            window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                         }
                     })
                 }
@@ -381,7 +382,7 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
-                        url: "../uploadnote.php",
+                        url: "uploadnote.php",
                         data: {'note': note,'id':urlId},
                         success:function(data) 
                         {

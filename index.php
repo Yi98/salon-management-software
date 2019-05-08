@@ -143,6 +143,7 @@
             <p> Copyright &copy; 2019 Style and Smile Salon House All Rights Reserved</p>
         </div>
     </footer>
+    <script src="script.js"></script>
     <script>
         function directNavigationBar() {
             window.location.href="index.php#navigation-bar";
