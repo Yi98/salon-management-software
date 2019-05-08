@@ -102,6 +102,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
+              <script src="../script.js"></script>
 </body>
 </html>
 
