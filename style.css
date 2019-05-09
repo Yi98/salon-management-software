@@ -25,11 +25,7 @@ body {
 	width: 1000px;
 	height: 600px;
 }
-/*
-ul {
-	padding-left: 4%;
-}
-*/
+
 .next-button {
 	margin-top: 3%;
 	margin-left: 3%;
@@ -335,7 +331,6 @@ input:focus::-webkit-input-placeholder {
     visibility: hidden;
 }
 
-/* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
   background-color: #555;
   color: white;
@@ -393,7 +388,6 @@ input:focus::-webkit-input-placeholder {
   opacity: 0.8;
   
 }
-
 
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
@@ -482,10 +476,9 @@ input:focus::-webkit-input-placeholder {
     width: 100%;
   }
 
-    #indexTitle{
-        font-size:4rem;
-    }
-
+  #indexTitle{
+      font-size:4rem;
+  }
 }
 
 @import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed');
@@ -513,7 +506,6 @@ input:focus::-webkit-input-placeholder {
 @font-face {
     font-family: "CustomFont";
     src: url(fonts/Vogue.ttf);
-
 }
 
 @font-face{
@@ -614,8 +606,6 @@ input:focus::-webkit-input-placeholder {
 
 .appointment-container nav ul li{
     display: inline-block;
-    /*margin:0 7% 0 7%;*/
-    /*padding: 0 5% 0 5%;*/
 }
 
 #logout-button, #login-button {
@@ -650,6 +640,7 @@ input:focus::-webkit-input-placeholder {
     padding: 0;
     margin:0;   
 }
+
 /* Prevent the navigation bar from wrapping */
 ul {
     white-space: nowrap;
@@ -1104,7 +1095,7 @@ img.cart-img {
 
 #pay-cart-modal {
   margin: 0 auto !important;
-  height: 45% !important;
+  height: 55% !important;
   position: relative;
 }
 
@@ -1158,5 +1149,4 @@ p.remove-text:hover {
     position: fixed; /* Set the navbar to fixed position */
       top: 0; /* Position the navbar at the top of the page */
       width: 100%; /* Full width */
-    background-color:red;
 }

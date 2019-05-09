@@ -27,6 +27,7 @@
       <div class="container dashboard-container text-center">
         <!-- Add new staff button -->
         <button id="add_new_staff_button" class="btn btn-info">Add new staff</button>
+        <button id="pos_button" class="btn btn-info" onclick="window.location.href='point-of-sale.php';">Point of Sales</button>
     
         <div class="vertical-center add-staff-popup">
             <div class="add-staff-container container col-md-offset-2 col-md-8">

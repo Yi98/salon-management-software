@@ -129,20 +129,6 @@
 
             $currentUser = $data->fetch(PDO::FETCH_ASSOC);
             $id = $_SESSION["id"];
-            if ($currentUser["image_path"] != NULL) {
-                $image_path = $currentUser['image_path'];
-                if ($currentUser["role"] == "staff") {
-                    echo "<a style='color:black;text-decoration:none;' href='../profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='../'.'$image_path'/></span>";
-                } else {
-                    echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='$image_path'/></span>";
-                }
-            } else {
-                if ($currentUser["role"] == "staff") {
-                    echo "<a style='color:black;text-decoration:none;' href='../profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
-                } else {
-                    echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
-                }
-            }
             echo '<span>'.$_SESSION["name"].'</span></a>';
         }
     ?>

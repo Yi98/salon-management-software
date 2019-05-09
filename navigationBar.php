@@ -38,11 +38,11 @@
             if ($currentUser["role"] == "staff") {
                 echo "<a style='color:black;text-decoration:none;' href='../profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='../$image_path'/></span>";
             } else {
-                echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%;' src='$image_path'/></span>";
+                echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img style='height:auto; max-height:40px; margin-right:1%; width:40px; height:40px; border-radius:100%;' src='$image_path'/></span>";
             }
         } else {
             if ($currentUser["role"] == "staff") {
-                echo "<a style='color:black;text-decoration:none;' href='../profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
+                echo "<a style='color:black;text-decoration:none;' href='../profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='../images/profile-placeholder.png'/></span>";
             } else {
                 echo "<a style='color:black;text-decoration:none;' href='profile.php?id=$id'><span id='profile_image'><img id='profile_image_placeholder' style='height:auto; max-height:40px; margin-right:1%;' src='images/profile-placeholder.png'/></span>";
             }

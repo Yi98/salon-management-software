@@ -1172,29 +1172,7 @@ function onPayCart() {
 
 		    http.onreadystatechange = function() {
 		      if(http.readyState == 4 && http.status == 200) {
-		      	// if (http.responseText.trim() == "success") {
-		      		// alert('Sale recorded to database');
 		      		console.log(http.responseText);
-		      	// };
-		     //    appointmentLoader.style.display = "none";
-		     //  	if (http.responseText.trim() == "success") {
-		     //  		$('#success-booking-modal')
-		     //        .modal('show');
-		     //  	}
-		     //  	else if (http.responseText.trim() == "fail") {
-							// $('#fail-booking-modal')
-		     //        .modal('show');
-		     //  	}
-		     //    else if (http.responseText.trim() == "over") {
-		     //      $('#over-booking-modal')
-		     //        .modal('show');
-		     //    }
-		     //    else if (http.responseText.trim() == "duplicate") {
-		     //    	$('#duplicate-booking-modal')
-		     //        .modal('show');
-		     //    }
-		      }
-		    }
 		    http.send(params);
   		}
 		})
