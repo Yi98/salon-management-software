@@ -1,14 +1,12 @@
 <?php include '../db_connect.php'; ?>
 <?php
-    if ($_SESSION["role"] != "staff") {
-        header("location: ../index.php");
-    }
+    // if ($_SESSION["role"] != "staff") {
+    //     header("location: ../index.php");
+    // }
 ?>
+
 <?php 
-// if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) 
-//     {
-//         header('location: login.php');
-//     }
+
 $sql = 'SELECT * from inventories';
 
 $q = $conn->query($sql);
@@ -95,14 +93,14 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <div class="ui black deny button">
           Back
         </div>
-        <div class="ui positive right labeled icon button">
+        <div class="ui positive right labeled icon button" id="confirm-payment-btn">
           Confirm payment
           <i class="checkmark icon"></i>
         </div>
       </div>
     </div>
   </div>
-              <script src="../script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
 

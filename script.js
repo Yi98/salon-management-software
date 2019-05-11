@@ -1172,11 +1172,15 @@ function onPayCart() {
 
 		    http.onreadystatechange = function() {
 		      if(http.readyState == 4 && http.status == 200) {
-		      		console.log(http.responseText);
-		    http.send(params);
-  		}
-		})
-  	.modal('show');
+	      		console.log(http.responseText);
+            setTimeout(_ => document.location.reload(), 500);
+  		    }
+		    }
+
+        http.send(params);
+    }
+    })
+   .modal('show');
 }
 
 function onAddCart() {
