@@ -102,7 +102,7 @@
     <?php 
         // Check whether the sign in user are staff
         if (isset($_SESSION["id"]) ) {
-            if ($_SESSION["role"] == "staff") {
+            if ($_SESSION["role"] == "staff" || $_SESSION["role"] == "manager") {
                 echo "<li><p><a href='staff/dashboard.php'>DASHBOARD</a></p></li>
                 <li><p><a href='staff/appointment.php'>APPOINTMENT LIST</a></p></li>
                 <li><p><a href='staff/inventory.php'>INVENTORY LIST</a></p></li>
@@ -287,6 +287,7 @@
       </div>
     </div>
     
+    <script src="script.js"></script>
     <script>
         // Profile Logic
         $("#save_profile_button").hide();

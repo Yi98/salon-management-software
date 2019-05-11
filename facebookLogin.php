@@ -45,11 +45,12 @@
                             $_SESSION["name"] = $userdatabase["name"];
                             $_SESSION["email"] = $userdatabase["email"];
                             $_SESSION["role"] = $userdatabase["role"];
-                            if ($_SESSION["role"] == "staff") {
-                                header('Location: staff/dashboard.php');    
+                            if ($_SESSION["role"] == "user") {
+                                header('Location: index.php');
                                 exit();
                             } else {
-                                header('Location: index.php');
+                                header('Location: staff/dashboard.php');
+                                exit();
                             }
                         } else {
                             $date = date("Y-m-d H:i:s");
@@ -74,10 +75,12 @@
                             $_SESSION["name"] = $user->getField("name");
                             $_SESSION["email"] = $user->getField("email");
                             $_SESSION["role"] = "user";
-                            if ($_SESSION["role"] == "staff") {
-                                header('Location: staff/dashboard.php');    
-                            } else {
+                            if ($_SESSION["role"] == "user") {
                                 header('Location: index.php');
+                                exit();
+                            } else {
+                                header('Location: staff/dashboard.php');
+                                exit();
                             }
                         }
                     } else {
@@ -103,10 +106,12 @@
                             $_SESSION["name"] = $user->getField("name");
                             $_SESSION["email"] = $user->getField("email");
                             $_SESSION["role"] = "user";
-                            if ($_SESSION["role"] == "staff") {
-                                header('Location: staff/dashboard.php');    
+                            if ($_SESSION["role"] == "user") {
+                                header('Location: index.php');  
+                                exit();
                             } else {
-                                header('Location: index.php');
+                                header('Location: staff/dashboard.php'); 
+                                exit();
                             }
                     }
 
