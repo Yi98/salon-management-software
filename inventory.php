@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
     
-    <script src="script.js"></script>
+   
   
 </head>
   
@@ -56,6 +56,10 @@
         </div>
         </div>
     </div>
+    
+    <?php include "footer.php" ?>
+    
+     <script src="script.js"></script>
 </body>
   
 </html>

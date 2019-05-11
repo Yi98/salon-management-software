@@ -59,7 +59,7 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 
     
-    <script src="script.js"></script>
+    
   
     <style>
         .row {
@@ -205,13 +205,13 @@
             
             
             <?php
-                if ($_SESSION["role"] == "staff") {
+                if ($_SESSION["role"] == "staff" || $_SESSION["role"] == "manager" ) {
                     echo "
                         <div class='note_section' style='display:flex;align-items: center;'>
                             <p class='section_title' style='display:inline-block;'>Notes</p>
                             <div class='edit-and-save-note' style='display:inline-block; margin-left:auto;'>
-                                <button id='edit_note_button' type='submit' name='editNote' style='display:inline-block;'>Edit Notes</button>
-                                <button form='profile-form' id='save_note_button' type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
+                                <button class='btn btn-info' id='edit_note_button' type='submit' name='editNote' style='display:inline-block;'>Edit Notes</button>
+                                <button class='btn btn-success' form='profile-form' id='save_note_button' type='submit' name='saveNote' style='display:inline-block;'>Save Notes</button>
                             </div>
                         </div>
                        <textarea id='notes_textarea' name='Notes' disabled>".(htmlspecialchars($profileOwner['note']))."</textarea>";
@@ -352,14 +352,15 @@
                     var contact = document.getElementById("profile-contact").value;
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
-                    type: "POST",
-                    url: "uploadprofile.php",
-                    data: {'name': name, 'email': email, 'contact': contact, 'id': urlId},
-                    success:function(data) 
-                    {
-                        window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
-                    }
-                    });
+                        type: "POST",
+                        url: "updateprofile.php",
+                        cache:false,
+                        data: {'name': name, 'email': email, 'contact': contact, 'id': urlId},
+                        success:function(data) 
+                        {
+                            window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
+                        }
+                    })
                 }
             }); 
             
@@ -369,19 +370,19 @@
                     var urlId = <?php echo $urlId ?>;
                     $.ajax({
                         type: "POST",
-                        url: "uploadnote.php",
+                        url: "updatenote.php",
                         data: {'note': note,'id':urlId},
                         success:function(data) 
                         {
-                            // Probably need to add something here
                             window.location = "<?php echo $_SERVER['REQUEST_URI'] ?>";
                         }
-                    });
+                    })
                 }
             }); 
             
         });
     </script>
+    <script src="script.js"></script>
 </body>
   
 </html>
