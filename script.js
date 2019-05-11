@@ -1172,6 +1172,7 @@ function onPayCart() {
 
 		    http.onreadystatechange = function() {
 		      if(http.readyState == 4 && http.status == 200) {
+
 		      		console.log(http.responseText);
               }
             }
@@ -1179,6 +1180,17 @@ function onPayCart() {
   		}
 		})
   	.modal('show');
+
+	      		console.log(http.responseText);
+            setTimeout(_ => document.location.reload(), 500);
+  		    }
+		    }
+
+        http.send(params);
+    }
+    })
+   .modal('show');
+
 }
 
 function onAddCart() {
@@ -1232,6 +1244,7 @@ function onAddCart() {
 	  sumUpCart();
 
     checkDisableCart();
+    checkDisablePayBtn();
 }
 
 function onModifyNum(element, action) {
@@ -1296,7 +1309,8 @@ function onRemoveCart(element) {
 		document.getElementById('sample-li-cart').classList.remove('hide-li');
 	}
 
-  checkDisableCart(); 
+  checkDisableCart();
+  checkDisablePayBtn();
 
 }
 
@@ -1316,4 +1330,19 @@ function checkDisableCart() {
       }
     }
   }
+}
+
+function checkDisablePayBtn() {
+  const amount = document.getElementById('total-amount').innerHTML;
+  
+  if (amount > 0) {
+    document.getElementById('pay-cart-btn').disabled = false;
+  }
+  else {
+    document.getElementById('pay-cart-btn').disabled = true;
+  }
+}
+
+function checkStatus() {
+  checkDisablePayBtn();
 }

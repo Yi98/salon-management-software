@@ -1,14 +1,18 @@
 <?php include '../db_connect.php'; ?>
 <?php
+<<<<<<< HEAD
     if ($_SESSION["role"] != "staff" && $_SESSION["role"] != "manager") {
         header("location: ../index.php");
     }
+=======
+    // if ($_SESSION["role"] != "staff") {
+    //     header("location: ../index.php");
+    // }
+>>>>>>> 8c6d6b22ac40ef4dee4a5a066aab8e8cbdc9245b
 ?>
+
 <?php 
-// if (!isset($_SESSION["id"]) && empty($_SESSION["id"])) 
-//     {
-//         header('location: login.php');
-//     }
+
 $sql = 'SELECT * from inventories';
 
 $q = $conn->query($sql);
@@ -28,7 +32,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <script src="../script.js"></script>
 </head>
-<body>
+<body onload="checkStatus()">
     <!-- Include navigation bar -->
     <?php include "../navigationBar.php" ?>
     
@@ -60,7 +64,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-            <button class="btn btn-success w-100 h-50 mt-5" onclick="onPayCart()">Pay</button>
+            <button class="btn btn-success w-100 h-50 mt-5" id="pay-cart-btn" onclick="onPayCart()">Pay</button>
           </div>
         </div>
       </div>
@@ -95,14 +99,14 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         <div class="ui black deny button">
           Back
         </div>
-        <div class="ui positive right labeled icon button">
+        <div class="ui positive right labeled icon button" id="confirm-payment-btn">
           Confirm payment
           <i class="checkmark icon"></i>
         </div>
       </div>
     </div>
   </div>
-              <script src="../script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
 
