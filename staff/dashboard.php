@@ -7,12 +7,14 @@
 ?>
 
 <?php
-// FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
+    // FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
     $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser`";
     $all_appointments = $conn->query($all_appointments_query);
-    $all_appointment_result = $all_appointments->execute();
-
-   
+    $all_appointments->execute();
+    // HERE I CAN GET THE DATA ALREADY, WHAT I NEED TO DO ARE TO SEND THE DATA INTO THE GRAPHS
+    //foreach ($all_appointments as $row) {
+    //    echo $row["hairdresser"].$row["total"];
+    //}
 ?>
 
 <?php
