@@ -26,7 +26,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <script src="../script.js"></script>
 </head>
-<body>
+<body onload="checkStatus()">
     <!-- Include navigation bar -->
     <?php include "../navigationBar.php" ?>
     
@@ -58,7 +58,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-            <button class="btn btn-success w-100 h-50 mt-5" onclick="onPayCart()">Pay</button>
+            <button class="btn btn-success w-100 h-50 mt-5" id="pay-cart-btn" onclick="onPayCart()">Pay</button>
           </div>
         </div>
       </div>

@@ -1234,6 +1234,7 @@ function onAddCart() {
 	  sumUpCart();
 
     checkDisableCart();
+    checkDisablePayBtn();
 }
 
 function onModifyNum(element, action) {
@@ -1298,7 +1299,8 @@ function onRemoveCart(element) {
 		document.getElementById('sample-li-cart').classList.remove('hide-li');
 	}
 
-  checkDisableCart(); 
+  checkDisableCart();
+  checkDisablePayBtn();
 
 }
 
@@ -1318,4 +1320,19 @@ function checkDisableCart() {
       }
     }
   }
+}
+
+function checkDisablePayBtn() {
+  const amount = document.getElementById('total-amount').innerHTML;
+  
+  if (amount > 0) {
+    document.getElementById('pay-cart-btn').disabled = false;
+  }
+  else {
+    document.getElementById('pay-cart-btn').disabled = true;
+  }
+}
+
+function checkStatus() {
+  checkDisablePayBtn();
 }
