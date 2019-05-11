@@ -46,6 +46,11 @@
                                         <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
                                         <input type="text" name="add-staff-email" id="add-staff-email" placeholder="New staff email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$add_staff_email) ?>"/>
                                     </div>
+                                    <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" id="add-manager-checkbox">
+                                          <label class="custom-control-label" for="add-manager-checkbox">Add new manager</label>
+                                    </div>
+                                    
                                     <span id="add-staff-email-alert"></span>
                                     <?php echo "<span style='color:green'>$add_staff_success_message</span>" ?>
                                     <?php echo "<span style='color:red'>$add_staff_error_message</span>" ?>
