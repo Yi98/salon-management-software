@@ -5,6 +5,16 @@
         header("location: ../index.php");
     }
 ?>
+
+<?php
+// FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
+    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser`";
+    $all_appointments = $conn->query($all_appointments_query);
+    $all_appointment_result = $all_appointments->execute();
+
+   
+?>
+
 <?php
     $add_staff_email = "";
     $add_staff_success_message = "";
