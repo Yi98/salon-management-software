@@ -150,6 +150,7 @@
       <tbody>
         <table class="table table-bordered ttb" id="bannedUserTable">
           <caption>Banned users</caption>
+          
           <tr>
             <th>No.
             </th>
@@ -169,13 +170,11 @@
           
           <!-- Display all banned users by retrieving the users from database -->
           <?php
-            $query = "SELECT * FROM users WHERE banned = 'Yes'";
+            $query = "SELECT * FROM users WHERE banned = 'Yes' ";
             $data = $conn->query($query);
             $data->execute();
-            $userNo = 0;
             foreach($data as $row)
             {
-              $userNo ++;
               $id = $row['userId'];
               $today = date("Y-m-d");
               $duration = "+" . $row['bannedDuration'] . "days";
@@ -199,12 +198,15 @@
                 $result->execute();
               }
               
-              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['bannedReason'] . "</td><td><b>" . $days . "</b></td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to unban this user?\");'>" . "<button type='submit' class='btn btn-primary' name='idUnban' value ='$id'>Unban</button></form></td></tr>";
+              echo "<tr><td>" . $row['userId'] . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['bannedReason'] . "</td><td><b>" . $days . "</b></td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to unban this user?\");'>" . "<button type='submit' class='btn btn-primary' name='idUnban' value ='$id'>Unban</button></form></td></tr>";
             }
           
-            ?>  
+            ?> 
+          
+          
         </table>
       </tbody> 
+      
       
       <!--Display all user in tabular form -->
       <tbody>
@@ -233,10 +235,18 @@
           
           <!-- Display all users by retrieving the users from database -->
           <?php
-            $query = "SELECT * FROM users WHERE banned IS NULL";
+            $record_per_page = 10;
+            $page = '';
+            if(isset($_GET['page'])){
+              $page = $_GET['page'];
+            } else {
+              $page = 1;
+            }
+            $start_from = ($page-1)*$record_per_page;
+
+            $query = "SELECT * FROM users WHERE banned IS NULL ORDER BY userId ASC LIMIT $start_from, $record_per_page";
             $data = $conn->query($query);
             $data->execute();
-            $userNo = 0;
             foreach($data as $row)
             {
               $lastSignIn = $row['lastSignIn'];
@@ -263,13 +273,26 @@
                 $show = $days . " days ago";
               }
               
-              $userNo ++;
               $id = $row['userId'];
-              echo "<tr><td>" . $userNo . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "<img src='$src' alt='$src'/>" . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
+              echo "<tr><td>" . $row['userId'] . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['note'] . "</td><td>" . "<img src='$src' alt='$src'/>" . "</td><td>" . "active <b>" . $show . "</b>" . "</td><td>" . $row['role'] . "</td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . "<button type='submit' class='btn btn-primary' name='idEdit' onclick='openUserEdit()' value ='$id'>Edit</button></form></td><td><form method='post' onsubmit='return confirm(\"Ban this user?\");'><button type='submit' class='btn btn-danger' name='idBan' value ='$id'>Ban</button></form></td>" . "</tr>";
             }
             ?>  
         </table>
       </tbody>
+      <div class="page-links">
+        <ul class="pagination">
+          <?php 
+            $page_query = "SELECT COUNT(*) FROM users WHERE banned IS NULL";
+            $data = $conn->query($page_query);
+            $data->execute();
+            $num_rows = $data->fetchColumn();
+            $total_pages = ceil($num_rows/$record_per_page);
+            for($i=1; $i<=$total_pages; $i++){
+              echo '<li><a href="user.php?page='. $i . '">' . $i . '</a></li>'; 
+            }
+          ?>
+          </ul>
+        </div>
     </div>
           <script src="../script.js"></script>
   </body>

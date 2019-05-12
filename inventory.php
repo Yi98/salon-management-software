@@ -27,9 +27,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="style.css">
-    
-   
-  
 </head>
   
 <body>
@@ -42,7 +39,17 @@
         <div class="row">
         <!-- Display all products -->
         <?php
-          $query = "SELECT * FROM inventories WHERE archive = 'No'";
+          $record_per_page = 8;
+          $page = '';
+          if(isset($_GET['page'])){
+            $page = $_GET['page'];
+          } else {
+            $page = 1;
+          }
+  
+          $start_from = ($page-1)*$record_per_page;
+  
+          $query = "SELECT * FROM inventories WHERE archive = 'No' ORDER BY inventoryId ASC LIMIT $start_from, $record_per_page";
           $data = $conn->query($query);
           $data->execute();
 
@@ -51,13 +58,27 @@
              echo "<div class='col-lg-3 col-xs-3 product-list-img'><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='250' height='250' /></br><span class='stock'><b>" . $row['status'] . "</b></span><span><b>RM " . $row['unitPrice'] . "</b></span>
              <p>". $row['inventoryName'] ."</p></div>";
           }
-        ?>
           
+        ?> 
         </div>
+        </div>
+      <div class="page-links">
+        <ul class="pagination">
+          <?php 
+            $page_query = "SELECT COUNT(*) FROM inventories WHERE archive = 'No'";
+            $data = $conn->query($page_query);
+            $data->execute();
+            $num_rows = $data->fetchColumn();
+            $total_pages = ceil($num_rows/$record_per_page);
+            for($i=1; $i<=$total_pages; $i++){
+              echo '<li><a href="inventory.php?page='. $i . '">' . $i . '</a></li>'; 
+            }
+          ?>
+          </ul>
         </div>
     </div>
     
-    <?php include "footer.php" ?>
+    
     
      <script src="script.js"></script>
 </body>

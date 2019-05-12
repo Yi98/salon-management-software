@@ -1347,3 +1347,5 @@ function checkDisablePayBtn() {
 function checkStatus() {
   checkDisablePayBtn();
 }
+
+

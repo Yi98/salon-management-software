@@ -296,7 +296,17 @@
           
           <!-- Display all archive products -->
           <?php
-            $query = "SELECT * FROM inventories WHERE archive ='Yes'";
+            $record_per_page = 5;
+            $page = '';
+            if(isset($_GET['page'])){
+              $page = $_GET['page'];
+            } else {
+              $page = 1;
+            }
+  
+            $start_from = ($page-1)*$record_per_page;
+    
+            $query = "SELECT * FROM inventories WHERE archive ='Yes' ORDER BY inventoryId ASC LIMIT $start_from, $record_per_page";
             $data = $conn->query($query);
             $data->execute();
             $inventoryNo = 0;
@@ -312,6 +322,20 @@
         </table>
       </tbody>
       <br/>
+        <div class="page-links">
+        <ul class="pagination">
+          <?php 
+            $page_query = "SELECT COUNT(*) FROM inventories WHERE archive = 'Yes'";
+            $data = $conn->query($page_query);
+            $data->execute();
+            $num_rows = $data->fetchColumn();
+            $total_pages = ceil($num_rows/$record_per_page);
+            for($i=1; $i<=$total_pages; $i++){
+              echo '<li><a href="inventory.php?page='. $i . '">' . $i . '</a></li>'; 
+            }
+          ?>
+          </ul>
+        </div>
       </div>
       <br/>
       
@@ -412,20 +436,41 @@
           </tr>
           <!-- Display all products -->
           <?php
-            $query = "SELECT * FROM inventories WHERE archive = 'No'";
+            $record_per_page = 5;
+            $page = '';
+            if(isset($_GET['page'])){
+              $page = $_GET['page'];
+            } else {
+              $page = 1;
+            }
+
+            $start_from = ($page-1)*$record_per_page;
+            
+            $query = "SELECT * FROM inventories WHERE archive = 'No' ORDER BY inventoryId ASC LIMIT $start_from, $record_per_page";
             $data = $conn->query($query);
             $data->execute();
-            $inventoryNo = 0;
             foreach($data as $row)
             {
-              $inventoryNo ++;
               $id = $row['inventoryId'];
-              echo "<tr><td>" . $inventoryNo . "</td>" . "<td class='product-wctrl'>" . $row['inventoryName'] . "</td>" . "<td class='product-wctrl'>" . $row['brand'] . "</td>" . "<td class='product-wctrl'>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . " <button type='submit' class='btn btn-primary' name='idEdit' value ='$id' onclick='openUserEdit()'>Edit</button>" . " <button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> " . " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>" . "</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50' class='zoom' /></td>" . "<td id='gender'>".$row['gender']."</td><td id='categories'>". $row['categories']. "</td></tr>";
+              echo "<tr><td>" . $row['inventoryId'] . "</td>" . "<td class='product-wctrl'>" . $row['inventoryName'] . "</td>" . "<td class='product-wctrl'>" . $row['brand'] . "</td>" . "<td class='product-wctrl'>" . $row['manufacturer'] . "</td>" . "<td>" . $row['quantity'] . "</td>" . "<td>" . $row['unitPrice'] . "</td>" . "<td>" . $row['purchasingPrice'] . "</td>" . "<td>" . $row['status'] . "</td>" . "<td><form method='post' onsubmit='return confirm(\"Are you sure you want to perform this action?\");'>" . " <button type='submit' class='btn btn-primary' name='idEdit' value ='$id' onclick='openUserEdit()'>Edit</button>" . " <button type='submit' class='btn btn-danger' name='idDel' value ='$id'>Delete</button> " . " <button type='submit' class='btn btn-success' name='idArc' value ='$id'>Archive</button>" . "</div></form></td>" ."<td><embed src='data:". $row['mime']. ";base64," . base64_encode($row['image_name']). "' width='50' class='zoom' /></td>" . "<td id='gender'>".$row['gender']."</td><td id='categories'>". $row['categories']. "</td></tr>";
             }
             ?>  
         </table>
       </tbody>
-      
+      <div class="page-links">
+        <ul class="pagination">
+          <?php 
+            $page_query = "SELECT COUNT(*) FROM inventories WHERE archive = 'No'";
+            $data = $conn->query($page_query);
+            $data->execute();
+            $num_rows = $data->fetchColumn();
+            $total_pages = ceil($num_rows/$record_per_page);
+            for($i=1; $i<=$total_pages; $i++){
+              echo '<li><a href="inventory.php?page='. $i . '">' . $i . '</a></li>'; 
+            }
+          ?>
+          </ul>
+        </div>
       
     </div>
           <script src="../script.js"></script>
