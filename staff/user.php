@@ -170,16 +170,7 @@
           
           <!-- Display all banned users by retrieving the users from database -->
           <?php
-            $record_per_page = 10;
-            $page = '';
-            if(isset($_GET['page'])){
-              $page = $_GET['page'];
-            } else {
-              $page = 1;
-            }
-            $start_from = ($page-1)*$record_per_page;
-    
-            $query = "SELECT * FROM users WHERE banned = 'Yes' ORDER BY userId ASC LIMIT $start_from, $record_per_page";
+            $query = "SELECT * FROM users WHERE banned = 'Yes' ";
             $data = $conn->query($query);
             $data->execute();
             foreach($data as $row)
@@ -209,16 +200,6 @@
               
               echo "<tr><td>" . $row['userId'] . "</td><td>" . $row['email'] . "</td><td>" . $row['contact'] . "</td><td>" . $row['name'] . "</td><td>" . $row ['bannedReason'] . "</td><td><b>" . $days . "</b></td><td><form method='post' onsubmit='return confirm(\"Are you sure you want to unban this user?\");'>" . "<button type='submit' class='btn btn-primary' name='idUnban' value ='$id'>Unban</button></form></td></tr>";
             }
-            echo "<div class='page-links'><ul class='pagination'>";
-            $page_query = "SELECT COUNT(*) FROM users WHERE banned = 'Yes'";
-            $data = $conn->query($page_query);
-            $data->execute();
-            $num_rows = $data->fetchColumn();
-            $total_pages = ceil($num_rows/$record_per_page);
-            for($i=1; $i<=$total_pages; $i++){
-              echo '<li><a href="user.php?page='. $i . '">' . $i . '</a></li>'; 
-            }
-            echo "</ul></div>";
           
             ?> 
           
