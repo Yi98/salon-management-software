@@ -529,6 +529,32 @@ input:focus::-webkit-input-placeholder {
     color:#e5ca00;
     text-shadow: black 0 -3.5px;
 }
+.indexTitle{
+    position:absolute;
+    margin-top:100px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 8rem;
+    white-space: nowrap;
+    color:white;
+    z-index: 1;
+    font-family:"Abrail Fatface";
+    font-weight: bold;
+    color:#e5ca00;
+    text-shadow: black 0 -3.5px;
+}
+.indexSubtitle {
+    position:absolute;
+    margin-top:150px;
+    left:50%;
+    transform: translate(-50%,-50%);
+    font-size: 1em;
+    color:White;
+    font-weight: 1000;
+    z-index: 1;
+    font-family: Georgia;
+    letter-spacing: 3px;
+}
 
 #indexSubtitle{
     position:absolute;

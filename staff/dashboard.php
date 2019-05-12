@@ -8,15 +8,15 @@
 
 <?php
     // FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
-    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser`";
+    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser` ORDER BY `total` DESC";
     $all_appointments = $conn->query($all_appointments_query);
     $all_appointments->execute();
+    $results = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
     // HERE I CAN GET THE DATA ALREADY, WHAT I NEED TO DO ARE TO SEND THE DATA INTO THE GRAPHS
-    //foreach ($all_appointments as $row) {
-    //    echo $row["hairdresser"].$row["total"];
-    //}
-
-
+    foreach ($results as $row) {
+        //echo $row["hairdresser"].$row["total"];
+    }
+    $topFavourableStaff = $results[0]["hairdresser"];
 
     $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
 
@@ -110,7 +110,7 @@
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable staff</p>
-              <p class="result">Steven Lau</p>
+              <p class="result"><?php echo $topFavourableStaff ?></p>
             </div>
           </div>
           <div class="col-md-4 col">
@@ -165,6 +165,12 @@
             <div class="content">
               <p class="title">Ranking for most favourable staff</p>
               <ol>
+                <?php
+                    foreach ($results as $row) {
+                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times)</li>";
+                    } 
+                ?>
+                <!--
                 <li>Steven Lau</li>
                 <li>Steven Wong</li>
                 <li>Steven Ng</li>
@@ -175,6 +181,7 @@
                 <li>Steven Son</li>
                 <li>Steven Dan</li>
                 <li>Steven Heng</li>
+                -->
               </ol>
             </div>
           </div>
