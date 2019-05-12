@@ -902,8 +902,8 @@ span.view-details-text {
 .product-list-img p{
   text-align:center;
   font-family: georgia,sans-serif;
-  font-size: 2.5rem;
-  margin:5% 0 15% 0;
+  font-size: 2rem;
+  margin:5% 0 25% 0;
 }
 
 .product-list-img{
@@ -912,7 +912,7 @@ span.view-details-text {
 }
 
 .product-list-img .stock{
-  margin-right:50%; 
+  margin-right:30%; 
 }
 
 .archiveItem{
