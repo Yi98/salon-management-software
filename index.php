@@ -128,7 +128,7 @@
             </div>
         </section>
     </body>
-    <footer>
+    <footer style="height:50vh;">
         <div id="firstfooter">
             <h1 id="indexTitle">STYLE &amp; SMILE</h1>
             <p id="indexSubtitle" style="margin-top:3%">HAIR SALON</p>

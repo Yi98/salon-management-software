@@ -5,6 +5,7 @@ html {
 html, body {
 	margin: 0;
 	padding: 0;
+    height:100%;
 }
 
 body {
@@ -817,12 +818,14 @@ nav{
  font-size: 14px;
 }
 
-
-footer {
-    clear: both;
+.container {
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
     position: relative;
-    height: 50vh;
-    margin-top: -40px;
+}
+
+#footer #lastfooter {
+    margin-top:1%;
 }
 
 #firstfooter{

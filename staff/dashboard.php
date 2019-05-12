@@ -201,11 +201,6 @@
     </script>
   </body>
   
-<!--
-  <footer>
-  <div class="text-center bg-dark dboard">
-      <p class="text-light"><small>Smile &amp; Style Salon Copyright &copy;</small></p>
-    </div></footer>
--->
+<?php include "../footer.php"; ?>
   
 </html>
