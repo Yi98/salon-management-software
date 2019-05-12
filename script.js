@@ -1282,7 +1282,6 @@ function onCashPaidChange() {
 
 	let changes = (cashPaid - totalAmount).toFixed(2);
 
-
 	document.getElementById('total-changes').innerHTML = changes > 0 ? changes : 0.00.toFixed(2);
 }
 
@@ -1324,7 +1323,7 @@ function checkDisableCart() {
 
 function checkDisablePayBtn() {
   const amount = document.getElementById('total-amount').innerHTML;
-  
+
   if (amount > 0) {
     document.getElementById('pay-cart-btn').disabled = false;
   }
