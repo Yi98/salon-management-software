@@ -1,10 +1,43 @@
 <!-- Include navigation bar -->
 <?php include '../db_connect.php'; ?>
 <?php
-    // if ($_SESSION["role"] != "staff") {
-    //     header("location: ../index.php");
-    // }
+    if ($_SESSION["role"] != "staff" && $_SESSION["role"] != "manager") {
+        header("location: ../index.php");
+    }
 ?>
+
+<?php
+    // FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
+    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser`";
+    $all_appointments = $conn->query($all_appointments_query);
+    $all_appointments->execute();
+    // HERE I CAN GET THE DATA ALREADY, WHAT I NEED TO DO ARE TO SEND THE DATA INTO THE GRAPHS
+    //foreach ($all_appointments as $row) {
+    //    echo $row["hairdresser"].$row["total"];
+    //}
+
+
+
+    $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
+
+    $most_favourable_product = $conn->query($most_favourable_product_query);
+    $most_favourable_product->execute();
+
+    $products_list = $conn->query($most_favourable_product_query);
+    $products_list->execute();
+
+    $topProduct = "None"; // most favourable product
+    $topProductCount = 0;  // most favorable product number
+
+    foreach ($most_favourable_product as $row) {
+       // echo $row["productName"].$row["count"];
+       if ($row["count"] > $topProductCount) {
+        $topProduct = $row["productName"];
+        $topProductCount = $row["count"];
+       }
+    }
+?>
+
 <?php
     $add_staff_email = "";
     $add_staff_success_message = "";
@@ -46,6 +79,11 @@
                                         <label class="input-group-addon" for="email"><i class="flaticon-email"></i></label>
                                         <input type="text" name="add-staff-email" id="add-staff-email" placeholder="New staff email" class="form-control" value="<?php echo str_replace(array("'", '"'), "",$add_staff_email) ?>"/>
                                     </div>
+                                    <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" id="add-manager-checkbox">
+                                          <label class="custom-control-label" for="add-manager-checkbox">Add new manager</label>
+                                    </div>
+                                    
                                     <span id="add-staff-email-alert"></span>
                                     <?php echo "<span style='color:green'>$add_staff_success_message</span>" ?>
                                     <?php echo "<span style='color:red'>$add_staff_error_message</span>" ?>
@@ -84,7 +122,7 @@
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable product</p>
-              <p class="result">Loreal</p>
+              <p class="result"><?php echo $topProduct ?></p>
             </div>
           </div>
         </div>
@@ -100,18 +138,18 @@
             <div class="content container">
               <p class="title">Ranking for the top sales product and service</p>
               <ol>
-                <li>Haircutting RM9999</li>
-                <li>Hairwashing RM8888</li>
-                <li>Haircoloring RM7777</li>
-                <li>Loreal Paris RM6666</li>
-                <li>Pantene RM5555</li>
-                <li>HAHA RM4444</li>
-                <li>Haircutting RM9999</li>
-                <li>Hairwashing RM8888</li>
-                <li>Haircoloring RM7777</li>
-                <li>Loreal Paris RM6666</li>
-                <li>Pantene RM5555</li>
-                <li>HAHA RM4444</li>
+                <?php
+                  foreach ($products_list as $row) { 
+                    if (strlen($row['productName']) > 15) {
+                      $name = substr($row['productName'], 0, 20)."...";
+                    }
+                    else {
+                      $name = $row['productName'];
+                    }
+                    
+                    echo "<li title='$row[productName]'>$name - $row[count]</li>";
+                  }
+                ?>
               </ol>
             </div>
           </div>

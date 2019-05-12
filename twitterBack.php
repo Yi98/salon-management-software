@@ -1,3 +1,4 @@
+
 <!-- Twitter Login -->
 <?php 
 
@@ -48,8 +49,9 @@
                 
                 $_SESSION["id"] = $userdatabase["userId"];
                 $_SESSION["name"] = $userdatabase["name"];
-                $_SESSION["email"] = $user_info->email;
-                $_SESSION["role"] = $userdatabase["role"];
+                               $_SESSION["role"] = $userdatabase["role"];
+                $_SESSION["email"] = $userdatabase["email"];
+ 
  
             } else {
                 $user_store_query = "INSERT INTO `users` (email, password, name, role, note, lastSignIn) VALUES (:email, NULL, :name, 'user', '', '$date')";
@@ -101,11 +103,12 @@
             
         unset($_SESSION['oauth_token']);
         
-        if ($_SESSION["role"] == "staff") {
+        if ($_SESSION["role"] != "user") {
             header('Location: staff/dashboard.php');    
             exit();
         } else {
             header('Location: index.php');
+            
         }
 
     }else 

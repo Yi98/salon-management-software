@@ -1,6 +1,6 @@
 <?php include "../db_connect.php"; ?>
 <?php
-    if ($_SESSION["role"] != "staff") {
+    if ($_SESSION["role"] != "staff" && $_SESSION["role"] != "manager") {
         header("location: ../index.php");
     }
 ?>

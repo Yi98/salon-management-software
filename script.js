@@ -537,6 +537,7 @@ function startResetPasswordValidate() {
 function addStaffValidation() {
     let email = document.getElementById("add-staff-email").value;
     let emailAlert = document.getElementById("add-staff-email-alert");
+    let managerCheckbox = document.getElementById("add-manager-checkbox");
     let regex = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
     let result = regex.test(email);
     if (email.length == 0) {
@@ -547,6 +548,13 @@ function addStaffValidation() {
         emailAlert.textContent = "Email should be following the following format: johndoe@gmail.com";
         emailAlert.style.color = "red";
         return false;
+    } else if (managerCheckbox.checked) {
+        emailAlert.textContent = "";
+        $.post("../addmanager.php", { email: email },
+        function(data) {
+	        $('#add-staff-email-alert').html(data);
+            $('#add-staff-form')[0].reset();
+        });
     } else {
         emailAlert.textContent = "";
         $.post("../addstaff.php", { email: email },
@@ -1172,6 +1180,9 @@ function onPayCart() {
 
 		    http.onreadystatechange = function() {
 		      if(http.readyState == 4 && http.status == 200) {
+
+
+
 	      		console.log(http.responseText);
             setTimeout(_ => document.location.reload(), 500);
   		    }
@@ -1181,6 +1192,7 @@ function onPayCart() {
     }
     })
    .modal('show');
+
 }
 
 function onAddCart() {

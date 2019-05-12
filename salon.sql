@@ -39,6 +39,12 @@ CREATE TABLE `appointments` (
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `appointments` (`appointmentId`, `userId`, `appointmentDate`, `appointmentTime`, `typeOfServices`, `hairdresser`, `request`, `status`) VALUES
+(1, 1,  '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', ''),
+(2, 2,  '2019-04-15', '', 'Ng Chin Shu ', 'So', '', ''),
+(3, 3,  '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', ''),
+(4, 4,  '2019-04-15', '', 'Ng Chin Shu ', 'So', '', ''),
+(5, 5,  '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', '');
 -- --------------------------------------------------------
 
 --

@@ -1,6 +1,6 @@
 <?php include "db_connect.php"; ?>
 <?php
-    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff" || isset($_SESSION["role"]) && $_SESSION["role"] == "manager") {
         header("location: staff/dashboard.php");
     }
 ?>
@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
     
-    <script src="script.js"></script>
+   
   
 </head>
   
@@ -56,6 +56,10 @@
         </div>
         </div>
     </div>
+    
+    <?php include "footer.php" ?>
+    
+     <script src="script.js"></script>
 </body>
   
 </html>

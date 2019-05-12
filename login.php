@@ -1,7 +1,9 @@
 <?php include "db_connect.php"; ?>
 <?php
-    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff") {
+    if (isset($_SESSION["role"]) && $_SESSION["role"] == "staff" || isset($_SESSION["role"]) && $_SESSION["role"] == "manager") {
         header("location: staff/dashboard.php");
+    } else if (isset($_SESSION["role"]) && $_SESSION["role"] == "user") {
+        header("location: index.php");
     }
 ?>
 <!-- Social Media Login -->
