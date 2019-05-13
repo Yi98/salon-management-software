@@ -32,7 +32,7 @@
     <?php include "navigationBar.php" ?>
     
     <!-- Sign up form -->
-    <div class="vertical-center">
+    <div class="vertical-center reset-vertical-center">
         <div class="reset-password-container container col-md-offset-2 col-md-8">
             <div class="row equal">
                 <div class="reset-password-content">

@@ -45,7 +45,7 @@
     <?php include "navigationBar.php" ?>
     <h1 class="display-4  text-center">Sign Up</h1>
     <!-- Sign up form -->
-    <div class="vertical-center">
+    <div class="vertical-center signup-vertical-center">
         <div class="sign-up-container container col-md-offset-2 col-md-8">
             <div class="row equal">
                 <div class="signup-content">
