@@ -22,19 +22,18 @@
     }
     $topFavourableStaff = $results[0]["hairdresser"];
 
+
+
     $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
 
     $most_favourable_product = $conn->query($most_favourable_product_query);
     $most_favourable_product->execute();
-
-    $products_list = $conn->query($most_favourable_product_query);
-    $products_list->execute();
+    $products = $most_favourable_product->fetchAll(PDO::FETCH_ASSOC);
 
     $topProduct = "None"; // most favourable product
-    $topProductCount = 0;  // most favorable product number
+    $topProductCount = 0;  // most favorable product count
 
-    foreach ($most_favourable_product as $row) {
-       // echo $row["productName"].$row["count"];
+    foreach ($products as $row) {
        if ($row["count"] > $topProductCount) {
         $topProduct = $row["productName"];
         $topProductCount = $row["count"];
@@ -51,13 +50,15 @@
 <html lang="en">
   <head>
     <title>Dashboard</title>
-      <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../style.css" type="text/css">
-    
+    <script>
+      var products = <?php echo json_encode($products); ?>;
+    </script>
   </head>
-  <body>
+  <body onload="loadChart(products)">
     <?php include "../navigationBar.php" ?>
       
     <div id="dashboard-bg">
@@ -133,9 +134,10 @@
         <div class="row graph-grid">
           <div class="col-md-8 col">
             <div class="content">
-               <p class="title">Sales for the stores (lifetime, monthly, weekly, daily)</p>
+               <p class="title">Sales of the stores (All time)</p>
                <p class="result">  
-                   <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/>
+                   <!-- <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/> -->
+                   <canvas id="product_chart" width="400" height="400"></canvas>
                 </p> 
             </div>
           </div>
@@ -145,7 +147,7 @@
               <p class="title">Ranking for the top sales product and service</p>
               <ol>
                 <?php
-                  foreach ($products_list as $row) { 
+                  foreach ($products as $row) {
                     if (strlen($row['productName']) > 15) {
                       $name = substr($row['productName'], 0, 20)."...";
                     }
