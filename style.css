@@ -400,6 +400,10 @@ input:focus::-webkit-input-placeholder {
     width:100%;
 }
 
+.product-c #anp, .product-c input, .product-c select {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 .product-c button{
     width: 4%;
     border: none;
