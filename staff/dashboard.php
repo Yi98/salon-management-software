@@ -115,7 +115,6 @@
             </div>    
         </div>
           
-          
         <h1 class="display-4">Dashboard For Staff</h1>
         <a class="weatherwidget-io" href="https://forecast7.com/en/1d61110d38/kuching/" data-label_1="KUCHING" data-label_2="WEATHER" data-icons="Climacons Animated" data-days="3" data-theme="clear" >KUCHING WEATHER</a>
         <script>
@@ -127,33 +126,34 @@
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable staff</p>
-              <p class="result"><?php echo $topFavourableStaff ?></p>
+              <p class="result">*<?php echo $topFavourableStaff ?>*</p>
             </div>
           </div>
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable service</p>
-              <p class="result">Haircutting</p>
+              <p class="result">*Haircutting*</p>
             </div>
           </div>
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable product</p>
-              <p class="result"><?php echo $topProduct ?></p>
+              <p class="result">*<?php echo $topProduct ?>*</p>
             </div>
           </div>
         </div>
         <div class="row graph-grid">
-          <div class="col-md-8 col">
-            <div class="content">
-               <p class="title">Sales of the stores (All time)</p>
-               <p class="result">  
-                   <!-- <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/> -->
-                   <canvas id="product_chart" width="400" height="400"></canvas>
-                </p> 
-            </div>
+          <div class="col-md-8 col col-zoom">
+            <a href="sales_insight.php" class="insight">
+              <div class="content">
+                 <p class="title">Sales of the stores (All time)</p>
+                 <p class="result">  
+                     <!-- <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/> -->
+                     <canvas id="product_chart" width="400" height="400"></canvas>
+                  </p> 
+              </div>
+            </a>
           </div>
-        
           <div class="col-md-4 col">
             <div class="content container">
               <p class="title">Ranking for the top sales product and service</p>
@@ -166,7 +166,6 @@
                     else {
                       $name = $row['productName'];
                     }
-                    
                     echo "<li title='$row[productName]'>$name - $row[count]</li>";
                   }
                 ?>
@@ -175,13 +174,15 @@
           </div>
         </div>
         <div class="row graph-grid">
-          <div class="col-md-8 col">
-            <div class="content">
-              <p class="title">Graph for most favourable staff, most favourable services change according to user choice</p>
+          <div class="col-md-8 col col-zoom">
+            <a href="staff_insight.php" class="insight">
+              <div class="content">
+              <p class="title">Graph for most favourable staff</p>
               <p class="result">
                   <canvas id="favourableStaff" width="400" height="400"></canvas> 
                   <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
-            </div>
+              </div>
+            </a>
           </div>
           <div class="col-md-4 col">
             <div class="content">

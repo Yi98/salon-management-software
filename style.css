@@ -1179,3 +1179,40 @@ p.remove-text:hover {
       top: 0; /* Position the navbar at the top of the page */
       width: 100%; /* Full width */
 }
+
+.insight:hover{
+  text-decoration: none;
+  color:black;
+}
+
+.insight{
+  color:black;
+}
+
+.col-zoom{
+  transition: transform .2s; /* Animation */
+}
+
+.col-zoom:hover{
+  transform: scale(1.03);
+}
+
+.result{
+  font-weight:bold;
+  font-style:italic;
+}
+
+.col-c2 ul li a{
+  background-color:transparent;
+  color:black;
+  font-weight: thin;
+}
+
+.col-c2 ul li a:hover{
+  background-color:#e0b920;
+  color:black;
+}
+
+.rr-si{
+  padding-left:2%;
+}
