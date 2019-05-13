@@ -287,6 +287,8 @@
       </div>
     </div>
     
+    <?php include "footer.php"; ?>
+    
     <script src="script.js"></script>
     <script>
         // Profile Logic

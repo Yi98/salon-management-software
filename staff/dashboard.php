@@ -8,15 +8,19 @@
 
 <?php
     // FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
-    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser`";
+    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser` ORDER BY `total` DESC";
     $all_appointments = $conn->query($all_appointments_query);
     $all_appointments->execute();
+    $results = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
     // HERE I CAN GET THE DATA ALREADY, WHAT I NEED TO DO ARE TO SEND THE DATA INTO THE GRAPHS
-    //foreach ($all_appointments as $row) {
-    //    echo $row["hairdresser"].$row["total"];
-    //}
-
-
+    //$staffsName = array();
+    //$staffsTotal = array();
+    foreach ($results as $row) {
+        //array_push($staffsName, $row["hairdresser"]);
+        //array_push($staffsTotal, $row["total"]);
+        //echo $row["hairdresser"].$row["total"];
+    }
+    $topFavourableStaff = $results[0]["hairdresser"];
 
     $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
 
@@ -110,7 +114,7 @@
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable staff</p>
-              <p class="result">Steven Lau</p>
+              <p class="result"><?php echo $topFavourableStaff ?></p>
             </div>
           </div>
           <div class="col-md-4 col">
@@ -130,7 +134,9 @@
           <div class="col-md-8 col">
             <div class="content">
                <p class="title">Sales for the stores (lifetime, monthly, weekly, daily)</p>
-               <p class="result"><img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p> 
+               <p class="result">  
+                   <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/>
+                </p> 
             </div>
           </div>
         
@@ -158,13 +164,21 @@
           <div class="col-md-8 col">
             <div class="content">
               <p class="title">Graph for most favourable staff, most favourable services change according to user choice</p>
-              <p class="result"><img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>
+              <p class="result">
+                  <canvas id="favourableStaff" width="400" height="400"></canvas> 
+                  <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
             </div>
           </div>
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Ranking for most favourable staff</p>
               <ol>
+                <?php
+                    foreach ($results as $row) {
+                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times)</li>";
+                    } 
+                ?>
+                <!--
                 <li>Steven Lau</li>
                 <li>Steven Wong</li>
                 <li>Steven Ng</li>
@@ -175,6 +189,7 @@
                 <li>Steven Son</li>
                 <li>Steven Dan</li>
                 <li>Steven Heng</li>
+                -->
               </ol>
             </div>
           </div>
@@ -191,6 +206,56 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
     
     <script src="../script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+    <script>
+        var ctx = document.getElementById('favourableStaff').getContext('2d');
+        var staffsName = [], staffsTotal = [];
+        <?php
+            foreach ($results as $row) {
+        //array_push($staffsName, $row["hairdresser"]);
+        //array_push($staffsTotal, $row["total"]);
+        //echo $row["hairdresser"].$row["total"];
+        ?>
+            staffsName.push("<?php echo $row["hairdresser"]; ?>");
+            staffsTotal.push("<?php echo $row["total"]; ?>");
+        <?php  } ?>
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: staffsName,
+                datasets: [{
+                    label: '# of Votes',
+                    data: staffsTotal,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        </script>
     <script>
         $("#add_new_staff_button").on("click", function(){
             $(".add-staff-popup").addClass("add-staff-popup-active");
@@ -201,11 +266,6 @@
     </script>
   </body>
   
-<!--
-  <footer>
-  <div class="text-center bg-dark dboard">
-      <p class="text-light"><small>Smile &amp; Style Salon Copyright &copy;</small></p>
-    </div></footer>
--->
+<?php include "../footer.php"; ?>
   
 </html>

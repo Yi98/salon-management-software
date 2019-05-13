@@ -115,7 +115,7 @@
             </div>
         </div>    
     </div>
-    
+<?php include "footer.php"; ?>
     <!-- script.js -->
     <script src="script.js"></script>
     
