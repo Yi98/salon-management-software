@@ -47,7 +47,7 @@
     
     <h1 class="display-4  text-center">Login</h1>
     <!-- Log In form -->
-    <div class="vertical-center">
+    <div class="vertical-center login-vertical-center">
         <div class="log-in-container container col-md-offset-2 col-md-8">
             <div class="row equal">
                 <div class="login-content">

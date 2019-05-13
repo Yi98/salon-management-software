@@ -7,22 +7,13 @@
 ?>
 
 <?php
-    // FOR GETTING THE RECORDS FROM APPOINTMENT TO DETERMINE THE FAVOURABLE STAFF OR MANAGER
     $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser` ORDER BY `total` DESC";
     $all_appointments = $conn->query($all_appointments_query);
     $all_appointments->execute();
-    $results = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
-    // HERE I CAN GET THE DATA ALREADY, WHAT I NEED TO DO ARE TO SEND THE DATA INTO THE GRAPHS
-    //$staffsName = array();
-    //$staffsTotal = array();
-    foreach ($results as $row) {
-        //array_push($staffsName, $row["hairdresser"]);
-        //array_push($staffsTotal, $row["total"]);
-        //echo $row["hairdresser"].$row["total"];
-    }
-    $topFavourableStaff = $results[0]["hairdresser"];
+    $staffs = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
 
-
+    // Getting the top favourable staff, this works due to the data is obtained in descending order
+    $topFavourableStaff = $staffs[0]["hairdresser"];
 
     $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
 
@@ -36,7 +27,6 @@
     // Sort max to min
     for($i=0; $i<sizeof($products); $i++) {
       for($j=0; $j<sizeof($products)-$i-1; $j++) {
-        echo $products[$j]['count'];
         if ($products[$j]['count'] < $products[$j + 1]['count']) {
           $temp = $products[$j];
           $products[$j] = $products[$j+1];
@@ -68,9 +58,11 @@
     <link rel="stylesheet" href="../style.css" type="text/css">
     <script>
       var products = <?php echo json_encode($products); ?>;
+      var staffs = <?php echo json_encode($staffs); ?>
     </script>
   </head>
-  <body onload="loadChart(products)">
+  <body onload="loadChart(products); loadStaffChart(staffs)">
+      
     <?php include "../navigationBar.php" ?>
       
     <div id="dashboard-bg">
@@ -174,6 +166,7 @@
           </div>
         </div>
         <div class="row graph-grid">
+<<<<<<< HEAD
           <div class="col-md-8 col col-zoom">
             <a href="staff_insight.php" class="insight">
               <div class="content">
@@ -183,28 +176,24 @@
                   <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
               </div>
             </a>
+=======
+          <div class="col-md-8 col">
+            <div class="content">
+              <p class="title">Most favourable staff according to user choice in appointments (lifetime)</p>
+              <p class="result">
+                  <canvas id="favourableStaff" width="400" height="300"></canvas> 
+            </div>
+>>>>>>> 7bad0b73cc076944424d3c84c714e756fd50e38d
           </div>
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Ranking for most favourable staff</p>
               <ol>
                 <?php
-                    foreach ($results as $row) {
+                    foreach ($staffs as $row) {
                         echo "<li>".$row["hairdresser"]." (".$row["total"]." times)</li>";
                     } 
                 ?>
-                <!--
-                <li>Steven Lau</li>
-                <li>Steven Wong</li>
-                <li>Steven Ng</li>
-                <li>Steven Chong</li>
-                <li>Steven Tan</li>
-                <li>Steven Lim</li>
-                <li>Steven Kong</li>
-                <li>Steven Son</li>
-                <li>Steven Dan</li>
-                <li>Steven Heng</li>
-                -->
               </ol>
             </div>
           </div>
@@ -222,55 +211,6 @@
     
     <script src="../script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-    <script>
-        var ctx = document.getElementById('favourableStaff').getContext('2d');
-        var staffsName = [], staffsTotal = [];
-        <?php
-            foreach ($results as $row) {
-        //array_push($staffsName, $row["hairdresser"]);
-        //array_push($staffsTotal, $row["total"]);
-        //echo $row["hairdresser"].$row["total"];
-        ?>
-            staffsName.push("<?php echo $row["hairdresser"]; ?>");
-            staffsTotal.push("<?php echo $row["total"]; ?>");
-        <?php  } ?>
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: staffsName,
-                datasets: [{
-                    label: '# of Votes',
-                    data: staffsTotal,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-        </script>
     <script>
         $("#add_new_staff_button").on("click", function(){
             $(".add-staff-popup").addClass("add-staff-popup-active");
