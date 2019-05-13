@@ -33,6 +33,18 @@
     $topProduct = "None"; // most favourable product
     $topProductCount = 0;  // most favorable product count
 
+    // Sort max to min
+    for($i=0; $i<sizeof($products); $i++) {
+      for($j=0; $j<sizeof($products)-$i-1; $j++) {
+        echo $products[$j]['count'];
+        if ($products[$j]['count'] < $products[$j + 1]['count']) {
+          $temp = $products[$j];
+          $products[$j] = $products[$j+1];
+          $products[$j+1] = $temp;
+        }
+      }
+    }
+
     foreach ($products as $row) {
        if ($row["count"] > $topProductCount) {
         $topProduct = $row["productName"];
