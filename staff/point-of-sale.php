@@ -76,7 +76,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
               <div class="row">
                 <div class="col-md-12 text-left font-weight-bold"><label for="staffId">Staff ID</label></div>
               </div>
-              <input type="text" class="form-control mb-4" id="staffId" aria-describedby="emailHelp" placeholder="Enter staff ID">
+              <input type="text" class="form-control mb-4" id="staffId" aria-describedby="emailHelp" placeholder="Enter staff ID" value="<?php echo $_SESSION['id'] ?>">
             </div>
             <div class="form-group">
               <div class="row">

@@ -25,7 +25,8 @@
     //} 
     
 
-    $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
+    // query to get all products and their total sales
+    $most_favourable_product_query = "SELECT i.inventoryName as productName, SUM(s.itemAmount) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId WHERE i.categories != 'Service' GROUP BY s.inventoryId";
 
     $most_favourable_product = $conn->query($most_favourable_product_query);
     $most_favourable_product->execute();
@@ -33,6 +34,17 @@
 
     $topProduct = "None"; // most favourable product
     $topProductCount = 0;  // most favorable product count
+
+
+    // query to get all services and their total sales
+    $most_favourable_service_query = "SELECT i.inventoryName as serviceName, SUM(s.itemAmount) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId WHERE i.categories = 'Service' GROUP BY s.inventoryId";
+
+    $most_favourable_service = $conn->query($most_favourable_service_query);
+    $most_favourable_service->execute();
+    $services = $most_favourable_service->fetchAll(PDO::FETCH_ASSOC);
+
+    $topService = "None"; // most favourable product
+    $topServiceCount = 0;  // most favorable product count
 
     // Sort max to min
     for($i=0; $i<sizeof($products); $i++) {
@@ -49,6 +61,13 @@
        if ($row["count"] > $topProductCount) {
         $topProduct = $row["productName"];
         $topProductCount = $row["count"];
+       }
+    }
+
+    foreach ($services as $row) {
+       if ($row["count"] > $topServiceCount) {
+        $topService = $row["serviceName"];
+        $topServiceCount = $row["count"];
        }
     }
 ?>
@@ -135,7 +154,7 @@
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Most favourable service</p>
-              <p class="result">*Haircutting*</p>
+              <p class="result">*<?php echo $topService ?>*</p>
             </div>
           </div>
           <div class="col-md-4 col">
@@ -149,9 +168,8 @@
           <div class="col-md-8 col col-zoom">
             <a href="sales_insight.php" class="insight">
               <div class="content">
-                 <p class="title">Sales of the stores (All time)</p>
+                 <p class="title">Products' sales of the stores (All time)</p>
                  <p class="result">  
-                     <!-- <img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/> -->
                      <canvas id="product_chart" width="400" height="400"></canvas>
                   </p> 
               </div>
