@@ -1400,22 +1400,117 @@ function loadChart(data) {
   });
 }
 
-function loadStaffChart(data) {
-  const staffsName = [];
-  const staffsTotal = [];
 
-  data.forEach(item => {
-    staffsName.push(item.hairdresser);
-    staffsTotal.push(item.total);
-  });
+// NOT SURE THIS IS GOOD PRACTICE OR NOT, BUT WITHOUT THIS, THE CHART DESTROY WON'T WORK PROPERLY
+var myChart;
+function loadStaffFavorableChart(data, duration) {
+    const staffsName = [];
+    const staffsTotal = [];
+    
+    var currentOption = document.getElementById("currentToggleTime");
+    var firstDay, lastDay;
+    var mode;
+    if (myChart != undefined) {
+        myChart.destroy();
+    }
+
+    if (duration == 0) {
+        mode = "lifetime";
+    } else if (duration == 1) {
+        mode = "year";
+    } else if (duration == 2) {
+        mode = "month";
+    } else if (duration == 3) {
+        mode = "daily";
+    }
+    
+    if (mode == "year" || mode == "month") {
+        firstDay = moment().startOf(mode);
+        lastDay = moment().endOf(mode);
+    }
+
+    if (mode == "year" || mode == "month") {
+        currentOption.innerHTML = firstDay.format('YYYY-MM-DD') + " to " + lastDay.format('YYYY-MM-DD');
+    } else if (mode == "daily") {
+        currentOption.innerHTML = "Daily";
+    } else if (mode == "lifetime") {
+        currentOption.innerHTML = "Lifetime";
+    }
+    
+    data.forEach(item => {
+        if (mode == "lifetime") {
+            staffsName.push(item.hairdresser);
+            staffsTotal.push(item.total);
+        } else if (mode == "daily") {
+            if (moment(item.date).isSame(moment().format("YYYY-MM-DD"),"day")) {
+                staffsName.push(item.hairdresser);
+                staffsTotal.push(item.total);
+            }
+        } else if (mode == "year" || mode =="month") {
+            if ((moment(item.date) >= firstDay) && (moment(item.date) <= lastDay) ) 
+            {
+                staffsName.push(item.hairdresser);
+                staffsTotal.push(item.total);
+            }
+        }
+            
+    });
 
   var ctx = document.getElementById('favourableStaff').getContext('2d');
-  var myChart = new Chart(ctx, {
+  myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: staffsName,
                 datasets: [{
                     label: 'Number of being appointed by customer in appointments',
+                    data: staffsTotal,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+}
+
+function loadStaffPerformanceChart(data) {
+  const staffsName = [];
+  const staffsTotal = [];
+
+  data.forEach(item => {
+    staffsName.push(item.name);
+    staffsTotal.push(item.salesAmount);
+  });
+
+  var ctx = document.getElementById('performanceStaff').getContext('2d');
+  var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: staffsName,
+                datasets: [{
+                    label: 'Number of sales made by staffs',
                     data: staffsTotal,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

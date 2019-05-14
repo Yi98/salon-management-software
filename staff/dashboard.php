@@ -7,13 +7,23 @@
 ?>
 
 <?php
-    $all_appointments_query = "SELECT `hairdresser`, COUNT(1) AS `total` FROM `appointments` GROUP BY `hairdresser` ORDER BY `total` DESC";
+    $all_appointments_query = "SELECT hairdresser, COUNT(1) AS total, appointmentDate AS date FROM appointments GROUP BY hairdresser ORDER BY total DESC";
     $all_appointments = $conn->query($all_appointments_query);
     $all_appointments->execute();
     $staffs = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
 
     // Getting the top favourable staff, this works due to the data is obtained in descending order
     $topFavourableStaff = $staffs[0]["hairdresser"];
+
+    // Sales performance
+    $sales_performance_query = "SELECT u.name, COUNT(*) as salesCount, SUM(s.salesAmount) as salesAmount, dateOfSales as date FROM sales s INNER JOIN users u ON s.staffId=u.userId GROUP BY s.staffId ORDER BY salesAmount DESC";
+    $sales_performance = $conn->query($sales_performance_query);
+    $sales_performance->execute();
+    $sales_performance_result = $sales_performance->fetchAll(PDO::FETCH_ASSOC);
+    //foreach ($sales_performance_result as $row) {
+    //    echo "Staff Id: ".$row["name"]." Sales Count: ".$row["salesCount"]." Sales Amount:".$row["salesAmount"];
+    //} 
+    
 
     $most_favourable_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId GROUP BY s.inventoryId";
 
@@ -57,11 +67,12 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../style.css" type="text/css">
     <script>
-      var products = <?php echo json_encode($products); ?>;
-      var staffs = <?php echo json_encode($staffs); ?>
+        var products = <?php echo json_encode($products); ?>;
+        var staffs = <?php echo json_encode($staffs); ?>;
+        var staffs_performance = <?php echo json_encode($sales_performance_result); ?>
     </script>
   </head>
-  <body onload="loadChart(products); loadStaffChart(staffs)">
+  <body onload="loadChart(products); loadStaffFavorableChart(staffs); loadStaffPerformanceChart(staffs_performance)">
       
     <?php include "../navigationBar.php" ?>
       
@@ -166,7 +177,7 @@
           </div>
         </div>
         <div class="row graph-grid">
-<<<<<<< HEAD
+
           <div class="col-md-8 col col-zoom">
             <a href="staff_insight.php" class="insight">
               <div class="content">
@@ -176,30 +187,48 @@
                   <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
               </div>
             </a>
-=======
-          <div class="col-md-8 col">
-            <div class="content">
-              <p class="title">Most favourable staff according to user choice in appointments (lifetime)</p>
-              <p class="result">
-                  <canvas id="favourableStaff" width="400" height="300"></canvas> 
             </div>
->>>>>>> 7bad0b73cc076944424d3c84c714e756fd50e38d
-          </div>
+
           <div class="col-md-4 col">
             <div class="content">
               <p class="title">Ranking for most favourable staff</p>
               <ol>
                 <?php
                     foreach ($staffs as $row) {
-                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times)</li>";
+                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times) ".$row["date"]."</li>";
                     } 
                 ?>
               </ol>
             </div>
           </div>
-        </div>
       </div>  
+        
+      <div class="row graph-grid">
+          <div class="col-md-8 col col-zoom">
+            <a href="performance_insight.php" class="insight">
+              <div class="content">
+              <p class="title">Graph for displaying staff's performance</p>
+              <p class="result">
+                  <canvas id="performanceStaff" width="400" height="400"></canvas> 
+              </div>
+            </a>
+            </div>
+
+          <div class="col-md-4 col">
+            <div class="content">
+              <p class="title">Ranking for staff according to performance</p>
+              <ol>
+                <?php
+                    foreach ($sales_performance_result as $row) {
+                        echo "<li>".$row["name"]." RM (".$row["salesAmount"]." sales)".$row["date"]."</li>";
+                    } 
+                ?>
+              </ol>
+            </div>
+          </div>
+      </div>
     </div>
+  </div>
     
     
          
@@ -219,7 +248,7 @@
             $(".add-staff-popup").removeClass("add-staff-popup-active");
         });
     </script>
-  </body>
+</body>
   
 <?php include "../footer.php"; ?>
   
