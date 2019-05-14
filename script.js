@@ -1157,9 +1157,10 @@ function onPayCart() {
 		let cart = carts.children[i];
 
 		let id = cart.getElementsByClassName('inventoryId')[0].value;
+        let type = cart.getElementsByClassName('inventoryType')[0].value;
 		let num = cart.getElementsByClassName('cart-num')[0].innerHTML;
 
-		items.push({id, num});
+		items.push({id, num, type});
 	}
 
 	const stringItems = JSON.stringify(items);
@@ -1180,12 +1181,9 @@ function onPayCart() {
 
 		    http.onreadystatechange = function() {
 		      if(http.readyState == 4 && http.status == 200) {
-
-
-
 	      		console.log(http.responseText);
-            setTimeout(_ => document.location.reload(), 500);
-  		    }
+                // setTimeout(_ => document.location.reload(), 500);
+  		        }
 		    }
 
         http.send(params);
@@ -1199,6 +1197,7 @@ function onAddCart() {
 	const cartSelect = document.getElementById('cart-select').value;
 	const selected = JSON.parse(cartSelect);
 	let productName;
+
 
 	if (selected.name.length > 15) {
 		productName = selected.name.substring(0, 15) + "...";
@@ -1241,6 +1240,7 @@ function onAddCart() {
 				</div>
 			</div>
 			<input type="hidden" class="inventoryId" value="${selected.id}">
+            <input type="hidden" class="inventoryType" value="${selected.type}">
 	  </li>`;
 
 	  sumUpCart();

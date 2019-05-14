@@ -1,8 +1,8 @@
 <?php include '../db_connect.php'; ?>
 <?php
-    if ($_SESSION["role"] != "staff" && $_SESSION["role"] != "manager") {
-        header("location: ../index.php");
-    }
+    // if ($_SESSION["role"] != "staff" && $_SESSION["role"] != "manager") {
+    //     header("location: ../index.php");
+    // }
 ?>
 
 <?php 
@@ -37,7 +37,7 @@ $q->setFetchMode(PDO::FETCH_ASSOC);
       <select class="custom-select" id="cart-select" aria-label="Example select with button addon">
         <option selected>Choose...</option>
         <?php while ($row = $q->fetch()): ?>    
-          <option value='{"id": <?php echo htmlspecialchars($row['inventoryId']) ?>, "price": <?php echo htmlspecialchars($row['unitPrice']) ?>, "name": "<?php echo htmlspecialchars($row['inventoryName']) ?>"}'><?php echo htmlspecialchars($row['inventoryName']) ?></option>
+          <option value='{"id": <?php echo htmlspecialchars($row['inventoryId']) ?>, "price": <?php echo htmlspecialchars($row['unitPrice']) ?>, "name": "<?php echo htmlspecialchars($row['inventoryName']) ?>", "type": "product"}'><?php echo htmlspecialchars($row['inventoryName']) ?></option>
         <?php endwhile; ?>
       </select>
       <div class="input-group-append">
