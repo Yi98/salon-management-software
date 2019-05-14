@@ -113,6 +113,12 @@ CREATE TABLE `sales` (
   `dateOfSales` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `sales` (`salesId`, `staffId`, `salesAmount`, `dateOfSales`) VALUES
+(1, 1, 50, '2019-04-15'), 
+(2, 1, 50, '2019-04-15'),
+(3, 2, 50, '2019-04-15'),
+(4, 2, 50, '2019-04-15'),
+(5, 1, 50, '2019-04-15');
 -- --------------------------------------------------------
 
 --
