@@ -176,14 +176,7 @@
             <div class="content">
              <p class="title">Total sales</p>
               <div class="row rr-si">
-                  <div class="col-md-8 col-c1">
-                    <form class="navbar-form navbar-right" role="search">
-                      <div class="form-group text-left"> 
-                        <input type="text" class="form-control" size="10" placeholder="Search by services name and products name">
-                        <div class="glyphicon glyphicon-search btn-search"></div>
-                      </div>
-                    </form>
-                  </div>
+                  <div class="col-md-8 col-c1"></div>
                   <div class="col-md-4 col-c2">
                     <ul class="pagination"> 
                       <li class="page-item"><button class="page-link type-alternative" onclick="loadDetailsChart(sales, 'yearly', 0)">Yearly</button></li>
