@@ -1203,8 +1203,10 @@ function onAddCart() {
 		productName = selected.name.substring(0, 15) + "...";
 	}	else {
 		productName = selected.name;
-	}
-	
+	}	
+
+  console.log(selected.imageName);
+  console.log(selected.mime);
 
 	let cartItems = document.getElementById('cart-ul').innerHTML;
 
@@ -1221,7 +1223,7 @@ function onAddCart() {
 		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
 			<div class="row">
 				<div class="col-md-2">
-					<img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
+					<img class="cart-img" src="data:${selected.mime};base64,${selected.imageName}" alt="Product item">
 				</div>
 				<div class="col-md-2 cart-criteria">
 					<p class="cart-product-title m-0 cart-product-text" title="${selected.name}">${productName}</p>
@@ -1325,7 +1327,6 @@ function checkDisableCart() {
     select[i].style.backgroundColor = "white";
     for (let j=0; j<exists.length; j++) {
       if (select[i].innerHTML === exists[j].title) {
-        console.log(select[i].innerHTML);
         select[i].disabled = true;
         select[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
       }
@@ -1519,7 +1520,9 @@ function generateWeeklySalesChart(data) {
     }
   }
 
-  console.log(weeklySalesData);
+  for (let i=0; i<weeklySalesData.length; i++) {
+    weeklySalesData[i] = weeklySalesData[i].toFixed(2);
+  }
 
 
   let ctx = document.getElementById('product_details_chart').getContext('2d');
@@ -1594,6 +1597,10 @@ function generateYearlySalesChart(data) {
     yearlySalesData[4-year] += Number(item.salesAmount);
   });
 
+  for (let i=0; i<yearlySalesData.length; i++) {
+    yearlySalesData[i] = yearlySalesData[i].toFixed(2);
+  }
+
   let ctx = document.getElementById('product_details_chart').getContext('2d');
   let myChart = new Chart(ctx, {
       type: 'line',
@@ -1601,8 +1608,8 @@ function generateYearlySalesChart(data) {
           labels: ['2015', '2016', '2017', '2018', '2019'],
           datasets: [{
               label: 'Ringgit Malaysia (MYR)',
-              backgroundColor: '#ff8a5c',
-              borderColor: '#ff8a5c',
+              backgroundColor: '#ff5959',
+              borderColor: '#ff5959',
               data: yearlySalesData
           }]
       },
