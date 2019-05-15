@@ -69,8 +69,6 @@
                   </div>
               </div>
                 <p class="result"></p>
-                <!-- Maybe for the function can add a affect the time stamp it decrease -->
-                    <span onclick="loadStaffFavorableChart(staffs, 1)">&#x21A9;</span><h2 id="currentToggleTime" style="display:inline;">LifeTime</h2><span onclick="loadStaffFavorableChart(staffs, 2)">&#x21AA;</span>
                     <div class="canvas_container">
                         <canvas id="favourableStaff" width="400" height="150"></canvas>
                     </div>

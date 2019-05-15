@@ -229,7 +229,7 @@
               <p class="title">Graph for displaying staff's performance</p>
               <p class="result">
                   <canvas id="performanceStaff" width="400" height="400"></canvas> 
-              </div>
+              </div>    
             </a>
             </div>
 

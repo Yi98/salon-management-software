@@ -1537,10 +1537,11 @@ function loadDetailsChart(data, type) {
 var myChart; // Storing the chart object from chart.js
 var chartTimeAdjustment; // Storing the time used to adjust the firstDay and lastDay
 function loadStaffFavorableChart(data, duration) {
-    const staffsName = [];
+    var staffsName = [];
     const staffsTotal = [];
+    var chartFormat;
+    var chartLabel;
     
-    var currentOption = document.getElementById("currentToggleTime");
     var firstDay, lastDay;
     var mode;
     if (myChart != undefined) {
@@ -1561,59 +1562,79 @@ function loadStaffFavorableChart(data, duration) {
         firstDay = moment().startOf(mode);
         lastDay = moment().endOf(mode);
     }
-
-    if (mode == "year" || mode == "month") {
-        currentOption.innerHTML = firstDay.format('YYYY-MM-DD') + " to " + lastDay.format('YYYY-MM-DD');
-    } else if (mode == "daily") {
-        currentOption.innerHTML = "Daily";
-    } else if (mode == "lifetime") {
-        currentOption.innerHTML = "Lifetime";
-    }
     
     data.forEach(item => {
         if (mode == "lifetime") {
             staffsName.push(item.hairdresser);
             staffsTotal.push(item.total);
+            chartFormat = "bar";
+            chartLabel = 'Number of being appointed by customer in appointments';
         } else if (mode == "daily") {
             if (moment(item.date).isSame(moment().format("YYYY-MM-DD"),"day")) {
                 staffsName.push(item.hairdresser);
                 staffsTotal.push(item.total);
             }
-        } else if (mode == "year" || mode =="month") {
-            if ((moment(item.date) >= firstDay) && (moment(item.date) <= lastDay) ) 
-            {
-                staffsName.push(item.hairdresser);
-                staffsTotal.push(item.total);
+            chartFormat = "bar";
+        } else if (mode =="month") {
+            chartLabel = [];
+
+            const start = moment().startOf('year');
+            staffsName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            for(let i=0; i<12; i++) {
+              staffsTotal.push(0);  
             }
+
+            data.forEach(item => {
+              const end = moment(item.date);
+              let month = end.diff(start, 'month');
+              staffsTotal[month] += Number(item.total);
+            });
+
+
+            for (let i=0; i<staffsTotal.length; i++) {
+              staffsTotal[i] = Number(staffsTotal[i]).toFixed(2);
+            }
+            
+            chartFormat = "line";
+            
+        } else if (mode == "year") {
+            chartLabel = [];
+           
+            var start = moment();
+            var currentYear = moment().year();
+            
+            var temp = [];
+            var maxYear = 4;
+            for (var i = 0; i <= maxYear; i++) {
+                temp.push(currentYear - (maxYear - i));
+            }
+            staffsName = temp;
+            
+            for(let i=0; i<5; i++) {
+              staffsTotal.push(0);
+            }
+
+
+            data.forEach(item => {
+              const end = moment(item.date);
+              let year = start.diff(end, 'year');
+              staffsTotal[4-year] += Number(item.total);
+                console.log(item.total);
+            });
+            
+            chartFormat = "line";
         }
             
     });
 
   var ctx = document.getElementById('favourableStaff').getContext('2d');
   myChart = new Chart(ctx, {
-            type: 'bar',
+            type: chartFormat,
             data: {
                 labels: staffsName,
                 datasets: [{
-                    label: 'Number of being appointed by customer in appointments',
-                    data: staffsTotal,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
+                    label: chartLabel,
+                    data: staffsTotal   
                 }]
             },
             options: {
