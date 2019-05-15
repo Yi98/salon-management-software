@@ -199,10 +199,10 @@
           <div class="col-md-8 col col-zoom">
             <a href="performance_insight.php" class="insight">
               <div class="content">
-              <p class="title">Graph for displaying staff's performance</p>
+              <p class="title">Graph for displaying staff's performance (All time)</p>
               <p class="result">
                   <div id="canvas_container">
-                        <canvas id="performanceStaff" width="400" height="150"></canvas>
+                        <canvas id="performanceStaff" width="400" height="200"></canvas>
                     </div>
               </div>    
             </a>

@@ -1618,59 +1618,38 @@ function loadStaffPerformanceSimpleChart(data) {
     var dataSetLabel = [];
     var colorObtainedHistory = [];
     var colorObtained;
+    var temp = [];
+    
+    data.forEach(item => {
+        temp.push(item.name);
+    })
     
     data.forEach(item => {
         colorObtained = "";
         var start = moment();
         var currentYear = moment().year();
         var found = false;
-        var temp = [];
         var maxYear = 4;
         
-        for (var i = 0; i <= maxYear; i++) {
-            temp.push(currentYear - (maxYear - i));
-        }
+        dataSet.push(item.salesAmount);
+        
         chartLabels = temp;
 
         yearDifference = moment(item.date).diff(moment(), 'year');
         
         colorObtained = generateRandomColorsRgba();
-            
-        if ((yearDifference*-1) <= maxYear) {
-            if (dataSet.length != 0) {
-                    for (let i = 0; i < dataSet.length; i++) {
-                        if (dataSet[i].label == item.name) {
-                            dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
-                            found = true;
-                        }
-                    }
-                    if (found == false) {
-                        dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained});
-                        for (let j = 0; j < dataSet.length; j++) {
-                            if (dataSet[j].label == item.name) {
-                                dataSet[j].data[maxYear + yearDifference] += Number(item.salesAmount);
-                            }
-                        }
-                        found = true;
-                    }
-            } else {
-                
-                dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained });
-                for (let i = 0; i < dataSet.length; i++) {
-                    if (dataSet[i].label == item.name) {
-                        dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
-                    }
-                }
-            }
-        }
     });
     
     var ctx = document.getElementById('performanceStaff').getContext('2d');
         let myChart = new Chart(ctx, {
-            type: "line",
+            type: "bar",
             data: {
             labels: chartLabels,
-            datasets: dataSet
+            datasets: [{label:"Total Sales Made (RM)",
+                        data:dataSet,
+                        backgroundColor: generateRandomColorsRgba()
+                       }
+                      ]
         },
         options: {
             scales: {

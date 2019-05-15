@@ -181,6 +181,10 @@ body {
     border:1px solid grey;
 }
 
+.add-staff-container {
+    padding-top:10%;
+}
+
 .add-staff-content {
     margin: 0 auto;
 }
