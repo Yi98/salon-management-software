@@ -1230,3 +1230,7 @@ p.remove-text:hover {
 .rr-si{
   padding-left:2%;
 }
+
+.clickedButton {
+    background-color: #dee2e6;
+}
