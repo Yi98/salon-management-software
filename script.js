@@ -1203,10 +1203,7 @@ function onAddCart() {
 		productName = selected.name.substring(0, 15) + "...";
 	}	else {
 		productName = selected.name;
-	}	
-
-  console.log(selected.imageName);
-  console.log(selected.mime);
+	}
 
 	let cartItems = document.getElementById('cart-ul').innerHTML;
 
@@ -1221,7 +1218,7 @@ function onAddCart() {
 
 	document.getElementById("cart-ul").innerHTML += `
 		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-			<div class="row">
+			<div class="row cart-row">
 				<div class="col-md-2">
 					<img class="cart-img" src="data:${selected.mime};base64,${selected.imageName}" alt="Product item">
 				</div>
@@ -1761,4 +1758,134 @@ function loadStaffPerformanceChart(data) {
                 }
             }
         });
+}
+
+
+function loadRanking(data, serviceData) {
+  // console.log(data);
+  console.log(serviceData);
+
+  let previous = [];
+  let current = [];
+
+  for (let i=0; i<data.length; i++) {
+    if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
+      if (moment(data[i].saleDate).format('M') == moment().format('M')) {
+
+        let exist = false;
+
+        for (let j=0; j<current.length; j++) {
+          if (data[i].productName == current[j].name) {
+            exist = true;
+            current[j].amount += Number(data[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
+          current.push(item);
+        }
+      }
+      else if (moment(data[i].saleDate).format('M') == moment().format('M')-1) {
+
+        let exist = false;
+
+        for (let j=0; j<previous.length; j++) {
+          if (data[i].productName == previous[j].name) {
+            exist = true;
+            previous[j].amount += Number(data[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
+          previous.push(item);
+        }
+      }
+    }
+  }
+
+  let topImprover = "None";
+  let topImproverScore = 0;
+
+  for (let i=0; i<previous.length; i++) {
+    let currentItem = previous[i].name;
+    for (let j=0; j<current.length; j++) {
+      if (currentItem == current[j].name) {
+        let diff = current[j].amount - previous[i].amount;
+        if (diff > topImproverScore) {
+          topImproverScore = diff;
+          topImprover = currentItem;
+        }
+      }
+    }
+  }
+
+  document.getElementById('top_improved_product').innerHTML = topImprover;
+  document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
+
+
+  //services later move to a new function
+  previous = [];
+  current = [];
+  
+  for (let i=0; i<serviceData.length; i++) {
+    if (moment(serviceData[i].saleDate).format('Y') == moment().format('Y')) {
+      if (moment(serviceData[i].saleDate).format('M') == moment().format('M')) {
+        let exist = false;
+
+        for (let j=0; j<current.length; j++) {
+          if (serviceData[i].productName == current[j].name) {
+            exist = true;
+            current[j].amount += Number(serviceData[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
+          current.push(item);
+        }
+      }
+      else if (moment(serviceData[i].saleDate).format('M') == moment().format('M')-1) {
+
+        let exist = false;
+
+        for (let j=0; j<previous.length; j++) {
+          if (serviceData[i].productName == previous[j].name) {
+            exist = true;
+            previous[j].amount += Number(serviceData[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
+          previous.push(item);
+        }
+      }
+    }
+  }
+
+  topImprover = "None";
+  topImproverScore = 0;
+
+  console.log(previous);
+  console.log(current);
+
+  for (let i=0; i<previous.length; i++) {
+    let currentItem = previous[i].name;
+    for (let j=0; j<current.length; j++) {
+      if (currentItem == current[j].name) {
+        let diff = current[j].amount - previous[i].amount;
+        if (diff > topImproverScore) {
+          topImproverScore = diff;
+          topImprover = currentItem;
+        }
+      }
+    }
+  }
+
+  document.getElementById('top_improved_service').innerHTML = topImprover;
+  document.getElementById('top_improved_service_score').innerHTML = "Improved by: " + topImproverScore + " sales";
+
+  console.log(topImprover);
+  console.log(topImproverScore);
+
+
+
 }

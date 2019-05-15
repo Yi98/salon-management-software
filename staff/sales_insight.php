@@ -86,10 +86,27 @@
        }
     }
 
+
+    // get all the sales
     $allSalesQuery = "SELECT * from sales";
     $allSalesData = $conn->query($allSalesQuery);
     $allSalesData->execute();
     $sales = $allSalesData->fetchAll(PDO::FETCH_ASSOC);
+
+
+    //query to get top improved product
+    $most_improved_product_query = "SELECT i.inventoryName as productName, s.dateOfSales as saleDate, d.itemAmount as amount FROM sales s LEFT OUTER JOIN salesdetails d ON s.salesId = d.salesId LEFT OUTER JOIN inventories i ON i.inventoryId = d.inventoryId WHERE i.categories != 'Service'";
+
+    $most_improved_product = $conn->query($most_improved_product_query);
+    $most_improved_product->execute();
+    $improvedProducts = $most_improved_product->fetchAll(PDO::FETCH_ASSOC);
+
+
+    $most_improved_service_query = "SELECT i.inventoryName as productName, s.dateOfSales as saleDate, d.itemAmount as amount FROM sales s LEFT OUTER JOIN salesdetails d ON s.salesId = d.salesId LEFT OUTER JOIN inventories i ON i.inventoryId = d.inventoryId WHERE i.categories = 'Service'";
+
+    $most_improved_service = $conn->query($most_improved_service_query);
+    $most_improved_service->execute();
+    $improvedServices = $most_improved_service->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -105,10 +122,12 @@
     <script>
       var products = <?php echo json_encode($products); ?>;
       var sales = <?php echo json_encode($sales); ?>;
+      var improvedProducts = <?php echo json_encode($improvedProducts); ?>;
+      var improvedServices = <?php echo json_encode($improvedServices); ?>;
     </script>
     
   </head>
-  <body onload="loadDetailsChart(sales, 'daily', 3)">
+  <body onload="loadDetailsChart(sales, 'daily', 3); loadRanking(improvedProducts, improvedServices);">
     <?php include "../navigationBar.php" ?>
     <div class="container dashboard-container text-center">
       <h1 class="display-4">Detail Insight for Services &amp; Products</h1>
@@ -127,8 +146,8 @@
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improver Service</p>
-            <p class="result">*Waiting to be implemented*</p>
+            <p class="title">Top Improved Service (Monthly)</p>
+            <p class="result">*<span id="top_improved_service"></span>*<br/><span id="top_improved_service_score"></span></p>
           </div>
         </div>
       </div>
@@ -147,8 +166,8 @@
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improver Product</p>
-            <p class="result">*Waiting to be implemented*</p>
+            <p class="title">Top Improved Product (Monthly)</p>
+            <p class="result">*<span id="top_improved_product"></span>*<br/><span id="top_improved_product_score"></span></p>
           </div>
         </div>
       </div>
