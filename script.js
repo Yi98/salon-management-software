@@ -1988,6 +1988,12 @@ function generateRandomColorsRgba() {
 
 
 function loadRanking(productData, serviceData) {
+  // et current month
+  const months = document.getElementsByClassName('current-month');
+  for (let i=0; i<months.length; i++) {
+    months[i].innerHTML = moment().format('MMMM');
+  } 
+
   getTopImprover(productData, 'product');
   getTopImprover(serviceData, 'service');
 }
@@ -1996,6 +2002,9 @@ function loadRanking(productData, serviceData) {
 function getTopImprover(data, type) {
   const previous = [];
   const current = [];
+
+  console.log(data);
+
 
   for (let i=0; i<data.length; i++) {
     if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
@@ -2009,6 +2018,7 @@ function getTopImprover(data, type) {
             current[j].amount += Number(data[i].amount);
           }
         }
+
         if (!exist) {
           let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
           current.push(item);
@@ -2024,6 +2034,7 @@ function getTopImprover(data, type) {
             previous[j].amount += Number(data[i].amount);
           }
         }
+
         if (!exist) {
           let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
           previous.push(item);
@@ -2031,6 +2042,23 @@ function getTopImprover(data, type) {
       }
     }
   }
+
+  for (let i=0; i<current.length; i++) {
+    let exist = false;
+    for (let j=0; j<previous.length; j++) {
+      if (current[i].name == previous[j].name) {
+        exist = true;
+      }
+    }
+
+    if (!exist) {
+      let item = {'name': current[i].name, 'amount': 0};
+      previous.push(item);
+    }
+  }
+
+  console.log(previous);
+  console.log(current);
 
   let topImprover = "None";
   let topImproverScore = 0;
@@ -2047,6 +2075,7 @@ function getTopImprover(data, type) {
       }
     }
   }
+
 
 
   if (type == 'product') {

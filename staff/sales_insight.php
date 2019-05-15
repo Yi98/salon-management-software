@@ -134,19 +134,19 @@
       <div class="row">
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Service</p>
-            <p class="result">*<?php echo $topService ?>*</p>
+            <p class="title">Top Service (All time)</p>
+            <p class="result">*<?php echo $topService ?>*<br/>Total sales: <?php echo $topServiceCount ?></p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Service (Sale's frequency)</p>
+            <p class="title">Top Consistent Service (<span class="current-month"></span>)</p>
             <p class="result">*<?php echo $frequentService ?>*</p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improved Service (Monthly)</p>
+            <p class="title">Top Improved Service (<span class="current-month"></span>)</p>
             <p class="result">*<span id="top_improved_service"></span>*<br/><span id="top_improved_service_score"></span></p>
           </div>
         </div>
@@ -154,19 +154,19 @@
       <div class="row">
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Product</p>
-            <p class="result">*<?php echo $topProduct ?>*</p>
+            <p class="title">Top Product (All time)</p>
+            <p class="result">*<?php echo $topProduct ?>*<br/>Total sales: <?php echo $topProductCount ?></p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Product (Sale's frequency)</p>
+            <p class="title">Top Consistent Product (<span class="current-month"></span>)</p>
             <p class="result">*<?php echo $frequentProduct ?>*</p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improved Product (Monthly)</p>
+            <p class="title">Top Improved Product (<span class="current-month"></span>)</p>
             <p class="result">*<span id="top_improved_product"></span>*<br/><span id="top_improved_product_score"></span></p>
           </div>
         </div>
