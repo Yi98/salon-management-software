@@ -672,7 +672,7 @@ function filterUsers(){
   tr = table.getElementsByTagName("tr");
   
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[5];
+    td = tr[i].getElementsByTagName("td")[7];
     if (td) {
       if (td.textContent == 'user') {
         tr[i].style.display = "";
@@ -689,7 +689,7 @@ function filterStaffs(){
   tr = table.getElementsByTagName("tr");
   
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[5];
+    td = tr[i].getElementsByTagName("td")[7];
     if (td) {
       if (td.textContent == 'staff') {
         tr[i].style.display = "";
@@ -1143,7 +1143,7 @@ function categoryFilter(category){
         } 
       }
     } 
-  }
+}
 
 function onPayCart() {
 	const price = document.getElementById('total-amount').innerHTML;

@@ -1234,3 +1234,6 @@ p.remove-text:hover {
 .clickedButton {
     background-color: #dee2e6;
 }
+.graph-grid{
+    width:100%;
+}

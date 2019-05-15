@@ -97,9 +97,6 @@
       
     <div id="dashboard-bg">
       <div class="container dashboard-container text-center">
-        <!-- Add new staff button -->
-        <button id="add_new_staff_button" class="btn btn-info">Add new staff</button>
-        <button id="pos_button" class="btn btn-info" onclick="window.location.href='point-of-sale.php';">Point of Sales</button>
     
         <div class="vertical-center add-staff-popup">
             <div class="add-staff-container container col-md-offset-2 col-md-8">
@@ -138,6 +135,13 @@
         </div>
           
         <h1 class="display-4">Dashboard For Staff</h1>
+          <br/>
+          <!-- Add new staff button -->
+        <button id="add_new_staff_button" class="btn btn-info">Add new staff</button>
+        <button id="pos_button" class="btn btn-info" onclick="window.location.href='point-of-sale.php';">Point of Sales</button>
+        <br/>
+        <br/>
+        
         <a class="weatherwidget-io" href="https://forecast7.com/en/1d61110d38/kuching/" data-label_1="KUCHING" data-label_2="WEATHER" data-icons="Climacons Animated" data-days="3" data-theme="clear" >KUCHING WEATHER</a>
         <script>
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
@@ -176,7 +180,7 @@
             </a>
           </div>
           <div class="col-md-4 col">
-            <div class="content container">
+            <div class="content">
               <p class="title">Ranking for the top sales product and service</p>
               <ol>
                 <?php
@@ -195,7 +199,6 @@
           </div>
         </div>
         <div class="row graph-grid">
-
           <div class="col-md-8 col col-zoom">
             <a href="staff_insight.php" class="insight">
               <div class="content">
@@ -247,8 +250,6 @@
       </div>
     </div>
   </div>
-    
-    
          
     <!-- Bootstrap, jQuery-->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
