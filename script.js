@@ -1217,10 +1217,10 @@ function onAddCart() {
 	}
 
 	document.getElementById("cart-ul").innerHTML += `
-		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-			<div class="row cart-row">
+		<li class="list-group-item justify-content-between align-items-center cart-list mb-2">
+			<div class="row">
 				<div class="col-md-2">
-					<img class="cart-img" src="data:${selected.mime};base64,${selected.imageName}" alt="Product item">
+				   <img class="cart-img" src="data:${selected.mime};base64,${selected.imageName}" alt="Product item">
 				</div>
 				<div class="col-md-2 cart-criteria">
 					<p class="cart-product-title m-0 cart-product-text" title="${selected.name}">${productName}</p>
@@ -1237,9 +1237,9 @@ function onAddCart() {
 				<div class="col-md-2 cart-criteria">
 	    		<p class="remove-text" onclick="onRemoveCart(this)">Remove</p>		
 				</div>
+        <input type="hidden" class="inventoryId" value="${selected.id}">
+      <input type="hidden" class="inventoryType" value="${selected.type}">
 			</div>
-			<input type="hidden" class="inventoryId" value="${selected.id}">
-            <input type="hidden" class="inventoryType" value="${selected.type}">
 	  </li>`;
 
 	  sumUpCart();
