@@ -1128,7 +1128,7 @@ p.sub-content {
 }
 
 img.cart-img {
-  width: 55%;
+  width: 40%;
   border: 1px solid rgb(209, 208, 208);
 }
 
@@ -1233,4 +1233,7 @@ p.remove-text:hover {
 
 .clickedButton {
     background-color: #dee2e6;
+}
+.graph-grid{
+    width:100%;
 }

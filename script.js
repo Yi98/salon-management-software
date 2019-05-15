@@ -672,7 +672,7 @@ function filterUsers(){
   tr = table.getElementsByTagName("tr");
   
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[5];
+    td = tr[i].getElementsByTagName("td")[7];
     if (td) {
       if (td.textContent == 'user') {
         tr[i].style.display = "";
@@ -689,7 +689,7 @@ function filterStaffs(){
   tr = table.getElementsByTagName("tr");
   
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[5];
+    td = tr[i].getElementsByTagName("td")[7];
     if (td) {
       if (td.textContent == 'staff') {
         tr[i].style.display = "";
@@ -1143,7 +1143,7 @@ function categoryFilter(category){
         } 
       }
     } 
-  }
+}
 
 function onPayCart() {
 	const price = document.getElementById('total-amount').innerHTML;
@@ -1204,7 +1204,6 @@ function onAddCart() {
 	}	else {
 		productName = selected.name;
 	}
-	
 
 	let cartItems = document.getElementById('cart-ul').innerHTML;
 
@@ -1219,9 +1218,9 @@ function onAddCart() {
 
 	document.getElementById("cart-ul").innerHTML += `
 		<li class="list-group-item d-flex justify-content-between align-items-center cart-list mb-2">
-			<div class="row">
+			<div class="row cart-row">
 				<div class="col-md-2">
-					<img class="cart-img" src="../images/schwarzkopf_main.jpg" alt="Product item">
+					<img class="cart-img" src="data:${selected.mime};base64,${selected.imageName}" alt="Product item">
 				</div>
 				<div class="col-md-2 cart-criteria">
 					<p class="cart-product-title m-0 cart-product-text" title="${selected.name}">${productName}</p>
@@ -1325,7 +1324,6 @@ function checkDisableCart() {
     select[i].style.backgroundColor = "white";
     for (let j=0; j<exists.length; j++) {
       if (select[i].innerHTML === exists[j].title) {
-        console.log(select[i].innerHTML);
         select[i].disabled = true;
         select[i].style.backgroundColor = "rgba(200, 200, 200, 0.3)";
       }
@@ -1518,7 +1516,9 @@ function generateWeeklySalesChart(data) {
     }
   }
 
-  console.log(weeklySalesData);
+  for (let i=0; i<weeklySalesData.length; i++) {
+    weeklySalesData[i] = weeklySalesData[i].toFixed(2);
+  }
 
 
   let ctx = document.getElementById('product_details_chart').getContext('2d');
@@ -1592,6 +1592,10 @@ function generateYearlySalesChart(data) {
     yearlySalesData[4-year] += Number(item.salesAmount);
   });
 
+  for (let i=0; i<yearlySalesData.length; i++) {
+    yearlySalesData[i] = yearlySalesData[i].toFixed(2);
+  }
+
   let ctx = document.getElementById('product_details_chart').getContext('2d');
   let myChart = new Chart(ctx, {
       type: 'line',
@@ -1599,8 +1603,8 @@ function generateYearlySalesChart(data) {
           labels: ['2015', '2016', '2017', '2018', '2019'],
           datasets: [{
               label: 'Ringgit Malaysia (MYR)',
-              backgroundColor: '#ff8a5c',
-              borderColor: '#ff8a5c',
+              backgroundColor: '#ff5959',
+              borderColor: '#ff5959',
               data: yearlySalesData
           }]
       },
@@ -1980,4 +1984,134 @@ function generateYearlyStaffPerformanceChart(data) {
 function generateRandomColorsRgba() {
     var o = Math.round, r = Math.random, s = 255;
     return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ', 0.5)';
+}
+
+
+function loadRanking(data, serviceData) {
+  // console.log(data);
+  console.log(serviceData);
+
+  let previous = [];
+  let current = [];
+
+  for (let i=0; i<data.length; i++) {
+    if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
+      if (moment(data[i].saleDate).format('M') == moment().format('M')) {
+
+        let exist = false;
+
+        for (let j=0; j<current.length; j++) {
+          if (data[i].productName == current[j].name) {
+            exist = true;
+            current[j].amount += Number(data[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
+          current.push(item);
+        }
+      }
+      else if (moment(data[i].saleDate).format('M') == moment().format('M')-1) {
+
+        let exist = false;
+
+        for (let j=0; j<previous.length; j++) {
+          if (data[i].productName == previous[j].name) {
+            exist = true;
+            previous[j].amount += Number(data[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
+          previous.push(item);
+        }
+      }
+    }
+  }
+
+  let topImprover = "None";
+  let topImproverScore = 0;
+
+  for (let i=0; i<previous.length; i++) {
+    let currentItem = previous[i].name;
+    for (let j=0; j<current.length; j++) {
+      if (currentItem == current[j].name) {
+        let diff = current[j].amount - previous[i].amount;
+        if (diff > topImproverScore) {
+          topImproverScore = diff;
+          topImprover = currentItem;
+        }
+      }
+    }
+  }
+
+  document.getElementById('top_improved_product').innerHTML = topImprover;
+  document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
+
+
+  //services later move to a new function
+  previous = [];
+  current = [];
+  
+  for (let i=0; i<serviceData.length; i++) {
+    if (moment(serviceData[i].saleDate).format('Y') == moment().format('Y')) {
+      if (moment(serviceData[i].saleDate).format('M') == moment().format('M')) {
+        let exist = false;
+
+        for (let j=0; j<current.length; j++) {
+          if (serviceData[i].productName == current[j].name) {
+            exist = true;
+            current[j].amount += Number(serviceData[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
+          current.push(item);
+        }
+      }
+      else if (moment(serviceData[i].saleDate).format('M') == moment().format('M')-1) {
+
+        let exist = false;
+
+        for (let j=0; j<previous.length; j++) {
+          if (serviceData[i].productName == previous[j].name) {
+            exist = true;
+            previous[j].amount += Number(serviceData[i].amount);
+          }
+        }
+        if (!exist) {
+          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
+          previous.push(item);
+        }
+      }
+    }
+  }
+
+  topImprover = "None";
+  topImproverScore = 0;
+
+  console.log(previous);
+  console.log(current);
+
+  for (let i=0; i<previous.length; i++) {
+    let currentItem = previous[i].name;
+    for (let j=0; j<current.length; j++) {
+      if (currentItem == current[j].name) {
+        let diff = current[j].amount - previous[i].amount;
+        if (diff > topImproverScore) {
+          topImproverScore = diff;
+          topImprover = currentItem;
+        }
+      }
+    }
+  }
+
+  document.getElementById('top_improved_service').innerHTML = topImprover;
+  document.getElementById('top_improved_service_score').innerHTML = "Improved by: " + topImproverScore + " sales";
+
+  console.log(topImprover);
+  console.log(topImproverScore);
+
+
+
 }
