@@ -1400,8 +1400,18 @@ function loadChart(data) {
   });
 }
 
-function loadDetailsChart(data, type) {
+function loadDetailsChart(data, type, num) {
   console.log(data);
+
+  const buttons = document.getElementsByClassName('type-alternative');
+  for (let i=0; i<buttons.length; i++) {
+    if (i == num) {
+      buttons[i].classList.add('clickedButton');
+    }
+    else {
+      buttons[i].classList.remove('clickedButton');
+    }
+  }
 
   // destroy old canvas and replace with a new canvas
   document.getElementById('product_details_chart').remove();
@@ -1411,125 +1421,194 @@ function loadDetailsChart(data, type) {
   canvas.setAttribute('height','200');
   document.querySelector('#canvas-container').appendChild(canvas);  
   
-  let myChart;
-  let ctx = document.getElementById('product_details_chart').getContext('2d');
 
   if (type == 'daily') {
-    let totalDailySales = 0;  
-
-    data.forEach(item => {
-      if (moment(item.dateOfSales).isSame(moment(), 'day')) {
-        totalDailySales += Number(item.salesAmount);
-      } 
-    });
-
-    myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Sales'],
-            datasets: [{
-                label: 'Malaysia Ringgit (MYR)',
-                data: [totalDailySales],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
+    generateDailySalesChart(data);
+  }
+  else if (type == 'weekly') {
+    generateWeeklySalesChart(data);
   }
   else if (type == 'monthly') {
-    let monthlySalesData = [];
-    const start = moment([2019, 0, 1]);
-
-    for(let i=0; i<12; i++) {
-      monthlySalesData.push(0);
-    }
-
-
-    data.forEach(item => {
-      const current = item.dateOfSales.split('-');
-      const end = moment(current);
-      let month = end.diff(start, 'month');
-      monthlySalesData[month-1] += Number(item.salesAmount);
-    });
-
-
-    for (let i=0; i<monthlySalesData.length; i++) {
-      monthlySalesData[i] = monthlySalesData[i].toFixed(2);
-    }
-
-
-    myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mac', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            datasets: [{
-                label: 'Ringgit Malaysia (MYR)',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: monthlySalesData
-            }]
-        },
-        options: {}
-    });
+    generateMonthlySalesChart(data);
   }
   else if (type == 'yearly') {
-    let yearlySalesData = [];
-    const start = moment([2019, 11]);
-
-    for(let i=0; i<5; i++) {
-      yearlySalesData.push(0);
-    }
-
-
-    data.forEach(item => {
-      const current = item.dateOfSales.split('-');
-      const end = moment(current);
-      let year = start.diff(end, 'year');
-
-      yearlySalesData[4-year] += Number(item.salesAmount);
-    });
-
-    myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['2015', '2016', '2017', '2018', '2019'],
-            datasets: [{
-                label: 'Ringgit Malaysia (MYR)',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: yearlySalesData
-            }]
-        },
-        options: {}
-    });
+    generateYearlySalesChart(data);
   }
 }
 
 
+function generateDailySalesChart(data) {
+  let totalDailySales = 0;  
+
+  data.forEach(item => {
+    if (moment(item.dateOfSales).isSame(moment(), 'day')) {
+      totalDailySales += Number(item.salesAmount);
+    } 
+  });
+
+  let ctx = document.getElementById('product_details_chart').getContext('2d');
+  let myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: [(moment().format()).split('T')[0]],
+          datasets: [{
+              label: 'Ringgit Malaysia (MYR)',
+              data: [totalDailySales],
+              backgroundColor: [
+                  '#00d1cd',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  '#00d1cd',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+}
+
+
+function generateWeeklySalesChart(data) {
+  let firstDay = moment().startOf('month');
+  let secondWeek = firstDay.add(7, 'days');
+  let thirdWeek = moment(secondWeek).add(7, 'days');
+  let fourthWeek = moment(thirdWeek).add(7, 'days');
+
+  const weeksInMonth = [];
+  weeksInMonth.push(moment().startOf('month').format('YYYY-MM-DD'));
+  weeksInMonth.push(secondWeek.format('YYYY-MM-DD'));
+  weeksInMonth.push(thirdWeek.format('YYYY-MM-DD'));
+  weeksInMonth.push(fourthWeek.format('YYYY-MM-DD'));
+  weeksInMonth.push(moment().endOf('month').format('YYYY-MM-DD'));
+
+
+  console.log(weeksInMonth);
+
+  const weeklySalesData = [];
+
+  for (let i=0; i<5; i++) {
+    weeklySalesData.push(0);
+  }
+
+  for (let i=0; i<data.length; i++) {
+    for (let j=0; j<weeksInMonth.length; j++) {
+      if (moment(data[i].dateOfSales).isSameOrAfter(weeksInMonth[j], 'month')) {
+        if (moment(data[i].dateOfSales).isSameOrBefore(weeksInMonth[j+1], 'days')) {
+          weeklySalesData[j+1] += Number(data[i].salesAmount);
+          break;
+        }
+      }
+    }
+  }
+
+  console.log(weeklySalesData);
+
+
+  let ctx = document.getElementById('product_details_chart').getContext('2d');
+  let myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: weeksInMonth,
+          datasets: [{
+              label: 'Ringgit Malaysia (MYR)',
+              backgroundColor: '#8f71ff',
+              borderColor: '#8f71ff',
+              data: weeklySalesData
+          }]
+      },
+      options: {}
+  });
+}
+
+
+function generateMonthlySalesChart(data) {
+  let monthlySalesData = [];
+  const start = moment([2019, 0, 1]);
+
+  for(let i=0; i<12; i++) {
+    monthlySalesData.push(0);
+  }
+
+
+  data.forEach(item => {
+    const current = item.dateOfSales.split('-');
+    const end = moment(current);
+    let month = end.diff(start, 'month');
+    monthlySalesData[month-1] += Number(item.salesAmount);
+  });
+
+
+  for (let i=0; i<monthlySalesData.length; i++) {
+    monthlySalesData[i] = monthlySalesData[i].toFixed(2);
+  }
+
+  let ctx = document.getElementById('product_details_chart').getContext('2d');
+  let myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['Jan', 'Feb', 'Mac', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+              label: 'Ringgit Malaysia (MYR)',
+              backgroundColor: '#f30067',
+              borderColor: '#f30067',
+              data: monthlySalesData
+          }]
+      },
+      options: {}
+  });
+}
+
+
+function generateYearlySalesChart(data) {
+  let yearlySalesData = [];
+  const start = moment([2019, 11]);
+
+  for(let i=0; i<5; i++) {
+    yearlySalesData.push(0);
+  }
+
+
+  data.forEach(item => {
+    const current = item.dateOfSales.split('-');
+    const end = moment(current);
+    let year = start.diff(end, 'year');
+
+    yearlySalesData[4-year] += Number(item.salesAmount);
+  });
+
+  let ctx = document.getElementById('product_details_chart').getContext('2d');
+  let myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: ['2015', '2016', '2017', '2018', '2019'],
+          datasets: [{
+              label: 'Ringgit Malaysia (MYR)',
+              backgroundColor: '#ff8a5c',
+              borderColor: '#ff8a5c',
+              data: yearlySalesData
+          }]
+      },
+      options: {}
+  });
+}
 
 
 
@@ -1626,6 +1705,8 @@ function loadStaffFavorableChart(data, duration) {
             }
         });
 }
+
+
 
 function loadStaffPerformanceChart(data) {
   const staffsName = [];

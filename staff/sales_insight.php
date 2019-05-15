@@ -108,7 +108,7 @@
     </script>
     
   </head>
-  <body onload="loadDetailsChart(sales, 'daily')">
+  <body onload="loadDetailsChart(sales, 'daily', 3)">
     <?php include "../navigationBar.php" ?>
     <div class="container dashboard-container text-center">
       <h1 class="display-4">Detail Insight for Services &amp; Products</h1>
@@ -166,11 +166,11 @@
                     </form>
                   </div>
                   <div class="col-md-4 col-c2">
-                    <ul class="pagination">
-                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'lifetime')">Lifetime</a></li>
-                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'yearly')">Yearly</a></li>
-                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'monthly')">Monthly</a></li>
-                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'daily')">Daily</a></li>
+                    <ul class="pagination"> 
+                      <li class="page-item"><button class="page-link type-alternative" onclick="loadDetailsChart(sales, 'yearly', 0)">Yearly</button></li>
+                      <li class="page-item"><button class="page-link type-alternative" onclick="loadDetailsChart(sales, 'monthly', 1)">Monthly</button></li>
+                      <li class="page-item"><button class="page-link type-alternative" onclick="loadDetailsChart(sales, 'weekly', 2)">Weekly</button></li>
+                      <li class="page-item"><button class="page-link type-alternative" onclick="loadDetailsChart(sales, 'daily', 3)">Daily</button></li>
                     </ul>
                   </div>
               </div>
