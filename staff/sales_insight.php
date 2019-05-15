@@ -143,7 +143,7 @@
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Consistent Service (<span class="current-few-month"></span>)</p>
-            <p class="result">*<?php echo $frequentService ?>*</p>
+            <p class="result">*<span id="top_consistent_service"></span>*</p>
           </div>
         </div>
         <div class="col-md-4 col">

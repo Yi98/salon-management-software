@@ -2001,7 +2001,8 @@ function loadRanking(productData, serviceData) {
 
   getTopImprover(productData, 'product');
   getTopImprover(serviceData, 'service');
-  getTopConsitent(productData);
+  getTopConsitent(productData, 'product');
+  getTopConsitent(serviceData, 'service');
 }
 
 
@@ -2077,8 +2078,6 @@ function getTopImprover(data, type) {
     }
   }
 
-
-
   if (type == 'product') {
     document.getElementById('top_improved_product').innerHTML = topImprover;
     document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
@@ -2089,7 +2088,7 @@ function getTopImprover(data, type) {
   }
 }
 
-function getTopConsitent(data) {
+function getTopConsitent(data, type) {
   console.log(data);
   const currentMonth = moment().format('M');
 
@@ -2155,10 +2154,7 @@ function getTopConsitent(data) {
     }
 
     results[i].score = consistencyValue;
-
-
   }
-
 
   for (let i=0; i<results.length; i++) {
     if (results[i].score <= topConsistentScore) {
@@ -2166,6 +2162,14 @@ function getTopConsitent(data) {
       topConsistentScore = results[i].score;
     }
   }
+
+  console.log(consistenceData);
+  console.log(results);
   
-  document.getElementById('top_consistent_product').innerHTML = topConsistent;
+  if (type == 'product') {
+    document.getElementById('top_consistent_product').innerHTML = topConsistent;
+  }
+  else if (type == 'service') {
+    document.getElementById('top_consistent_service').innerHTML = topConsistent;
+  }
 }
