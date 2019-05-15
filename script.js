@@ -1457,7 +1457,8 @@ function loadDetailsChart(data) {
 
 
 // NOT SURE THIS IS GOOD PRACTICE OR NOT, BUT WITHOUT THIS, THE CHART DESTROY WON'T WORK PROPERLY
-var myChart;
+var myChart; // Storing the chart object from chart.js
+var chartTimeAdjustment; // Storing the time used to adjust the firstDay and lastDay
 function loadStaffFavorableChart(data, duration) {
     const staffsName = [];
     const staffsTotal = [];

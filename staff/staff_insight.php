@@ -5,7 +5,6 @@
     $all_appointments = $conn->query($all_appointments_query);
     $all_appointments->execute();
     $staffs = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
     
 <html lang="en">
@@ -23,28 +22,27 @@
   <body>
      
     <?php include "../navigationBar.php" ?>
+      
     <div class="container dashboard-container text-center">
       <h1 class="display-4">Detail Insight for Staffs</h1>
       <div class="row">
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Staff</p>
-            <p class="result">*David Cheam*</p>
-            <p>INSERT PIE CHART FOR ALL STAFF</p>
+            <p class="result">*<?php echo $staffs[0]["hairdresser"]." (".$staffs[0]["total"].")" ?>*</p>
+            <p></p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Consistent</p>
             <p class="result">*Steven Lau*</p>
-            <p>INSERT PIE CHART FOR ALL STAFF</p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Improver</p>
             <p class="result">*Ng Chin Shu*</p>
-            <p>INSERT PIE CHART FOR ALL STAFF</p>
           </div>
         </div>
       </div>
@@ -57,7 +55,7 @@
                     <form class="navbar-form navbar-right" role="search">
                       <div class="form-group text-left"> 
                         <input type="text" class="form-control" size="10" placeholder="Search by staff name">
-                        <div class="glyphicon glyphicon-search btn-search"></div>
+                        <div class="glyphic on glyphicon-search btn-search"></div>
                       </div>
                     </form>
                   </div>
@@ -70,26 +68,23 @@
                     </ul>
                   </div>
               </div>
-               <p class="result">
-                   <h2 id="currentToggleTime">LifeTime</h2>
+                <p class="result"></p>
+                <!-- Maybe for the function can add a affect the time stamp it decrease -->
+                    <span onclick="loadStaffFavorableChart(staffs, 1)">&#x21A9;</span><h2 id="currentToggleTime" style="display:inline;">LifeTime</h2><span onclick="loadStaffFavorableChart(staffs, 2)">&#x21AA;</span>
                     <div class="canvas_container">
                         <canvas id="favourableStaff" width="400" height="150"></canvas>
                     </div>
-                </p>
-              
             </div>
-            
           </div>
       </div>
     </div>
       
-        <script src="../script.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script>
-   
-            
-            
-        </script>
+    <script src="../script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script>
+        // Load the first graph when page is load
+        loadStaffFavorableChart(staffs, 0);
+    </script>
   </body>
 </html>

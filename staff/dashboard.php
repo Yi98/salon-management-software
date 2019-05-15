@@ -91,7 +91,7 @@
         var staffs_performance = <?php echo json_encode($sales_performance_result); ?>
     </script>
   </head>
-  <body onload="loadChart(products); loadStaffFavorableChart(staffs); loadStaffPerformanceChart(staffs_performance)">
+  <body onload="loadChart(products); loadStaffFavorableChart(staffs, 0); loadStaffPerformanceChart(staffs_performance)">
       
     <?php include "../navigationBar.php" ?>
       
@@ -201,6 +201,7 @@
               <div class="content">
               <p class="title">Graph for most favourable staff</p>
               <p class="result">
+                  <h2 id="currentToggleTime">LifeTime</h2>
                   <canvas id="favourableStaff" width="400" height="400"></canvas> 
                   <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
               </div>
@@ -213,7 +214,7 @@
               <ol>
                 <?php
                     foreach ($staffs as $row) {
-                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times) ".$row["date"]."</li>";
+                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times) </li>";
                     } 
                 ?>
               </ol>
@@ -238,7 +239,7 @@
               <ol>
                 <?php
                     foreach ($sales_performance_result as $row) {
-                        echo "<li>".$row["name"]." RM (".$row["salesAmount"]." sales)".$row["date"]."</li>";
+                        echo "<li>".$row["name"]." (RM ".$row["salesAmount"]." total sales)</li>";
                     } 
                 ?>
               </ol>
