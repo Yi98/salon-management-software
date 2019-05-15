@@ -55,6 +55,8 @@
     // query to get the sales count of products
     $most_frequent_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId WHERE i.categories != 'Service' GROUP BY s.inventoryId";
 
+    // $most_frequent_product_query = "SELECT i.inventoryName as productName, s.dateOfSales as saleDate, d.itemAmount as amount FROM sales s LEFT OUTER JOIN salesdetails d ON s.salesId = d.salesId LEFT OUTER JOIN inventories i ON i.inventoryId = d.inventoryId WHERE i.categories != 'Service'";
+
     $most_frequent_product = $conn->query($most_frequent_product_query);
     $most_frequent_product->execute();
     $frequentProducts = $most_frequent_product->fetchAll(PDO::FETCH_ASSOC);
@@ -140,7 +142,7 @@
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Service (<span class="current-month"></span>)</p>
+            <p class="title">Top Consistent Service (<span class="current-few-month"></span>)</p>
             <p class="result">*<?php echo $frequentService ?>*</p>
           </div>
         </div>
@@ -160,8 +162,8 @@
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Product (<span class="current-month"></span>)</p>
-            <p class="result">*<?php echo $frequentProduct ?>*</p>
+            <p class="title">Top Consistent Product (<span class="current-few-month"></span>)</p>
+            <p class="result">*<span id="top_consistent_product"></span>*</p>
           </div>
         </div>
         <div class="col-md-4 col">
