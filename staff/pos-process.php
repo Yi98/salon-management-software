@@ -24,14 +24,7 @@ if (!empty($_POST['staffId']) && !empty($_POST['salesAmount']) && !empty($_POST[
       $num = $items[$i]->num;
       $type = $items[$i]->type;
 
-      if ($type == 'product') {
-        echo "productSelected";
-        $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES ('$currentId', '$id', '$num')";
-      } else {
-        echo "serviceSelected";
-        $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES ('$currentId', '$id', '$num')";
-      }
-
+      $detailsSql = "INSERT INTO salesdetails (salesId, inventoryId, itemAmount) VALUES ('$currentId', '$id', '$num')";    
 
       if ($conn->exec($detailsSql)) {
         echo 'success';

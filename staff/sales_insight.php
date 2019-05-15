@@ -86,6 +86,10 @@
        }
     }
 
+    $allSalesQuery = "SELECT * from sales";
+    $allSalesData = $conn->query($allSalesQuery);
+    $allSalesData->execute();
+    $sales = $allSalesData->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -97,13 +101,14 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../style.css" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-    <script src="../script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
       var products = <?php echo json_encode($products); ?>;
+      var sales = <?php echo json_encode($sales); ?>;
     </script>
     
   </head>
-  <body onload="loadDetailsChart(products)">
+  <body onload="loadDetailsChart(sales, 'daily')">
     <?php include "../navigationBar.php" ?>
     <div class="container dashboard-container text-center">
       <h1 class="display-4">Detail Insight for Services &amp; Products</h1>
@@ -123,7 +128,7 @@
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Improver Service</p>
-            <p class="result">*Ng Chin Shu*</p>
+            <p class="result">*Waiting to be implemented*</p>
           </div>
         </div>
       </div>
@@ -143,14 +148,14 @@
         <div class="col-md-4 col">
           <div class="content">
             <p class="title">Top Improver Product</p>
-            <p class="result">*Botanist*</p>
+            <p class="result">*Waiting to be implemented*</p>
           </div>
         </div>
       </div>
       <div class="row graph-grid">
           <div class="col-md-12 col">
             <div class="content">
-             <p class="title">Products &amp; services</p>
+             <p class="title">Total sales</p>
               <div class="row rr-si">
                   <div class="col-md-8 col-c1">
                     <form class="navbar-form navbar-right" role="search">
@@ -162,18 +167,22 @@
                   </div>
                   <div class="col-md-4 col-c2">
                     <ul class="pagination">
-                      <li class="page-item"><a class="page-link" href="#">Lifetime</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Yearly</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Monthly</a></li>
-                      <li class="page-item"><a class="page-link" href="#">Daily</a></li>
+                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'lifetime')">Lifetime</a></li>
+                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'yearly')">Yearly</a></li>
+                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'monthly')">Monthly</a></li>
+                      <li class="page-item"><a class="page-link" onclick="loadDetailsChart(sales, 'daily')">Daily</a></li>
                     </ul>
                   </div>
               </div>
-                 <canvas id="product_details_chart" width="400" height="400"></canvas>              
+              <div id="canvas-container">
+                 <canvas id="product_details_chart" width="400" height="200"></canvas>              
+              </div>
             </div>
             
           </div>
       </div>
     </div>
+
+    <script src="../script.js"></script>
   </body>
 </html>
