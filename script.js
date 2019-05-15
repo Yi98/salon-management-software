@@ -2010,8 +2010,6 @@ function getTopImprover(data, type) {
   const previous = [];
   const current = [];
 
-  console.log(data);
-
   for (let i=0; i<data.length; i++) {
     if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
       if (moment(data[i].saleDate).format('M') == moment().format('M')) {
@@ -2066,9 +2064,6 @@ function getTopImprover(data, type) {
 
   let topImprover = "None";
   let topImproverScore = 0;
-
-  console.log(previous);
-  console.log(current);
 
   for (let i=0; i<previous.length; i++) {
     let currentItem = previous[i].name;
