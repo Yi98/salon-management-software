@@ -1499,7 +1499,6 @@ function generateWeeklySalesChart(data) {
   weeksInMonth.push(fourthWeek.format('YYYY-MM-DD'));
   weeksInMonth.push(moment().endOf('month').format('YYYY-MM-DD'));
 
-
   console.log(weeksInMonth);
 
   const weeklySalesData = [];
@@ -1546,7 +1545,6 @@ function generateMonthlySalesChart(data) {
   for(let i=0; i<12; i++) {
     monthlySalesData.push(0);
   }
-
 
   data.forEach(item => {
     const current = item.dateOfSales.split('-');
@@ -1610,111 +1608,289 @@ function generateYearlySalesChart(data) {
   });
 }
 
-
-
-// NOT SURE THIS IS GOOD PRACTICE OR NOT, BUT WITHOUT THIS, THE CHART DESTROY WON'T WORK PROPERLY
-var myChart; // Storing the chart object from chart.js
-var chartTimeAdjustment; // Storing the time used to adjust the firstDay and lastDay
-function loadStaffFavorableChart(data, duration) {
-    var staffsName = [];
-    const staffsTotal = [];
-    var chartFormat;
-    var chartLabel;
-    
-    var firstDay, lastDay;
-    var mode;
-    if (myChart != undefined) {
-        myChart.destroy();
-    }
-
-    if (duration == 0) {
-        mode = "lifetime";
-    } else if (duration == 1) {
-        mode = "year";
-    } else if (duration == 2) {
-        mode = "month";
-    } else if (duration == 3) {
-        mode = "daily";
-    }
-    
-    if (mode == "year" || mode == "month") {
-        firstDay = moment().startOf(mode);
-        lastDay = moment().endOf(mode);
-    }
+function loadStaffPerformanceSimpleChart(data) {
+    var chartLabels = [];
+    var dataSet = [];
+    var dataSetLabel = [];
+    var colorObtainedHistory = [];
+    var colorObtained;
     
     data.forEach(item => {
-        if (mode == "lifetime") {
-            staffsName.push(item.hairdresser);
-            staffsTotal.push(item.total);
-            chartFormat = "bar";
-            chartLabel = 'Number of being appointed by customer in appointments';
-        } else if (mode == "daily") {
-            if (moment(item.date).isSame(moment().format("YYYY-MM-DD"),"day")) {
-                staffsName.push(item.hairdresser);
-                staffsTotal.push(item.total);
-            }
-            chartFormat = "bar";
-        } else if (mode =="month") {
-            chartLabel = [];
-
-            const start = moment().startOf('year');
-            staffsName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            for(let i=0; i<12; i++) {
-              staffsTotal.push(0);  
-            }
-
-            data.forEach(item => {
-              const end = moment(item.date);
-              let month = end.diff(start, 'month');
-              staffsTotal[month] += Number(item.total);
-            });
-
-
-            for (let i=0; i<staffsTotal.length; i++) {
-              staffsTotal[i] = Number(staffsTotal[i]).toFixed(2);
-            }
-            
-            chartFormat = "line";
-            
-        } else if (mode == "year") {
-            chartLabel = [];
-           
-            var start = moment();
-            var currentYear = moment().year();
-            
-            var temp = [];
-            var maxYear = 4;
-            for (var i = 0; i <= maxYear; i++) {
-                temp.push(currentYear - (maxYear - i));
-            }
-            staffsName = temp;
-            
-            for(let i=0; i<5; i++) {
-              staffsTotal.push(0);
-            }
-
-
-            data.forEach(item => {
-              const end = moment(item.date);
-              let year = start.diff(end, 'year');
-              staffsTotal[4-year] += Number(item.total);
-                console.log(item.total);
-            });
-            
-            chartFormat = "line";
+        colorObtained = "";
+        var start = moment();
+        var currentYear = moment().year();
+        var found = false;
+        var temp = [];
+        var maxYear = 4;
+        
+        for (var i = 0; i <= maxYear; i++) {
+            temp.push(currentYear - (maxYear - i));
         }
+        chartLabels = temp;
+
+        yearDifference = moment(item.date).diff(moment(), 'year');
+        
+        colorObtained = generateRandomColorsRgba();
             
+        if ((yearDifference*-1) <= maxYear) {
+            if (dataSet.length != 0) {
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[i].label == item.name) {
+                            dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
+                            found = true;
+                        }
+                    }
+                    if (found == false) {
+                        dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained});
+                        for (let j = 0; j < dataSet.length; j++) {
+                            if (dataSet[j].label == item.name) {
+                                dataSet[j].data[maxYear + yearDifference] += Number(item.salesAmount);
+                            }
+                        }
+                        found = true;
+                    }
+            } else {
+                
+                dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained });
+                for (let i = 0; i < dataSet.length; i++) {
+                    if (dataSet[i].label == item.name) {
+                        dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
+                    }
+                }
+            }
+        }
+    });
+    
+    var ctx = document.getElementById('performanceStaff').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+            labels: chartLabels,
+            datasets: dataSet
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+            
+        }
+    });
+}
+
+// Ng Yi Sensei method
+function loadStaffPerformanceChart(data, mode, num) {
+    const buttons = document.getElementsByClassName('type-alternative');
+
+    for (let i=0; i<buttons.length; i++) {
+        if (i == num) {
+          buttons[i].classList.add('clickedButton');
+        }
+        else {
+          buttons[i].classList.remove('clickedButton');
+        }
+    }
+    
+    // destroy old canvas and replace with a new canvas
+    document.getElementById('performanceStaff').remove();
+    let canvas = document.createElement('canvas');
+    canvas.setAttribute('id','performanceStaff');
+    canvas.setAttribute('width','400');
+    canvas.setAttribute('height','200');
+    document.querySelector('#canvas_container').appendChild(canvas);
+
+    if (mode == "yearly") {
+        generateYearlyStaffPerformanceChart(data);
+    } else if (mode == "monthly") {
+        generateMonthlyStaffPerformanceChart(data);
+    } else if (mode == "weekly") {
+        generateWeeklyStaffPerformanceChart(data);
+    } else {
+        generateDailyStaffPerformanceChart(data);  
+    }   
+}
+
+function generateDailyStaffPerformanceChart(data) {
+    const chartLabels = [];
+    const dataSet = [];
+    const dataSetLabel = [];
+    var colorObtained;
+    // iF MORE THAN ONE THEN UNABLE TO GENERATE
+    colorObtained = generateRandomColorsRgba();
+    data.forEach(item => {
+        if (moment(item.date).isSame(moment(), "d")) {
+            if (chartLabels.length != 0) {
+                for (let i = 0; i < chartLabels.length; i++) {
+                    if (chartLabels[i] == item.name) {
+                        dataSet[i] += Number(item.salesAmount);
+                    } else {
+                        chartLabels.push(item.name);
+                        dataSetLabel.push(item.name);
+                        dataSet.push(Number(item.salesAmount));
+                    }
+                }
+            } else {
+                chartLabels.push(item.name);
+                dataSetLabel.push(item.name);
+                dataSet.push(Number(item.salesAmount));
+            }
+        }
+
+    });
+    
+    var ctx = document.getElementById('performanceStaff').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: chartLabels,
+            datasets: [{
+                label: dataSetLabel,
+                data: dataSet,
+                borderColor: colorObtained, 
+                backgroundColor: colorObtained
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+function generateWeeklyStaffPerformanceChart(data) {
+    var chartLabels = [];
+    var dataSet = [];
+    var dataSetLabel = [];
+    
+    var colorObtained;
+    
+    
+    data.forEach(item => {
+        let firstDay = moment().startOf('month');
+        let secondWeek = firstDay.add(7, 'days');
+        let thirdWeek = moment(secondWeek).add(7, 'days');
+        let fourthWeek = moment(thirdWeek).add(7, 'days');
+
+        const weeksInMonth = [];
+        var temp = [];
+        temp.push(moment().startOf('month').format('YYYY-MM-DD'));
+        temp.push(secondWeek.format('YYYY-MM-DD'));
+        temp.push(thirdWeek.format('YYYY-MM-DD'));
+        temp.push(fourthWeek.format('YYYY-MM-DD'));
+        temp.push(moment().endOf('month').format('YYYY-MM-DD'));
+        chartLabels = temp;
+        
+        colorObtained = generateRandomColorsRgba();
+        
+        var found = false;
+        for (let j=0; j<chartLabels.length; j++) {
+          if (moment(item.date).isSameOrAfter(chartLabels[j], 'month')) {
+            if (moment(item.date).isBefore(chartLabels[j+1], 'days')) {
+                if (dataSet.length != 0) {
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[i].label == item.name) {
+                            dataSet[i].data[j] += Number(item.salesAmount);
+                            found = true;
+                        } 
+                    }
+                    if (found = false) {
+                        dataSet.push({label: item.name, data: [0,0,0,0,0],  borderColor: colorObtained, backgroundColor: colorObtained});
+                            for (let i = 0; i < dataSet.length; i++) {
+                                if (dataSet[i].label == item.name) {
+                                    dataSet[i].data[j] += Number(item.salesAmount);
+                                }
+                            }
+                    }
+                } else {
+                    dataSet.push({label: item.name, data: [0,0,0,0,0],  borderColor: colorObtained, backgroundColor: colorObtained});
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[i].label == item.name) {
+                                dataSet[i].data[j] += Number(item.salesAmount);
+                            }
+                        }
+                }
+                break;
+            }
+          }
+        }
+    });
+                 
+    var ctx = document.getElementById('performanceStaff').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: chartLabels,
+            datasets: dataSet
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
     });
 
-  var ctx = document.getElementById('favourableStaff').getContext('2d');
-  myChart = new Chart(ctx, {
-            type: chartFormat,
+}
+
+function generateMonthlyStaffPerformanceChart(data) {
+    var chartLabels = [];
+    var dataSet = [];
+    var dataSetLabel = [];
+    const start = moment().startOf('year');
+    
+    chartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+    var colorObtained;
+    
+    data.forEach(item => {
+        colorObtained = generateRandomColorsRgba();
+        
+        var found = false;
+        if (moment(item.date).isSame(moment(), 'year')) {
+            if (dataSet.length != 0) {
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[i].label == item.name) {
+                            dataSet[i].data[moment(item.date).month()] += Number(item.salesAmount);
+                            found = true;
+                        }
+                    }
+                    if (found == false) {
+                        dataSet.push({label: item.name, data: [0,0,0,0,0,0,0,0,0,0,0,0],  borderColor: colorObtained, backgroundColor: colorObtained});
+                            for (let j = 0; j < dataSet.length; j++) {
+                                if (dataSet[j].label == item.name) {
+                                    dataSet[j].data[moment(item.date).month()] += Number(item.salesAmount);
+                                }
+                            }
+                        found = true;
+                    }
+            } else {
+                dataSet.push({label: item.name, data: [0,0,0,0,0,0,0,0,0,0,0,0],  borderColor: colorObtained, backgroundColor: colorObtained});
+                for (let i = 0; i < dataSet.length; i++) {
+                    if (dataSet[i].label == item.name) {
+                        dataSet[i].data[moment(item.date).month()] += Number(item.salesAmount);
+                    }
+                }
+            }
+        }
+    });
+    
+    var ctx = document.getElementById('performanceStaff').getContext('2d');
+    let myChart = new Chart(ctx, {
+            type: "line",
             data: {
-                labels: staffsName,
-                datasets: [{
-                    label: chartLabel,
-                    data: staffsTotal   
-                }]
+                labels: chartLabels,
+                datasets: dataSet
             },
             options: {
                 scales: {
@@ -1728,52 +1904,80 @@ function loadStaffFavorableChart(data, duration) {
         });
 }
 
+function generateYearlyStaffPerformanceChart(data) {
+    var chartLabels = [];
+    var dataSet = [];
+    var dataSetLabel = [];
+    var colorObtainedHistory = [];
+    var colorObtained;
+    
+    data.forEach(item => {
+        colorObtained = "";
+        var start = moment();
+        var currentYear = moment().year();
+        var found = false;
+        var temp = [];
+        var maxYear = 4;
+        
+        for (var i = 0; i <= maxYear; i++) {
+            temp.push(currentYear - (maxYear - i));
+        }
+        chartLabels = temp;
 
-
-function loadStaffPerformanceChart(data) {
-  const staffsName = [];
-  const staffsTotal = [];
-
-  data.forEach(item => {
-    staffsName.push(item.name);
-    staffsTotal.push(item.salesAmount);
-  });
-
-  var ctx = document.getElementById('performanceStaff').getContext('2d');
-  var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: staffsName,
-                datasets: [{
-                    label: 'Number of sales made by staffs',
-                    data: staffsTotal,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+        yearDifference = moment(item.date).diff(moment(), 'year');
+        
+        colorObtained = generateRandomColorsRgba();
+            
+        if ((yearDifference*-1) <= maxYear) {
+            if (dataSet.length != 0) {
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[i].label == item.name) {
+                            dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
+                            found = true;
                         }
-                    }]
+                    }
+                    if (found == false) {
+                        dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained});
+                        for (let j = 0; j < dataSet.length; j++) {
+                            if (dataSet[j].label == item.name) {
+                                dataSet[j].data[maxYear + yearDifference] += Number(item.salesAmount);
+                            }
+                        }
+                        found = true;
+                    }
+            } else {
+                
+                dataSet.push({label: item.name, data: [0,0,0,0,0], borderColor: colorObtained, backgroundColor: colorObtained });
+                for (let i = 0; i < dataSet.length; i++) {
+                    if (dataSet[i].label == item.name) {
+                        dataSet[i].data[maxYear + yearDifference] += Number(item.salesAmount);
+                    }
                 }
             }
-        });
+        }
+    });
+    
+    var ctx = document.getElementById('performanceStaff').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+            labels: chartLabels,
+            datasets: dataSet
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+            
+        }
+    });
+}
+
+function generateRandomColorsRgba() {
+    var o = Math.round, r = Math.random, s = 255;
+    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ', 0.5)';
 }

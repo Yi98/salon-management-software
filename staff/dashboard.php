@@ -7,23 +7,20 @@
 ?>
 
 <?php
-    $all_appointments_query = "SELECT hairdresser, COUNT(1) AS total, appointmentDate AS date FROM appointments GROUP BY hairdresser ORDER BY total DESC";
-    $all_appointments = $conn->query($all_appointments_query);
-    $all_appointments->execute();
-    $staffs = $all_appointments->fetchAll(PDO::FETCH_ASSOC);
-
-    // Getting the top favourable staff, this works due to the data is obtained in descending order
-    $topFavourableStaff = $staffs[0]["hairdresser"];
-
     // Sales performance
     $sales_performance_query = "SELECT u.name, COUNT(*) as salesCount, SUM(s.salesAmount) as salesAmount, dateOfSales as date FROM sales s INNER JOIN users u ON s.staffId=u.userId GROUP BY s.staffId ORDER BY salesAmount DESC";
     $sales_performance = $conn->query($sales_performance_query);
     $sales_performance->execute();
     $sales_performance_result = $sales_performance->fetchAll(PDO::FETCH_ASSOC);
-    //foreach ($sales_performance_result as $row) {
-    //    echo "Staff Id: ".$row["name"]." Sales Count: ".$row["salesCount"]." Sales Amount:".$row["salesAmount"];
-    //} 
-    
+
+    $highestPerformanceSales = 0;
+    $highestPerformanceStaff = "";
+    foreach ($sales_performance_result as $results ) {
+        if ($results["salesAmount"] > $highestPerformanceSales) {
+            $highestPerformanceSales = $results["salesAmount"];
+            $highestPerformanceStaff = $results["name"];
+        }
+    }
 
     // query to get all products and their total sales
     $most_favourable_product_query = "SELECT i.inventoryName as productName, SUM(s.itemAmount) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId WHERE i.categories != 'Service' GROUP BY s.inventoryId";
@@ -87,11 +84,10 @@
     <link rel="stylesheet" href="../style.css" type="text/css">
     <script>
         var products = <?php echo json_encode($products); ?>;
-        var staffs = <?php echo json_encode($staffs); ?>;
         var staffs_performance = <?php echo json_encode($sales_performance_result); ?>
     </script>
   </head>
-  <body onload="loadChart(products); loadStaffFavorableChart(staffs, 0); loadStaffPerformanceChart(staffs_performance)">
+  <body onload="loadChart(products); loadStaffPerformanceSimpleChart(staffs_performance)">
       
     <?php include "../navigationBar.php" ?>
       
@@ -147,8 +143,8 @@
         <div class="row">
           <div class="col-md-4 col">
             <div class="content">
-              <p class="title">Most favourable staff</p>
-              <p class="result">*<?php echo $topFavourableStaff ?>*</p>
+              <p class="title">Highest Performance Staff</p>
+              <p class="result">*<?php echo $highestPerformanceStaff ?>*</p>
             </div>
           </div>
           <div class="col-md-4 col">
@@ -194,41 +190,15 @@
             </div>
           </div>
         </div>
-        <div class="row graph-grid">
-
-          <div class="col-md-8 col col-zoom">
-            <a href="staff_insight.php" class="insight">
-              <div class="content">
-              <p class="title">Graph for most favourable staff</p>
-              <p class="result">
-                  <h2 id="currentToggleTime">LifeTime</h2>
-                  <canvas id="favourableStaff" width="400" height="400"></canvas> 
-                  <!--<img src="https://d33wubrfki0l68.cloudfront.net/cc541f9cbdd7e0c8f14c2fde762ff38c00e9d62b/fc921/images/angular/ng2-charts/chart-example.png" alt="example" width="100%;"/></p>-->
-              </div>
-            </a>
-            </div>
-
-          <div class="col-md-4 col">
-            <div class="content">
-              <p class="title">Ranking for most favourable staff</p>
-              <ol>
-                <?php
-                    foreach ($staffs as $row) {
-                        echo "<li>".$row["hairdresser"]." (".$row["total"]." times) </li>";
-                    } 
-                ?>
-              </ol>
-            </div>
-          </div>
-      </div>  
-        
       <div class="row graph-grid">
           <div class="col-md-8 col col-zoom">
             <a href="performance_insight.php" class="insight">
               <div class="content">
               <p class="title">Graph for displaying staff's performance</p>
               <p class="result">
-                  <canvas id="performanceStaff" width="400" height="400"></canvas> 
+                  <div id="canvas_container">
+                        <canvas id="performanceStaff" width="400" height="150"></canvas>
+                    </div>
               </div>    
             </a>
             </div>
@@ -259,6 +229,7 @@
     
     <script src="../script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
         $("#add_new_staff_button").on("click", function(){
             $(".add-staff-popup").addClass("add-staff-popup-active");
