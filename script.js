@@ -2010,6 +2010,8 @@ function getTopImprover(data, type) {
   const previous = [];
   const current = [];
 
+  console.log(data);
+
   for (let i=0; i<data.length; i++) {
     if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
       if (moment(data[i].saleDate).format('M') == moment().format('M')) {
@@ -2065,6 +2067,9 @@ function getTopImprover(data, type) {
   let topImprover = "None";
   let topImproverScore = 0;
 
+  console.log(previous);
+  console.log(current);
+
   for (let i=0; i<previous.length; i++) {
     let currentItem = previous[i].name;
     for (let j=0; j<current.length; j++) {
@@ -2089,7 +2094,6 @@ function getTopImprover(data, type) {
 }
 
 function getTopConsitent(data, type) {
-  console.log(data);
   const currentMonth = moment().format('M');
 
   const consistenceData = [];
@@ -2163,8 +2167,6 @@ function getTopConsitent(data, type) {
     }
   }
 
-  console.log(consistenceData);
-  console.log(results);
   
   if (type == 'product') {
     document.getElementById('top_consistent_product').innerHTML = topConsistent;
