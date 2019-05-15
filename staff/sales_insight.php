@@ -55,6 +55,8 @@
     // query to get the sales count of products
     $most_frequent_product_query = "SELECT i.inventoryName as productName, COUNT(*) as count FROM inventories i RIGHT OUTER JOIN salesdetails s ON i.inventoryId = s.inventoryId WHERE i.categories != 'Service' GROUP BY s.inventoryId";
 
+    // $most_frequent_product_query = "SELECT i.inventoryName as productName, s.dateOfSales as saleDate, d.itemAmount as amount FROM sales s LEFT OUTER JOIN salesdetails d ON s.salesId = d.salesId LEFT OUTER JOIN inventories i ON i.inventoryId = d.inventoryId WHERE i.categories != 'Service'";
+
     $most_frequent_product = $conn->query($most_frequent_product_query);
     $most_frequent_product->execute();
     $frequentProducts = $most_frequent_product->fetchAll(PDO::FETCH_ASSOC);
@@ -134,19 +136,19 @@
       <div class="row">
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Service</p>
-            <p class="result">*<?php echo $topService ?>*</p>
+            <p class="title">Top Service (All time)</p>
+            <p class="result">*<?php echo $topService ?>*<br/>Total sales: <?php echo $topServiceCount ?></p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Service (Sale's frequency)</p>
-            <p class="result">*<?php echo $frequentService ?>*</p>
+            <p class="title">Top Consistent Service (<span class="current-few-month"></span>)</p>
+            <p class="result">*<span id="top_consistent_service"></span>*</p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improved Service (Monthly)</p>
+            <p class="title">Top Improved Service (<span class="current-month"></span>)</p>
             <p class="result">*<span id="top_improved_service"></span>*<br/><span id="top_improved_service_score"></span></p>
           </div>
         </div>
@@ -154,19 +156,19 @@
       <div class="row">
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Product</p>
-            <p class="result">*<?php echo $topProduct ?>*</p>
+            <p class="title">Top Product (All time)</p>
+            <p class="result">*<?php echo $topProduct ?>*<br/>Total sales: <?php echo $topProductCount ?></p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Consistent Product (Sale's frequency)</p>
-            <p class="result">*<?php echo $frequentProduct ?>*</p>
+            <p class="title">Top Consistent Product (<span class="current-few-month"></span>)</p>
+            <p class="result">*<span id="top_consistent_product"></span>*</p>
           </div>
         </div>
         <div class="col-md-4 col">
           <div class="content">
-            <p class="title">Top Improved Product (Monthly)</p>
+            <p class="title">Top Improved Product (<span class="current-month"></span>)</p>
             <p class="result">*<span id="top_improved_product"></span>*<br/><span id="top_improved_product_score"></span></p>
           </div>
         </div>

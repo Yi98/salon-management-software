@@ -1399,7 +1399,6 @@ function loadChart(data) {
 }
 
 function loadDetailsChart(data, type, num) {
-  console.log(data);
 
   const buttons = document.getElementsByClassName('type-alternative');
   for (let i=0; i<buttons.length; i++) {
@@ -1967,8 +1966,22 @@ function generateRandomColorsRgba() {
 
 
 function loadRanking(productData, serviceData) {
+  // et current month
+  const months = document.getElementsByClassName('current-month');
+  const recents = document.getElementsByClassName('current-few-month');
+
+  for (let i=0; i<months.length; i++) {
+    months[i].innerHTML = moment().format('MMMM');
+  } 
+
+  for (let i=0; i<recents.length; i++) {
+    recents[i].innerHTML = moment().subtract(2, 'months').format('MMMM') + " - " + moment().format('MMMM');
+  } 
+
   getTopImprover(productData, 'product');
   getTopImprover(serviceData, 'service');
+  getTopConsitent(productData, 'product');
+  getTopConsitent(serviceData, 'service');
 }
 
 
@@ -1988,6 +2001,7 @@ function getTopImprover(data, type) {
             current[j].amount += Number(data[i].amount);
           }
         }
+
         if (!exist) {
           let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
           current.push(item);
@@ -2003,11 +2017,27 @@ function getTopImprover(data, type) {
             previous[j].amount += Number(data[i].amount);
           }
         }
+
         if (!exist) {
           let item = {'name': data[i].productName, 'amount': Number(data[i].amount)};
           previous.push(item);
         }
       }
+    }
+  }
+
+  // initialize 0 to item that does not existed last month
+  for (let i=0; i<current.length; i++) {
+    let exist = false;
+    for (let j=0; j<previous.length; j++) {
+      if (current[i].name == previous[j].name) {
+        exist = true;
+      }
+    }
+
+    if (!exist) {
+      let item = {'name': current[i].name, 'amount': 0};
+      previous.push(item);
     }
   }
 
@@ -2027,7 +2057,6 @@ function getTopImprover(data, type) {
     }
   }
 
-
   if (type == 'product') {
     document.getElementById('top_improved_product').innerHTML = topImprover;
     document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
@@ -2035,5 +2064,88 @@ function getTopImprover(data, type) {
   else if (type == 'service') {
     document.getElementById('top_improved_service').innerHTML = topImprover;
     document.getElementById('top_improved_service_score').innerHTML = "Improved by: " + topImproverScore + " sales";
+  }
+}
+
+function getTopConsitent(data, type) {
+  const currentMonth = moment().format('M');
+
+  const consistenceData = [];
+  const results = [];
+
+  let topConsistent = "None";
+  let topConsistentScore = 10000;
+
+  for (let i=0; i<data.length; i++) {
+    let exist = false;
+    for (let j=0; j<consistenceData.length; j++) {
+      if (data[i].productName == consistenceData[j].name) {
+        exist = true;
+      }
+    }
+    if (!exist) {
+      let item = {'name': data[i].productName, sales: [0, 0, 0]};
+      consistenceData.push(item);
+    }
+  
+  };
+
+  for (let i=0; i<data.length; i++) {
+    if (moment(data[i].saleDate).format('M') >= currentMonth-2 && moment(data[i].saleDate).format('M') <= currentMonth) {
+      if (moment(data[i].saleDate).format('M') == currentMonth-2) {
+        for (let j=0; j<consistenceData.length; j++) {
+          if (data[i].productName == consistenceData[j].name) {
+            consistenceData[j].sales[0] += Number(data[i].amount);
+          }
+        }
+      }
+      else if (moment(data[i].saleDate).format('M') == currentMonth-1) {
+        for (let j=0; j<consistenceData.length; j++) {
+          if (data[i].productName == consistenceData[j].name) {
+            consistenceData[j].sales[1] += Number(data[i].amount);
+          }
+        }
+      }
+      else if (moment(data[i].saleDate).format('M') == currentMonth) {
+        for (let j=0; j<consistenceData.length; j++) {
+          if (data[i].productName == consistenceData[j].name) {
+            consistenceData[j].sales[2] += Number(data[i].amount);
+          }
+        }
+      }
+    } 
+  }
+
+  for (let i=0; i<consistenceData.length; i++) {
+    let item = {'name': consistenceData[i].name, 'score': 99999};
+    results.push(item);
+
+    let firstDiff = Math.abs(consistenceData[i].sales[0] - consistenceData[i].sales[1]);
+    let secondDiff = Math.abs(consistenceData[i].sales[1] - consistenceData[i].sales[2]);
+
+    let consistencyValue = (firstDiff + secondDiff) / 2;
+
+    for (let j=0; j<consistenceData[i].sales.length; j++) {
+      if (consistenceData[i].sales[j] == 0) {
+        consistencyValue += 100; // for fairness
+      }
+    }
+
+    results[i].score = consistencyValue;
+  }
+
+  for (let i=0; i<results.length; i++) {
+    if (results[i].score <= topConsistentScore) {
+      topConsistent = results[i].name;
+      topConsistentScore = results[i].score;
+    }
+  }
+
+  
+  if (type == 'product') {
+    document.getElementById('top_consistent_product').innerHTML = topConsistent;
+  }
+  else if (type == 'service') {
+    document.getElementById('top_consistent_service').innerHTML = topConsistent;
   }
 }
