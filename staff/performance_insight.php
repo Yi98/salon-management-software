@@ -14,7 +14,7 @@
     $sales_total_result = $sales_total->fetchAll(PDO::FETCH_ASSOC);
 
     $highestPerformanceSales = 0;
-    $highestPerformanceStaff = "";
+    $highestPerformanceStaff = "None";
     foreach ($sales_total_result as $results ) {
         if ($results["salesAmount"] > $highestPerformanceSales) {
             $highestPerformanceSales = $results["salesAmount"];
@@ -73,7 +73,7 @@
     $previous_month->execute();
     $previous_month_result = $previous_month->fetchAll(PDO::FETCH_ASSOC);
 
-    $topImproverStaff = "";
+    $topImproverStaff = "None";
     $topImproveScore = 0;
     foreach ($current_month_result as $current_results) {
         foreach($previous_month_result as $previous_results) {
@@ -101,7 +101,7 @@
       
     </head>
     
-  <body onload="loadStaffPerformanceChart(staffs, 'yearly',0);">
+  <body onload="loadStaffPerformanceChart(staffs, 'daily',3);">
      
     <?php include "../navigationBar.php" ?>
       
