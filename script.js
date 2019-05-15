@@ -1987,12 +1987,15 @@ function generateRandomColorsRgba() {
 }
 
 
-function loadRanking(data, serviceData) {
-  // console.log(data);
-  console.log(serviceData);
+function loadRanking(productData, serviceData) {
+  getTopImprover(productData, 'product');
+  getTopImprover(serviceData, 'service');
+}
 
-  let previous = [];
-  let current = [];
+
+function getTopImprover(data, type) {
+  const previous = [];
+  const current = [];
 
   for (let i=0; i<data.length; i++) {
     if (moment(data[i].saleDate).format('Y') == moment().format('Y')) {
@@ -2045,73 +2048,13 @@ function loadRanking(data, serviceData) {
     }
   }
 
-  document.getElementById('top_improved_product').innerHTML = topImprover;
-  document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
 
-
-  //services later move to a new function
-  previous = [];
-  current = [];
-  
-  for (let i=0; i<serviceData.length; i++) {
-    if (moment(serviceData[i].saleDate).format('Y') == moment().format('Y')) {
-      if (moment(serviceData[i].saleDate).format('M') == moment().format('M')) {
-        let exist = false;
-
-        for (let j=0; j<current.length; j++) {
-          if (serviceData[i].productName == current[j].name) {
-            exist = true;
-            current[j].amount += Number(serviceData[i].amount);
-          }
-        }
-        if (!exist) {
-          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
-          current.push(item);
-        }
-      }
-      else if (moment(serviceData[i].saleDate).format('M') == moment().format('M')-1) {
-
-        let exist = false;
-
-        for (let j=0; j<previous.length; j++) {
-          if (serviceData[i].productName == previous[j].name) {
-            exist = true;
-            previous[j].amount += Number(serviceData[i].amount);
-          }
-        }
-        if (!exist) {
-          let item = {'name': serviceData[i].productName, 'amount': Number(serviceData[i].amount)};
-          previous.push(item);
-        }
-      }
-    }
+  if (type == 'product') {
+    document.getElementById('top_improved_product').innerHTML = topImprover;
+    document.getElementById('top_improved_product_score').innerHTML = "Improved by: " + topImproverScore + " sales";
   }
-
-  topImprover = "None";
-  topImproverScore = 0;
-
-  console.log(previous);
-  console.log(current);
-
-  for (let i=0; i<previous.length; i++) {
-    let currentItem = previous[i].name;
-    for (let j=0; j<current.length; j++) {
-      if (currentItem == current[j].name) {
-        let diff = current[j].amount - previous[i].amount;
-        if (diff > topImproverScore) {
-          topImproverScore = diff;
-          topImprover = currentItem;
-        }
-      }
-    }
+  else if (type == 'service') {
+    document.getElementById('top_improved_service').innerHTML = topImprover;
+    document.getElementById('top_improved_service_score').innerHTML = "Improved by: " + topImproverScore + " sales";
   }
-
-  document.getElementById('top_improved_service').innerHTML = topImprover;
-  document.getElementById('top_improved_service_score').innerHTML = "Improved by: " + topImproverScore + " sales";
-
-  console.log(topImprover);
-  console.log(topImproverScore);
-
-
-
 }
