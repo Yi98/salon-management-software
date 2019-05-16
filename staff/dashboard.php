@@ -214,7 +214,7 @@
               <ol>
                 <?php
                     foreach ($sales_performance_result as $row) {
-                        echo "<li>".$row["name"]." (RM ".$row["salesAmount"]." total sales)</li>";
+                        echo "<li>".$row["name"]." (RM ".number_format((float)$row["salesAmount"], 2, '.', '')." total sales)</li>";
                     } 
                 ?>
               </ol>

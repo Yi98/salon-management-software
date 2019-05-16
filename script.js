@@ -1700,6 +1700,7 @@ function generateDailyStaffPerformanceChart(data) {
     const dataSet = [];
     const dataSetLabel = [];
     var colorObtained;
+    var found = false;
     // iF MORE THAN ONE THEN UNABLE TO GENERATE
     colorObtained = generateRandomColorsRgba();
     data.forEach(item => {
@@ -1708,11 +1709,13 @@ function generateDailyStaffPerformanceChart(data) {
                 for (let i = 0; i < chartLabels.length; i++) {
                     if (chartLabels[i] == item.name) {
                         dataSet[i] += Number(item.salesAmount);
-                    } else {
-                        chartLabels.push(item.name);
-                        dataSetLabel.push(item.name);
-                        dataSet.push(Number(item.salesAmount));
+                        found = true;
                     }
+                } 
+                if (found == false) {
+                    chartLabels.push(item.name);
+                    dataSetLabel.push(item.name);
+                    dataSet.push(Number(item.salesAmount));
                 }
             } else {
                 chartLabels.push(item.name);
@@ -1783,7 +1786,7 @@ function generateWeeklyStaffPerformanceChart(data) {
                             found = true;
                         } 
                     }
-                    if (found = false) {
+                    if (found == false) {
                         dataSet.push({label: item.name, data: [0,0,0,0,0],  borderColor: colorObtained, backgroundColor: colorObtained});
                             for (let i = 0; i < dataSet.length; i++) {
                                 if (dataSet[i].label == item.name) {

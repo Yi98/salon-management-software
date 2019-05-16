@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2019 at 09:00 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.2
+-- Generation Time: May 16, 2019 at 04:56 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,11 +44,8 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`appointmentId`, `userId`, `appointmentDate`, `appointmentTime`, `typeOfServices`, `hairdresser`, `request`, `status`) VALUES
-(1, 1, '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', ''),
-(2, 2, '2019-04-15', '', 'Ng Chin Shu ', 'So', '', ''),
-(3, 3, '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', ''),
-(4, 4, '2019-04-15', '', 'Ng Chin Shu ', 'So', '', ''),
-(5, 5, '2019-04-15', '', 'Ng Chin Shu ', 'Yo', '', '');
+(6, 4, '2019-05-17', '13:00 - 15:00', 'Hair-cutting', 'Joanne Cheong', 'none', 'fulfilled'),
+(7, 4, '2019-05-24', '11:00 - 13:00', 'Hair-dyeing', 'Joanne Cheong', 'none', 'unfulfilled');
 
 -- --------------------------------------------------------
 
@@ -119,18 +116,14 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`salesId`, `staffId`, `salesAmount`, `dateOfSales`) VALUES
-(79, 1, 139.97, '2018-03-19'),
-(80, 1, 143.96, '2019-05-16'),
-(81, 1, 480, '2016-04-14'),
-(82, 1, 12, '2019-05-01'),
-(84, 1, 12, '2019-05-15'),
-(85, 1, 149.95, '2019-05-14'),
-(86, 1, 12, '2019-05-14'),
-(87, 1, 80, '2019-05-31'),
-(88, 1, 80, '2019-05-26'),
-(89, 1, 350, '2018-05-29'),
-(90, 6, 1000, '2019-09-14'),
-(91, 6, 342, '2019-05-02');
+(93, 1, 19.99, '2019-04-16'),
+(94, 1, 91.99, '2019-05-01'),
+(95, 1, 98.99, '2017-05-16'),
+(96, 1, 173.49, '2018-05-16'),
+(97, 6, 41.99, '2019-03-16'),
+(98, 1, 612, '2019-05-16'),
+(99, 6, 265.49, '2019-05-16'),
+(100, 3, 19.99, '2019-05-16');
 
 -- --------------------------------------------------------
 
@@ -149,21 +142,25 @@ CREATE TABLE `salesdetails` (
 --
 
 INSERT INTO `salesdetails` (`salesId`, `inventoryId`, `itemAmount`) VALUES
-(79, 1, 1),
-(79, 95, 3),
-(80, 95, 4),
-(80, 99, 2),
-(81, 2, 6),
-(82, 99, 1),
-(84, 99, 1),
-(85, 95, 5),
-(86, 99, 1),
-(87, 2, 1),
-(88, 2, 1),
-(89, 1, 7),
-(90, 93, 1),
-(91, 2, 4),
-(91, 96, 1);
+(93, 92, 1),
+(94, 1, 1),
+(94, 92, 1),
+(94, 96, 1),
+(95, 93, 1),
+(95, 100, 1),
+(96, 92, 1),
+(96, 94, 1),
+(96, 100, 1),
+(97, 93, 1),
+(97, 96, 1),
+(98, 2, 6),
+(98, 96, 6),
+(99, 2, 1),
+(99, 92, 1),
+(99, 94, 1),
+(99, 99, 1),
+(99, 100, 1),
+(100, 92, 1);
 
 -- --------------------------------------------------------
 
@@ -193,12 +190,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`image_path`, `userId`, `email`, `contact`, `password`, `name`, `role`, `note`, `lastSignIn`, `forgotPasswordId`, `banned`, `bannedDate`, `bannedReason`, `bannedDuration`) VALUES
-(NULL, 1, 'ngchinshu83@gmail.com', '', 'b5ef261a75dce04c2b86ad4a0d3ea510', 'Ng Chin Shu ', 'staff', '', '2019-04-15', NULL, NULL, NULL, NULL, NULL),
-(NULL, 2, '\'ngchinsia@hotmail.com\'', '', 'b5ef261a75dce04c2b86ad4a0d3ea510', '\'Ng Chin Sia\'', 'user', '', '2019-04-15', NULL, NULL, NULL, NULL, NULL),
-(NULL, 3, '\'bongjh@hotmail.com\'', '', 'b5ef261a75dce04c2b86ad4a0d3ea510', '\'Bong Jin Hong\'', 'user', '', '2019-04-16', NULL, NULL, NULL, NULL, NULL),
-(NULL, 4, '\'ngyi@hotmail.com\'', '', 'b5ef261a75dce04c2b86ad4a0d3ea510', '\'Ng Yi\'', 'user', '', '2019-04-15', NULL, NULL, NULL, NULL, NULL),
+(NULL, 1, 'ngchinshu83@gmail.com', '', 'e10adc3949ba59abbe56e057f20f883e', 'Ng Chin Shu ', 'manager', '', '2019-05-16', NULL, NULL, NULL, NULL, NULL),
+(NULL, 2, 'ngchinsia@hotmail.com', '', 'b5ef261a75dce04c2b86ad4a0d3ea510', 'Ng Chin Sia', 'user', '', '2019-04-15', NULL, NULL, NULL, NULL, NULL),
+(NULL, 3, 'bongjh@hotmail.com', '', 'e10adc3949ba59abbe56e057f20f883e', 'Bong Jin Hong', 'staff', '', '2019-04-16', NULL, NULL, NULL, NULL, NULL),
+(NULL, 4, 'ngyi@hotmail.com', '', 'e10adc3949ba59abbe56e057f20f883e', 'Ng Yi', 'user', '', '2019-05-16', NULL, NULL, NULL, NULL, NULL),
 (NULL, 5, 'urmumgay@hotmail.com', '', 'e10adc3949ba59abbe56e057f20f883e', 'youmumgay', 'user', '', '2019-04-16', NULL, 'Yes', '2019-04-16', 'Inappropriate name', 1),
-('', 6, 'ngyi07285@hotmail.com', '012-3456789', 'e10adc3949ba59abbe56e057f20f883e', 'Ng Yi', 'staff', '', '2019-05-14', NULL, NULL, NULL, NULL, NULL);
+('', 6, 'ngyi07285@hotmail.com', '012-3456789', 'e10adc3949ba59abbe56e057f20f883e', 'Ng Yi', 'staff', '', '2019-05-16', NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -245,7 +242,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointmentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `appointmentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `inventories`
@@ -257,7 +254,7 @@ ALTER TABLE `inventories`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `salesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `salesId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `users`
